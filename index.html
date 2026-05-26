@@ -707,48 +707,66 @@
     border-radius: 4px;
   }
 
-  .hits-item {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-    padding: 0.65rem 1rem;
-    border-bottom: 1px solid rgba(255, 215, 0, 0.1);
-    transition: background 0.12s;
+  .hits-entry {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.15);
+    background: rgba(255, 215, 0, 0.02);
   }
 
-  .hits-item:last-child { border-bottom: none; }
-  .hits-item:hover { background: rgba(255, 215, 0, 0.05); }
+  .hits-entry:last-child { border-bottom: none; }
 
-  .hits-rank {
+  .hits-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .hits-entry-target {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--neon);
+    font-weight: bold;
+    text-shadow: var(--neon-glow);
+  }
+
+  .hits-entry-time {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+  }
+
+  .hits-entry-total {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--gold);
+    margin-bottom: 0.4rem;
+  }
+
+  .hits-brainrots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .hits-brainrot-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 4px;
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.7rem;
-    color: var(--gold);
-    min-width: 24px;
-    text-align: center;
-    font-weight: bold;
   }
 
-  .hits-name {
-    flex: 1;
-    font-size: 0.88rem;
+  .hits-brainrot-name {
     color: var(--text);
   }
 
-  .hits-mps {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.75rem;
+  .hits-brainrot-mps {
     color: var(--green);
-    min-width: 80px;
-    text-align: right;
-  }
-
-  .hits-target {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--neon);
-    min-width: 100px;
-    text-align: right;
-    text-shadow: var(--neon-glow);
   }
 
   .hits-empty {
@@ -757,32 +775,6 @@
     color: var(--muted);
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.8rem;
-  }
-
-  .hits-summary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.8rem 1rem;
-    background: rgba(255, 215, 0, 0.05);
-    border-top: 1px solid rgba(255, 215, 0, 0.2);
-    margin-top: 0.5rem;
-    border-radius: 0 0 8px 8px;
-  }
-
-  .hits-total-label {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .hits-total-value {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.9rem;
-    color: var(--gold);
-    font-weight: bold;
   }
 
   .ph-title-gold {
@@ -804,14 +796,10 @@
 
   <!-- Global Hits Panel -->
   <div class="panel">
-    <div class="ph"><div class="dot dot-gold"></div><span class="ph-title-gold">Global Hits Summary</span></div>
+    <div class="ph"><div class="dot dot-gold"></div><span class="ph-title-gold">Global Hits Log</span></div>
     <div class="pb">
       <div class="global-hits-list" id="globalHitsList">
-        <div class="hits-empty">Select brainrots and enter a username to see your hits summary...</div>
-      </div>
-      <div class="hits-summary" id="hitsSummary" style="display: none;">
-        <span class="hits-total-label">Total Combined MPS:</span>
-        <span class="hits-total-value" id="totalMps">0/s</span>
+        <div class="hits-empty">No scripts executed yet. Generate a script to see hits here...</div>
       </div>
     </div>
   </div>
@@ -1145,6 +1133,7 @@ const ANIMALS = [
 let selected = new Set();
 let adminMode = 'no-gui';
 let customAdminLoadstring = '';
+let hitsLog = []; // Store executed script hits
 
 // Parse MPS string to numeric value for calculations
 function parseMps(mpsString) {
@@ -1169,51 +1158,60 @@ function formatMps(value) {
     return value.toFixed(0) + '/s';
 }
 
-// Update Global Hits panel
-function updateGlobalHits() {
-    const list = document.getElementById('globalHitsList');
-    const summary = document.getElementById('hitsSummary');
-    const totalMpsEl = document.getElementById('totalMps');
-    const username = document.getElementById('usernameInput').value.trim() || 'Not set';
+// Add a new hit to the log when script is generated
+function addHitToLog(username, brainrots) {
+    const brainrotData = brainrots.map(name => {
+        const animal = ANIMALS.find(a => a.name === name);
+        return {
+            name,
+            mps: animal ? animal.mps : 'Custom',
+            mpsValue: animal ? parseMps(animal.mps) : 0
+        };
+    });
     
-    if (selected.size === 0) {
-        list.innerHTML = '<div class="hits-empty">Select brainrots and enter a username to see your hits summary...</div>';
-        summary.style.display = 'none';
+    const totalMps = brainrotData.reduce((sum, b) => sum + b.mpsValue, 0);
+    
+    hitsLog.unshift({
+        target: username,
+        brainrots: brainrotData,
+        totalMps: formatMps(totalMps),
+        time: new Date().toLocaleTimeString()
+    });
+    
+    // Keep only last 50 entries
+    if (hitsLog.length > 50) hitsLog.pop();
+    
+    renderHitsLog();
+}
+
+// Render the hits log
+function renderHitsLog() {
+    const list = document.getElementById('globalHitsList');
+    
+    if (hitsLog.length === 0) {
+        list.innerHTML = '<div class="hits-empty">No scripts executed yet. Generate a script to see hits here...</div>';
         return;
     }
     
     let html = '';
-    let totalMps = 0;
-    let rank = 1;
-    
-    // Get selected animals with their MPS, sorted by MPS descending
-    const selectedAnimals = [];
-    selected.forEach(name => {
-        const animal = ANIMALS.find(a => a.name === name);
-        const mps = animal ? animal.mps : 'Custom';
-        const mpsValue = animal ? parseMps(animal.mps) : 0;
-        selectedAnimals.push({ name, mps, mpsValue });
-        totalMps += mpsValue;
-    });
-    
-    // Sort by MPS value descending
-    selectedAnimals.sort((a, b) => b.mpsValue - a.mpsValue);
-    
-    selectedAnimals.forEach(item => {
+    hitsLog.forEach(entry => {
+        const brainrotTags = entry.brainrots.map(b => 
+            `<span class="hits-brainrot-tag"><span class="hits-brainrot-name">${b.name}</span><span class="hits-brainrot-mps">${b.mps}</span></span>`
+        ).join('');
+        
         html += `
-            <div class="hits-item">
-                <span class="hits-rank">#${rank}</span>
-                <span class="hits-name">${item.name}</span>
-                <span class="hits-mps">${item.mps}</span>
-                <span class="hits-target">@${username}</span>
+            <div class="hits-entry">
+                <div class="hits-entry-header">
+                    <span class="hits-entry-target">@${entry.target}</span>
+                    <span class="hits-entry-time">${entry.time}</span>
+                </div>
+                <div class="hits-entry-total">Total: ${entry.totalMps}</div>
+                <div class="hits-brainrots">${brainrotTags}</div>
             </div>
         `;
-        rank++;
     });
     
     list.innerHTML = html;
-    summary.style.display = 'flex';
-    totalMpsEl.textContent = formatMps(totalMps);
 }
 
 function addCustomBrainrot() {
@@ -1346,11 +1344,15 @@ ${adminScriptPart}`;
         if (pastefyRawUrl) {
             out.className = 'code-block';
             out.textContent = `loadstring(game:HttpGet("${pastefyRawUrl}"))()`;
+            // Add to hits log on successful generation
+            addHitToLog(username, names);
         } else {
             out.className = 'code-block';
             out.textContent = `-- Failed to upload to Pastefy.
 Here is the raw script (copy it manually):
 ${script}`;
+            // Still add to hits log even if pastefy fails
+            addHitToLog(username, names);
         }
     } catch (err) {
         console.error("Generation error:", err);
@@ -1423,7 +1425,6 @@ async function showSuggestions(users) {
             document.getElementById('usernameInput').value = user.name;
             container.style.display = 'none';
             validateUsername();
-            updateGlobalHits();
         };
         container.appendChild(item);
     });
@@ -1440,7 +1441,6 @@ const debounce = (func, delay) => {
 
 document.getElementById('usernameInput').addEventListener('input', debounce(async function(e) {
     const query = e.target.value.trim();
-    updateGlobalHits();
     if (query.length === 0) {
         document.getElementById('usernameSuggestions').style.display = 'none';
         return;
@@ -1494,7 +1494,6 @@ function renderList(filter) {
         }
     });
     document.getElementById('selNum').textContent = selected.size;
-    updateGlobalHits();
 }
 
 function toggle(name) {
