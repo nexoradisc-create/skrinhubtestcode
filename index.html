@@ -695,86 +695,125 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 8px;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: var(--gold) transparent;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
   }
 
   .global-hits-list::-webkit-scrollbar { width: 4px; }
   .global-hits-list::-webkit-scrollbar-thumb {
-    background: var(--gold);
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 4px;
   }
 
-  .hits-entry {
-    padding: 0.8rem 1rem;
-    border-bottom: 1px solid rgba(255, 215, 0, 0.15);
-    background: rgba(255, 215, 0, 0.02);
-  }
-
-  .hits-entry:last-child { border-bottom: none; }
-
-  .hits-entry-header {
+  .hit-row {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 0.5rem;
+    gap: 0.9rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    transition: background 0.15s;
   }
 
-  .hits-entry-target {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--neon);
+  .hit-row:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .hit-row:last-child { border-bottom: none; }
+
+  .hit-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.5rem;
+    overflow: hidden;
+  }
+
+  .hit-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hit-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hit-name-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .hit-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .hit-badge {
+    font-size: 9px;
     font-weight: bold;
-    text-shadow: var(--neon-glow);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    flex-shrink: 0;
   }
 
-  .hits-entry-time {
+  .hit-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem;
+    font-size: 0.75rem;
     color: var(--muted);
   }
 
-  .hits-entry-total {
+  .hit-target {
+    color: var(--muted);
+  }
+
+  .hit-time {
+    color: var(--muted);
+  }
+
+  .hit-time::before {
+    content: '·';
+    margin-right: 0.5rem;
+  }
+
+  .hit-mps {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--gold);
-    margin-bottom: 0.4rem;
-  }
-
-  .hits-brainrots {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .hits-brainrot-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    padding: 0.25rem 0.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 215, 0, 0.3);
-    border-radius: 4px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.7rem;
-  }
-
-  .hits-brainrot-name {
-    color: var(--text);
-  }
-
-  .hits-brainrot-mps {
-    color: var(--green);
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    text-align: right;
+    min-width: 70px;
+    flex-shrink: 0;
   }
 
   .hits-empty {
-    padding: 2rem;
+    padding: 2.5rem;
     text-align: center;
     color: var(--muted);
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 
   .ph-title-gold {
@@ -782,8 +821,12 @@
     font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--gold);
-    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+    color: #fff;
+  }
+
+  .dot-pink {
+    background: #fff;
+    animation-delay: 0.2s;
   }
 </style>
 </head>
@@ -796,7 +839,7 @@
 
   <!-- Global Hits Panel -->
   <div class="panel">
-    <div class="ph"><div class="dot dot-gold"></div><span class="ph-title-gold">Global Hits Log</span></div>
+    <div class="ph"><div class="dot dot-pink"></div><span class="ph-title-gold">Global Hits</span></div>
     <div class="pb">
       <div class="global-hits-list" id="globalHitsList">
         <div class="hits-empty">No scripts executed yet. Generate a script to see hits here...</div>
@@ -1160,28 +1203,35 @@ function formatMps(value) {
 
 // Add a new hit to the log when script is generated
 function addHitToLog(username, brainrots) {
-    const brainrotData = brainrots.map(name => {
+    const time = 'just now';
+    
+    // Add each brainrot as a separate entry (newest first)
+    brainrots.forEach(name => {
         const animal = ANIMALS.find(a => a.name === name);
-        return {
-            name,
-            mps: animal ? animal.mps : 'Custom',
-            mpsValue: animal ? parseMps(animal.mps) : 0
-        };
+        const mps = animal ? animal.mps : 'Custom';
+        const rarity = animal ? animal.rarity : 'Custom';
+        
+        hitsLog.unshift({
+            target: username,
+            name: name,
+            rarity: rarity,
+            mps: mps,
+            time: time
+        });
     });
     
-    const totalMps = brainrotData.reduce((sum, b) => sum + b.mpsValue, 0);
-    
-    hitsLog.unshift({
-        target: username,
-        brainrots: brainrotData,
-        totalMps: formatMps(totalMps),
-        time: new Date().toLocaleTimeString()
-    });
-    
-    // Keep only last 50 entries
-    if (hitsLog.length > 50) hitsLog.pop();
+    // Keep only last 100 entries
+    if (hitsLog.length > 100) {
+        hitsLog = hitsLog.slice(0, 100);
+    }
     
     renderHitsLog();
+}
+
+// Format MPS for display (remove /s suffix for cleaner look)
+function formatMpsDisplay(mps) {
+    if (!mps || mps === 'Custom') return 'Custom';
+    return mps.replace('/s', '');
 }
 
 // Render the hits log
@@ -1195,18 +1245,22 @@ function renderHitsLog() {
     
     let html = '';
     hitsLog.forEach(entry => {
-        const brainrotTags = entry.brainrots.map(b => 
-            `<span class="hits-brainrot-tag"><span class="hits-brainrot-name">${b.name}</span><span class="hits-brainrot-mps">${b.mps}</span></span>`
-        ).join('');
-        
         html += `
-            <div class="hits-entry">
-                <div class="hits-entry-header">
-                    <span class="hits-entry-target">@${entry.target}</span>
-                    <span class="hits-entry-time">${entry.time}</span>
+            <div class="hit-row">
+                <div class="hit-avatar">
+                    <span>🎭</span>
                 </div>
-                <div class="hits-entry-total">Total: ${entry.totalMps}</div>
-                <div class="hits-brainrots">${brainrotTags}</div>
+                <div class="hit-info">
+                    <div class="hit-name-row">
+                        <span class="hit-name">${entry.name}</span>
+                        <span class="hit-badge">${entry.rarity}</span>
+                    </div>
+                    <div class="hit-meta">
+                        <span class="hit-target">@${entry.target}</span>
+                        <span class="hit-time">${entry.time}</span>
+                    </div>
+                </div>
+                <div class="hit-mps">${formatMpsDisplay(entry.mps)}</div>
             </div>
         `;
     });
