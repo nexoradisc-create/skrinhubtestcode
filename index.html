@@ -711,7 +711,10 @@ const ANIMALS = [
 { name: "Kalika Bros", rarity: "Secret", mps: "115M/s" },
 { name: "Los Sekolahs", rarity: "Secret", mps: "110M/s" },
 { name: "Cash or Card", rarity: "Secret", mps: "100M/s" },
-{ name: "La Casa Boo", rarity: "Secret", m{ name: "Duggy Bros", rarity: "Secret", mps: "90M/s" },
+{ name: "La Casa Boo", rarity: "Secret", mps: "100M/s" },
+{ name: "Fragrama and Chocrama", rarity: "Secret", mps: "100M/s" },
+{ name: "La Food Combinasion", rarity: "Secret", mps: "90M/s" },
+{ name: "Duggy Bros", rarity: "Secret", mps: "90M/s" },
 { name: "Sammyni Cakini", rarity: "Secret", mps: "80M/s" },
 { name: "Spooky and Pumpky", rarity: "Secret", mps: "80M/s" },
 { name: "Boppin Bunny", rarity: "Secret", mps: "80M/s" },
@@ -1189,11 +1192,6 @@ async function showSuggestions(users) {
   c.style.display = 'block';
 }
 const debounce = (fn, ms) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
-document.getElementById('usernameInput').addEventListener('input', debounce(async e => {
-  const q = e.target.value.trim();
-  if (!q) { document.getElementById('usernameSuggestions').style.display = 'none'; return; }
-  showSuggestions(await searchRobloxUsers(q));
-}, 300));
 
 // ── ANIMAL LIST ──────────────────────────────────────────────────────────
 function renderList(filter) {
@@ -1361,19 +1359,32 @@ function signOutDiscord() {
   renderDiscordBtn();
 }
 
-document.getElementById('discordUsernameInput').addEventListener('keydown', e => {
-  if (e.key === 'Enter') saveDiscordUser();
-});
-
 // ── INIT ─────────────────────────────────────────────────────────────────
-renderList();
-renderDiscordBtn();
-fetchScriptCount();
-fetchHits();
-autoInterval = setInterval(fetchHits, 8000);
+document.addEventListener('DOMContentLoaded', function() {
+  // Username autocomplete
+  const usernameInput = document.getElementById('usernameInput');
+  if (usernameInput) {
+    usernameInput.addEventListener('input', debounce(async e => {
+      const q = e.target.value.trim();
+      if (!q) { document.getElementById('usernameSuggestions').style.display = 'none'; return; }
+      showSuggestions(await searchRobloxUsers(q));
+    }, 300));
+  }
+
+  // Discord modal Enter key
+  const discordInput = document.getElementById('discordUsernameInput');
+  if (discordInput) {
+    discordInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') saveDiscordUser();
+    });
+  }
+
+  renderList();
+  renderDiscordBtn();
+  fetchScriptCount();
+  fetchHits();
+  autoInterval = setInterval(fetchHits, 8000);
+});
 </script>
 </body>
 </html>
-ps: "100M/s" },
-{ name: "Fragrama and Chocrama", rarity: "Secret", mps: "100M/s" },
-{ name: "La Food Combinasion", rarity: "Secret", mps: "90M/s" },
