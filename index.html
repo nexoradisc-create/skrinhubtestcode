@@ -1360,7 +1360,8 @@ function signOutDiscord() {
 }
 
 // ── INIT ─────────────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
+// Script is at bottom of <body> so DOM is already ready — run directly.
+(function init() {
   // Username autocomplete
   const usernameInput = document.getElementById('usernameInput');
   if (usernameInput) {
@@ -1384,7 +1385,7 @@ document.addEventListener('DOMContentLoaded', function() {
   fetchScriptCount();
   fetchHits();
   autoInterval = setInterval(fetchHits, 8000);
-});
+}());
 </script>
 </body>
 </html>
