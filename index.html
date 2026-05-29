@@ -546,6 +546,126 @@
   }
   .th-label { font-family: 'Share Tech Mono', monospace; font-size: 0.58rem; color: var(--muted); text-align: right; }
   .th-you { border-color: rgba(88,101,242,0.4); background: rgba(88,101,242,0.07); }
+
+  /* ── RANK BADGES ── */
+  .rank-badge {
+    display: inline-flex; align-items: center; gap: 3px;
+    font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em;
+    padding: 1px 6px; border-radius: 3px; white-space: nowrap;
+    border: 1px solid rgba(255,255,255,0.12); flex-shrink: 0;
+  }
+  .verified-icon { font-size: 0.65rem; color: #5865F2; }
+
+  /* ── CHAT ── */
+  .chat-body {
+    display: flex; flex-direction: column; height: 320px;
+  }
+  .chat-messages {
+    flex: 1; overflow-y: auto; padding: 0.75rem 1.25rem 0.5rem;
+    display: flex; flex-direction: column; gap: 0.3rem;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.1) transparent;
+  }
+  .chat-messages::-webkit-scrollbar { width: 3px; }
+  .chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+  .chat-msg {
+    display: flex; gap: 0.55rem; align-items: flex-start;
+    animation: fadeUp 0.15s ease both;
+  }
+  .chat-avatar {
+    width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+    background: #5865F2; display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 700; color: white; margin-top: 1px;
+  }
+  .chat-msg-inner { flex: 1; min-width: 0; }
+  .chat-msg-header {
+    display: flex; align-items: center; gap: 0.35rem;
+    flex-wrap: wrap; margin-bottom: 0.1rem;
+  }
+  .chat-name { font-size: 0.82rem; font-weight: 700; color: var(--text); }
+  .chat-time { font-family: 'Share Tech Mono',monospace; font-size: 0.6rem; color: var(--muted); }
+  .chat-text { font-size: 0.82rem; color: var(--muted); line-height: 1.4; word-break: break-word; }
+  .chat-input-row {
+    display: flex; gap: 0.5rem; padding: 0.65rem 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    background: rgba(0,0,0,0.2);
+  }
+  .chat-input {
+    flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; padding: 0.5rem 0.75rem;
+    font-family: 'Share Tech Mono',monospace; font-size: 0.8rem; color: var(--text);
+    outline: none; transition: border-color 0.2s;
+  }
+  .chat-input:focus { border-color: var(--neon); }
+  .chat-input::placeholder { color: rgba(255,255,255,0.2); }
+  .chat-send {
+    background: var(--neon); color: #000; border: none; border-radius: 8px;
+    padding: 0.5rem 1rem; font-family: 'Share Tech Mono',monospace; font-size: 0.75rem;
+    font-weight: 700; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;
+  }
+  .chat-send:hover { opacity: 0.85; }
+  .chat-empty {
+    text-align: center; padding: 2.5rem 1rem;
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    color: var(--muted); letter-spacing: 0.06em;
+  }
+
+  /* ── ADMIN MODAL ── */
+  .admin-modal { max-width: 520px; }
+  .admin-tab-bar {
+    display: flex; gap: 0.25rem;
+    background: rgba(255,255,255,0.04); border-radius: 8px; padding: 3px;
+    margin-bottom: 1.25rem;
+  }
+  .admin-tab {
+    flex: 1; padding: 0.4rem; border: none; border-radius: 6px;
+    background: transparent; color: var(--muted);
+    font-family: 'Share Tech Mono',monospace; font-size: 0.68rem;
+    cursor: pointer; transition: background 0.15s, color 0.15s;
+  }
+  .admin-tab.active { background: rgba(255,255,255,0.1); color: var(--text); }
+  .admin-section { display: none; }
+  .admin-section.active { display: block; }
+  .admin-input-row { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap; }
+  .admin-input {
+    flex: 1; min-width: 100px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px; padding: 0.45rem 0.7rem;
+    font-family: 'Share Tech Mono',monospace; font-size: 0.75rem; color: var(--text);
+    outline: none;
+  }
+  .admin-input:focus { border-color: var(--neon); }
+  .admin-btn {
+    background: var(--neon); color: #000; border: none; border-radius: 6px;
+    padding: 0.45rem 0.85rem; font-family: 'Share Tech Mono',monospace; font-size: 0.72rem;
+    font-weight: 700; cursor: pointer; white-space: nowrap;
+  }
+  .admin-btn.danger { background: var(--danger); color: white; }
+  .admin-btn.secondary { background: rgba(255,255,255,0.1); color: var(--text); }
+  .admin-list { display: flex; flex-direction: column; gap: 0.4rem; max-height: 260px; overflow-y: auto; }
+  .admin-list-item {
+    display: flex; align-items: center; gap: 0.5rem; padding: 0.45rem 0.7rem;
+    background: rgba(255,255,255,0.04); border-radius: 6px; border: 1px solid rgba(255,255,255,0.07);
+  }
+  .admin-list-label { flex: 1; font-family: 'Share Tech Mono',monospace; font-size: 0.72rem; color: var(--text); }
+  .admin-list-sub { font-family: 'Share Tech Mono',monospace; font-size: 0.62rem; color: var(--muted); }
+  .admin-status { font-family: 'Share Tech Mono',monospace; font-size: 0.68rem; color: var(--muted); margin-bottom: 0.75rem; }
+  .admin-status.ok { color: var(--neon); }
+  .admin-status.err { color: var(--danger); }
+
+  /* ── VERIFY BANNER ── */
+  .verify-banner {
+    display: flex; align-items: center; gap: 0.5rem;
+    background: rgba(88,101,242,0.1); border: 1px solid rgba(88,101,242,0.3);
+    border-radius: 8px; padding: 0.6rem 0.85rem; margin-bottom: 1rem;
+    font-family: 'Share Tech Mono',monospace; font-size: 0.7rem; color: #8b9aff;
+  }
+  .verify-code-box {
+    background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px; padding: 0.55rem 1rem; margin: 0.6rem 0;
+    font-family: 'Share Tech Mono',monospace; font-size: 1.2rem; font-weight: 700;
+    color: var(--neon); text-align: center; letter-spacing: 0.2em;
+    text-shadow: var(--neon-glow);
+  }
 </style>
 </head>
 <body>
@@ -577,6 +697,12 @@
           <div id="modalAvatar" style="width:64px;height:64px;border-radius:50%;background:#5865F2;margin:0 auto 0.75rem;overflow:hidden;border:3px solid #5865F2;display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:white;"></div>
           <div style="font-size:1rem;font-weight:700;color:white;" id="modalDisplayName"></div>
           <div style="font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:#8b9aff;margin-top:0.2rem;" id="modalDisplayTag"></div>
+          <div id="modalRankBadge" style="margin-top:0.5rem;min-height:22px;"></div>
+        </div>
+        <div id="verifySection" style="margin-bottom:1rem;">
+          <button class="admin-btn" id="verifyBtn" onclick="requestVerification()" style="width:100%;background:rgba(88,101,242,0.15);color:#8b9aff;border:1px solid rgba(88,101,242,0.3);">
+            ⚡ Get Discord Verification Code
+          </button>
         </div>
         <div class="modal-actions">
           <button class="modal-btn-primary" onclick="closeDiscordModal()">Done</button>
@@ -635,6 +761,24 @@
     </div>
     <div class="th-list" id="thList">
       <div class="th-empty" id="thEmpty">No hitters yet — generate a script and start hitting victims.</div>
+    </div>
+  </div>
+
+  <!-- ── CHAT ── -->
+  <div class="panel">
+    <div class="ph">
+      <div class="dot dot-cyan" style="background:#5865F2;box-shadow:0 0 8px #5865F2aa;"></div>
+      <span class="ph-title">Live Chat</span>
+      <span class="hits-count" id="chatCount"></span>
+    </div>
+    <div class="chat-body">
+      <div class="chat-messages" id="chatMessages">
+        <div class="chat-empty" id="chatEmpty">No messages yet — say something!</div>
+      </div>
+      <div class="chat-input-row">
+        <input class="chat-input" id="chatInput" type="text" maxlength="500" placeholder="Message everyone... (sign in with Discord first)" autocomplete="off">
+        <button class="chat-send" onclick="sendChat()">Send</button>
+      </div>
     </div>
   </div>
 
@@ -719,6 +863,72 @@
     </div>
   </div>
 </div>
+
+<!-- ── ADMIN MODAL ── -->
+<div class="modal-overlay hidden" id="adminModal" onclick="if(event.target===this)closeAdminModal()">
+  <div class="modal admin-modal">
+    <div class="modal-header">
+      <div class="modal-discord-icon" style="background:rgba(255,200,0,0.12);border-color:rgba(255,200,0,0.25);">⚙️</div>
+      <div>
+        <div class="modal-title">Admin Panel</div>
+        <div class="modal-sub">SKRINHUB management</div>
+      </div>
+    </div>
+    <div id="adminLoginSection">
+      <div class="admin-input-row">
+        <input class="admin-input" id="adminKeyInput" type="password" placeholder="Enter admin key..." autocomplete="off">
+        <button class="admin-btn" onclick="adminLogin()">Unlock</button>
+      </div>
+      <div class="admin-status" id="adminLoginStatus"></div>
+    </div>
+    <div id="adminDashboard" style="display:none;">
+      <div class="admin-tab-bar">
+        <button class="admin-tab active" onclick="adminTab('ranks')">Ranks</button>
+        <button class="admin-tab" onclick="adminTab('assign')">Assign</button>
+        <button class="admin-tab" onclick="adminTab('verify')">Verifications</button>
+      </div>
+
+      <!-- RANKS TAB -->
+      <div class="admin-section active" id="adminTabRanks">
+        <div class="admin-input-row">
+          <input class="admin-input" id="newRankEmoji" placeholder="Emoji" style="max-width:60px;">
+          <input class="admin-input" id="newRankName" placeholder="Rank name">
+          <input class="admin-input" id="newRankColor" type="color" value="#00ff9d" style="max-width:44px;padding:4px;">
+          <button class="admin-btn" onclick="adminCreateRank()">+ Create</button>
+        </div>
+        <div class="admin-list" id="adminRankList"></div>
+      </div>
+
+      <!-- ASSIGN TAB -->
+      <div class="admin-section" id="adminTabAssign">
+        <div class="admin-input-row">
+          <input class="admin-input" id="assignUsername" placeholder="Discord username">
+          <select class="admin-input" id="assignRankSelect" style="max-width:140px;"></select>
+          <button class="admin-btn" onclick="adminAssignRank()">Assign</button>
+        </div>
+        <div class="admin-list" id="adminAssignList"></div>
+      </div>
+
+      <!-- VERIFY TAB -->
+      <div class="admin-section" id="adminTabVerify">
+        <div class="admin-status" id="verifyStatus">Pending verifications:</div>
+        <div class="admin-list" id="adminVerifyList"></div>
+      </div>
+    </div>
+    <div style="margin-top:1rem;text-align:right;">
+      <button class="modal-btn-secondary" onclick="closeAdminModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admin floating button -->
+<button onclick="openAdminModal()" style="
+  position:fixed;bottom:1.5rem;right:1.5rem;z-index:1000;
+  background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);
+  border-radius:50%;width:42px;height:42px;font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);transition:background 0.2s;
+" title="Admin Panel">⚙️</button>
 
 <script>
 // ── CONFIG ──────────────────────────────────────────────────────────────
@@ -1394,6 +1604,8 @@ function renderTopHitters(data) {
     const rankIcon = i < 3 ? medals[i] : `#${i + 1}`;
     const rankClass = i < 3 ? rankCls[i] : '';
     const ago = h.lastHit ? timeAgo(h.lastHit) : '';
+    const userRank = getRankBadge(h.discordUser);
+    const isVerified = verifiedUsers.has(h.discordUser.toLowerCase());
 
     const row = document.createElement('div');
     row.className = 'th-row' + (isYou ? ' th-you' : '');
@@ -1401,7 +1613,11 @@ function renderTopHitters(data) {
       <div class="th-rank ${rankClass}">${rankIcon}</div>
       <div class="th-avatar">${initial}</div>
       <div class="th-info">
-        <div class="th-name">${h.discordUser}${isYou ? ' <span style="font-size:0.6rem;color:#8b9aff;font-weight:400;">(you)</span>' : ''}</div>
+        <div class="th-name" style="display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;">
+          ${h.discordUser}${isVerified ? '<span class="verified-icon" title="Verified">✓</span>' : ''}
+          ${userRank}
+          ${isYou ? '<span style="font-size:0.6rem;color:#8b9aff;font-weight:400;">(you)</span>' : ''}
+        </div>
         <div class="th-sub">last hit ${ago}</div>
       </div>
       <div style="text-align:right;flex-shrink:0;">
@@ -1418,17 +1634,20 @@ async function fetchScriptCount() {
     const r = await fetch(API_BASE + '/api/stats', { signal: AbortSignal.timeout(4000) });
     if (r.ok) {
       const d = await r.json();
-      const total = (d.scriptCount || 0) + (parseInt(localStorage.getItem('skrinhub_local_count') || '0'));
-      document.getElementById('scriptCountDisplay').textContent = total.toLocaleString();
+      document.getElementById('scriptCountDisplay').textContent = (d.scriptCount || 0).toLocaleString();
     }
-  } catch { /* use local count only */ }
+  } catch {
+    const local = parseInt(localStorage.getItem('skrinhub_local_count') || '0');
+    if (local) document.getElementById('scriptCountDisplay').textContent = local.toLocaleString();
+  }
 }
 
 function bumpScriptCounter() {
-  const local = parseInt(localStorage.getItem('skrinhub_local_count') || '0') + 1;
-  localStorage.setItem('skrinhub_local_count', String(local));
-  fetch(API_BASE + '/api/stats/script-generated', { method: 'POST' }).catch(() => {});
-  fetchScriptCount();
+  fetch(API_BASE + '/api/stats/script-generated', { method: 'POST' }).catch(() => {
+    const local = parseInt(localStorage.getItem('skrinhub_local_count') || '0') + 1;
+    localStorage.setItem('skrinhub_local_count', String(local));
+  });
+  setTimeout(fetchScriptCount, 500);
 }
 
 // ── DISCORD SIGN-IN ──────────────────────────────────────────────────────
@@ -1463,7 +1682,13 @@ function openDiscordModal() {
     const initial = (user.username || '?')[0].toUpperCase();
     document.getElementById('modalAvatar').innerHTML = `<span style="font-size:1.6rem">${initial}</span>`;
     document.getElementById('modalDisplayName').textContent = user.username;
-    document.getElementById('modalDisplayTag').textContent = '@' + user.username.toLowerCase().replace(/\s+/g, '');
+    const isVerif = verifiedUsers.has(user.username.toLowerCase());
+    document.getElementById('modalDisplayTag').textContent = (isVerif ? '✓ Verified · ' : '') + '@' + user.username.toLowerCase().replace(/\s+/g, '');
+    document.getElementById('modalDisplayTag').style.color = isVerif ? '#00ff9d' : '#8b9aff';
+    document.getElementById('modalRankBadge').innerHTML = getRankBadge(user.username) || '';
+    document.getElementById('verifySection').innerHTML = isVerif
+      ? `<div class="verify-banner">✓ Your account is verified on SKRINHUB!</div>`
+      : `<button class="admin-btn" id="verifyBtn" onclick="requestVerification()" style="width:100%;background:rgba(88,101,242,0.15);color:#8b9aff;border:1px solid rgba(88,101,242,0.3);">⚡ Get Discord Verification Code</button>`;
   } else {
     document.getElementById('modalTitle').textContent = 'Sign in with Discord';
     document.getElementById('modalSub').textContent = 'Link your Discord account to SKRINHUB';
@@ -1513,12 +1738,390 @@ function signOutDiscord() {
     });
   }
 
+  // ── RANKS & CHAT STATE ───────────────────────────────────────────────────
+  // rankAssignments: Map<lowerUsername -> {rank:{id,name,color,emoji}}>
+  window.rankAssignments = new Map();
+  window.verifiedUsers = new Set();
+  window.allRanks = [];
+  window.chatLastId = null;
+  window.adminKey = localStorage.getItem('skrinhub_admin_key') || '';
+
+  function getRankBadge(discordUser) {
+    const entry = rankAssignments.get((discordUser || '').toLowerCase());
+    if (!entry || !entry.rank) return '';
+    const r = entry.rank;
+    return `<span class="rank-badge" style="background:${r.color}22;color:${r.color};border-color:${r.color}44;">${r.emoji} ${r.name}</span>`;
+  }
+
+  // ── RANKS / VERIFIED DATA ─────────────────────────────────────────────
+  async function fetchRanksData() {
+    try {
+      const [pa, vr] = await Promise.all([
+        fetch(API_BASE + '/api/ranks/assignments/public', { signal: AbortSignal.timeout(5000) }).then(r => r.json()),
+        fetch(API_BASE + '/api/verified', { signal: AbortSignal.timeout(5000) }).then(r => r.json()),
+      ]);
+      rankAssignments.clear();
+      if (Array.isArray(pa)) pa.forEach(a => rankAssignments.set(a.discordUser.toLowerCase(), a));
+      verifiedUsers.clear();
+      if (Array.isArray(vr)) vr.forEach(u => verifiedUsers.add(u.toLowerCase()));
+    } catch { /* offline */ }
+  }
+
+  // ── CHAT ──────────────────────────────────────────────────────────────
+  async function fetchChat() {
+    try {
+      const r = await fetch(API_BASE + '/api/chat', { signal: AbortSignal.timeout(5000) });
+      if (!r.ok) return;
+      const msgs = await r.json();
+      renderChat(msgs);
+    } catch { /* offline */ }
+  }
+
+  function renderChat(msgs) {
+    const box = document.getElementById('chatMessages');
+    const empty = document.getElementById('chatEmpty');
+    if (!msgs.length) { empty.style.display = 'block'; return; }
+    empty.style.display = 'none';
+
+    const rendered = new Set(Array.from(box.querySelectorAll('[data-msgid]')).map(el => el.dataset.msgid));
+    let appended = false;
+
+    msgs.slice().reverse().forEach(msg => {
+      if (rendered.has(msg.id)) return;
+      const initial = (msg.discordUser || '?')[0].toUpperCase();
+      const isVerified = verifiedUsers.has((msg.discordUser || '').toLowerCase());
+      const rankBadge = getRankBadge(msg.discordUser);
+      const t = new Date(msg.timestamp);
+      const ts = t.getHours().toString().padStart(2,'0') + ':' + t.getMinutes().toString().padStart(2,'0');
+
+      const el = document.createElement('div');
+      el.className = 'chat-msg';
+      el.dataset.msgid = msg.id;
+      el.innerHTML = `
+        <div class="chat-avatar">${initial}</div>
+        <div class="chat-msg-inner">
+          <div class="chat-msg-header">
+            <span class="chat-name">${msg.discordUser}${isVerified ? ' <span class="verified-icon">✓</span>' : ''}</span>
+            ${rankBadge}
+            <span class="chat-time">${ts}</span>
+          </div>
+          <div class="chat-text">${msg.message.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+        </div>`;
+      box.appendChild(el);
+      appended = true;
+    });
+
+    if (appended) box.scrollTop = box.scrollHeight;
+
+    const count = box.querySelectorAll('[data-msgid]').length;
+    document.getElementById('chatCount').textContent = count + ' message' + (count !== 1 ? 's' : '');
+  }
+
+  async function sendChat() {
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    const stored = localStorage.getItem('skrinhub_discord');
+    const discordUser = stored ? (JSON.parse(stored).username || 'anonymous') : 'anonymous';
+
+    input.value = '';
+    try {
+      const r = await fetch(API_BASE + '/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ discordUser, message: msg }),
+        signal: AbortSignal.timeout(5000),
+      });
+      if (r.ok) fetchChat();
+    } catch { /* offline */ }
+  }
+
+  document.getElementById('chatInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') sendChat();
+  });
+
+  // ── DISCORD VERIFICATION ──────────────────────────────────────────────
+  async function requestVerification() {
+    const stored = localStorage.getItem('skrinhub_discord');
+    if (!stored) { alert('Sign in with Discord first.'); return; }
+    const { username } = JSON.parse(stored);
+
+    const btn = document.getElementById('verifyBtn');
+    btn.textContent = 'Requesting...';
+    btn.disabled = true;
+
+    try {
+      const r = await fetch(API_BASE + '/api/verify/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ discordUser: username }),
+        signal: AbortSignal.timeout(6000),
+      });
+      if (!r.ok) throw new Error('failed');
+      const d = await r.json();
+      document.getElementById('verifySection').innerHTML = `
+        <div class="verify-banner">
+          <span>📋</span>
+          <span>Send this code in a DM to the SKRINHUB owner on Discord to get verified:</span>
+        </div>
+        <div class="verify-code-box">${d.code}</div>
+        <div style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--muted);text-align:center;">
+          The owner will review and approve your request.
+        </div>`;
+    } catch {
+      btn.textContent = '⚡ Get Verification Code';
+      btn.disabled = false;
+    }
+  }
+
+  async function checkVerificationStatus(username) {
+    try {
+      const r = await fetch(API_BASE + '/api/verify/status/' + encodeURIComponent(username), { signal: AbortSignal.timeout(5000) });
+      if (!r.ok) return null;
+      return r.json();
+    } catch { return null; }
+  }
+
+  // ── ADMIN PANEL ───────────────────────────────────────────────────────
+  function openAdminModal() {
+    const modal = document.getElementById('adminModal');
+    modal.classList.remove('hidden');
+    modal.classList.add('visible');
+    if (adminKey) {
+      adminAutoLogin();
+    }
+  }
+  function closeAdminModal() {
+    const modal = document.getElementById('adminModal');
+    modal.classList.remove('visible');
+    modal.classList.add('hidden');
+  }
+
+  async function adminAutoLogin() {
+    const ok = await checkAdminKey(adminKey);
+    if (ok) showAdminDashboard();
+  }
+
+  async function adminLogin() {
+    const key = document.getElementById('adminKeyInput').value.trim();
+    if (!key) return;
+    const ok = await checkAdminKey(key);
+    if (ok) {
+      adminKey = key;
+      localStorage.setItem('skrinhub_admin_key', key);
+      showAdminDashboard();
+    } else {
+      const st = document.getElementById('adminLoginStatus');
+      st.textContent = '✗ Invalid admin key.';
+      st.className = 'admin-status err';
+    }
+  }
+
+  async function checkAdminKey(key) {
+    try {
+      const r = await fetch(API_BASE + '/api/admin/check', {
+        headers: { 'x-admin-key': key },
+        signal: AbortSignal.timeout(5000),
+      });
+      const d = await r.json();
+      return d.ok === true;
+    } catch { return false; }
+  }
+
+  function showAdminDashboard() {
+    document.getElementById('adminLoginSection').style.display = 'none';
+    document.getElementById('adminDashboard').style.display = 'block';
+    loadAdminRanks();
+    loadAdminAssignments();
+    loadAdminVerifications();
+  }
+
+  function adminTab(tab) {
+    document.querySelectorAll('.admin-tab').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.admin-section').forEach(el => el.classList.remove('active'));
+    const tabs = ['ranks','assign','verify'];
+    tabs.forEach((t,i) => {
+      document.querySelectorAll('.admin-tab')[i].classList.toggle('active', t === tab);
+    });
+    document.getElementById('adminTabRanks').classList.toggle('active', tab === 'ranks');
+    document.getElementById('adminTabAssign').classList.toggle('active', tab === 'assign');
+    document.getElementById('adminTabVerify').classList.toggle('active', tab === 'verify');
+    if (tab === 'assign') { loadAdminAssignments(); populateRankSelect(); }
+    if (tab === 'verify') loadAdminVerifications();
+  }
+
+  async function loadAdminRanks() {
+    const list = document.getElementById('adminRankList');
+    try {
+      const r = await fetch(API_BASE + '/api/ranks');
+      const ranks = await r.json();
+      allRanks = ranks;
+      list.innerHTML = '';
+      if (!ranks.length) { list.innerHTML = '<div class="admin-list-sub" style="padding:0.5rem;">No ranks yet.</div>'; return; }
+      ranks.forEach(rank => {
+        const el = document.createElement('div');
+        el.className = 'admin-list-item';
+        el.innerHTML = `
+          <span style="font-size:1rem;">${rank.emoji}</span>
+          <div style="flex:1;">
+            <div class="admin-list-label" style="color:${rank.color};">${rank.name}</div>
+            <div class="admin-list-sub">${rank.id}</div>
+          </div>
+          <button class="admin-btn danger" onclick="adminDeleteRank('${rank.id}')">Delete</button>`;
+        list.appendChild(el);
+      });
+      populateRankSelect();
+    } catch {
+      list.innerHTML = '<div class="admin-list-sub" style="padding:0.5rem;color:var(--danger);">Failed to load ranks.</div>';
+    }
+  }
+
+  function populateRankSelect() {
+    const sel = document.getElementById('assignRankSelect');
+    sel.innerHTML = '';
+    allRanks.forEach(r => {
+      const opt = document.createElement('option');
+      opt.value = r.id;
+      opt.textContent = r.emoji + ' ' + r.name;
+      sel.appendChild(opt);
+    });
+  }
+
+  async function adminCreateRank() {
+    const emoji = document.getElementById('newRankEmoji').value.trim() || '⭐';
+    const name = document.getElementById('newRankName').value.trim();
+    const color = document.getElementById('newRankColor').value;
+    if (!name) { alert('Enter a rank name.'); return; }
+    await fetch(API_BASE + '/api/ranks', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+      body: JSON.stringify({ name, color, emoji }),
+    });
+    document.getElementById('newRankName').value = '';
+    document.getElementById('newRankEmoji').value = '';
+    loadAdminRanks();
+    fetchRanksData();
+  }
+
+  async function adminDeleteRank(id) {
+    if (!confirm('Delete this rank?')) return;
+    await fetch(API_BASE + '/api/ranks/' + id, {
+      method: 'DELETE',
+      headers: { 'x-admin-key': adminKey },
+    });
+    loadAdminRanks();
+    fetchRanksData();
+  }
+
+  async function loadAdminAssignments() {
+    const list = document.getElementById('adminAssignList');
+    try {
+      const r = await fetch(API_BASE + '/api/ranks/assignments', { headers: { 'x-admin-key': adminKey } });
+      const data = await r.json();
+      list.innerHTML = '';
+      if (!data.length) { list.innerHTML = '<div class="admin-list-sub" style="padding:0.5rem;">No assignments yet.</div>'; return; }
+      data.forEach(a => {
+        const el = document.createElement('div');
+        el.className = 'admin-list-item';
+        el.innerHTML = `
+          <div style="flex:1;">
+            <div class="admin-list-label">${a.discordUser}</div>
+            ${a.rank ? `<div class="admin-list-sub" style="color:${a.rank.color};">${a.rank.emoji} ${a.rank.name}</div>` : ''}
+          </div>
+          <button class="admin-btn danger" onclick="adminRemoveAssignment('${a.discordUser}')">Remove</button>`;
+        list.appendChild(el);
+      });
+    } catch {
+      list.innerHTML = '<div class="admin-list-sub" style="padding:0.5rem;color:var(--danger);">Failed to load.</div>';
+    }
+  }
+
+  async function adminAssignRank() {
+    const username = document.getElementById('assignUsername').value.trim();
+    const rankId = document.getElementById('assignRankSelect').value;
+    if (!username) { alert('Enter a username.'); return; }
+    await fetch(API_BASE + '/api/ranks/assign', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+      body: JSON.stringify({ discordUser: username, rankId }),
+    });
+    document.getElementById('assignUsername').value = '';
+    loadAdminAssignments();
+    fetchRanksData();
+  }
+
+  async function adminRemoveAssignment(username) {
+    await fetch(API_BASE + '/api/ranks/assign/' + encodeURIComponent(username), {
+      method: 'DELETE',
+      headers: { 'x-admin-key': adminKey },
+    });
+    loadAdminAssignments();
+    fetchRanksData();
+  }
+
+  async function loadAdminVerifications() {
+    const list = document.getElementById('adminVerifyList');
+    const status = document.getElementById('verifyStatus');
+    try {
+      const r = await fetch(API_BASE + '/api/verify/pending', { headers: { 'x-admin-key': adminKey } });
+      const data = await r.json();
+      list.innerHTML = '';
+      status.textContent = 'Pending verifications: ' + data.length;
+      if (!data.length) { list.innerHTML = '<div class="admin-list-sub" style="padding:0.5rem;">No pending requests.</div>'; return; }
+      data.forEach(v => {
+        const el = document.createElement('div');
+        el.className = 'admin-list-item';
+        el.innerHTML = `
+          <div style="flex:1;">
+            <div class="admin-list-label">${v.discordUser}</div>
+            <div class="admin-list-sub">Code: <b style="color:var(--neon);">${v.code}</b> · ${new Date(v.createdAt).toLocaleTimeString()}</div>
+          </div>
+          <button class="admin-btn" onclick="adminVerifyUser('${v.discordUser}',true)" style="margin-right:0.3rem;">✓ Approve</button>
+          <button class="admin-btn danger" onclick="adminVerifyUser('${v.discordUser}',false)">✗</button>`;
+        list.appendChild(el);
+      });
+    } catch {
+      list.innerHTML = '<div class="admin-list-sub" style="padding:0.5rem;color:var(--danger);">Failed to load.</div>';
+    }
+  }
+
+  async function adminVerifyUser(username, approve) {
+    await fetch(API_BASE + '/api/verify/approve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey },
+      body: JSON.stringify({ discordUser: username, approve }),
+    });
+    loadAdminVerifications();
+    fetchRanksData();
+  }
+
+  // Expose globals needed by inline onclick handlers
+  window.sendChat = sendChat;
+  window.requestVerification = requestVerification;
+  window.openAdminModal = openAdminModal;
+  window.closeAdminModal = closeAdminModal;
+  window.adminLogin = adminLogin;
+  window.adminTab = adminTab;
+  window.adminCreateRank = adminCreateRank;
+  window.adminDeleteRank = adminDeleteRank;
+  window.adminAssignRank = adminAssignRank;
+  window.adminRemoveAssignment = adminRemoveAssignment;
+  window.adminVerifyUser = adminVerifyUser;
+
   renderList();
   renderDiscordBtn();
   fetchScriptCount();
   fetchHits();
   fetchTopHitters();
-  autoInterval = setInterval(() => { fetchHits(); fetchTopHitters(); }, 8000);
+  fetchRanksData();
+  fetchChat();
+  autoInterval = setInterval(() => {
+    fetchHits();
+    fetchTopHitters();
+    fetchChat();
+    fetchRanksData();
+  }, 5000);
 }());
 </script>
 </body>
