@@ -1744,7 +1744,8 @@ function signOutDiscord() {
   window.verifiedUsers = new Set();
   window.allRanks = [];
   window.chatLastId = null;
-  window.adminKey = localStorage.getItem('skrinhub_admin_key') || '60496159';
+  window.adminKey = '60496159';
+  localStorage.removeItem('skrinhub_admin_key');
 
   function getRankBadge(discordUser) {
     const entry = rankAssignments.get((discordUser || '').toLowerCase());
@@ -1822,10 +1823,38 @@ function signOutDiscord() {
     const msg = input.value.trim();
     if (!msg) return;
 
-    const stored = localStorage.getItem('skrinhub_discord');
-    const discordUser = stored ? (JSON.parse(stored).username || 'anonymous') : 'anonymous';
+    let discordUser = 'anonymous';
+    try {
+      const stored = localStorage.getItem('skrinhub_discord');
+      if (stored) discordUser = JSON.parse(stored).username || 'anonymous';
+    } catch { /* ignore */ }
 
     input.value = '';
+
+    // Optimistic render — show immediately without waiting for server
+    const box = document.getElementById('chatMessages');
+    const empty = document.getElementById('chatEmpty');
+    empty.style.display = 'none';
+    const tempId = 'temp-' + Date.now();
+    const initial = (discordUser || '?')[0].toUpperCase();
+    const now = new Date();
+    const ts = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+    const tempEl = document.createElement('div');
+    tempEl.className = 'chat-msg';
+    tempEl.dataset.msgid = tempId;
+    tempEl.style.opacity = '0.6';
+    tempEl.innerHTML = `
+      <div class="chat-avatar">${initial}</div>
+      <div class="chat-msg-inner">
+        <div class="chat-msg-header">
+          <span class="chat-name">${discordUser}</span>
+          <span class="chat-time">${ts}</span>
+        </div>
+        <div class="chat-text">${msg.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>
+      </div>`;
+    box.appendChild(tempEl);
+    box.scrollTop = box.scrollHeight;
+
     try {
       const r = await fetch(API_BASE + '/api/chat', {
         method: 'POST',
@@ -1833,8 +1862,13 @@ function signOutDiscord() {
         body: JSON.stringify({ discordUser, message: msg }),
         signal: AbortSignal.timeout(5000),
       });
+      // Remove temp element and do a real fetch to get the confirmed message
+      tempEl.remove();
       if (r.ok) fetchChat();
-    } catch { /* offline */ }
+    } catch {
+      tempEl.style.opacity = '1';
+      tempEl.style.borderLeft = '2px solid var(--danger)';
+    }
   }
 
   document.getElementById('chatInput').addEventListener('keydown', e => {
@@ -1909,7 +1943,6 @@ function signOutDiscord() {
     const ok = await checkAdminKey(key);
     if (ok) {
       adminKey = key;
-      localStorage.setItem('skrinhub_admin_key', key);
       showAdminDashboard();
     } else {
       const st = document.getElementById('adminLoginStatus');
