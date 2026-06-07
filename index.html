@@ -328,9 +328,10 @@
 
   .chat-msg-time {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.57rem;
+    font-size: 0.55rem;
     color: #555;
-    flex-shrink: 0;
+    margin-top: 0.25rem;
+    display: block;
   }
 
   .chat-msg-text {
@@ -1279,9 +1280,10 @@ function connectWS() {
 
     if (data.type === 'history') {
       document.getElementById('chatMessages').innerHTML = '';
-      data.messages.forEach(m => appendChatMsg(m));
+      data.messages.filter(m => m.user !== null).forEach(m => appendChatMsg(m));
       scrollChatBottom();
     } else if (data.type === 'msg') {
+      if (data.message && data.message.user === null) return;
       const atBottom = isAtBottom();
       appendChatMsg(data.message);
       if (atBottom || chatOpen) scrollChatBottom();
@@ -1347,14 +1349,15 @@ function appendChatMsg(msg) {
   }
 
   div.className = 'chat-msg';
+  const timeStr = msg.time ? new Date(msg.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : time;
   div.innerHTML = `
     ${avatarHtml}
     <div class="chat-msg-body">
       <div class="chat-msg-meta">
         <span class="${nameClass}">${displayName}</span>${rankBadgeHtml}
-        <span class="chat-msg-time">${time}</span>
       </div>
       <div class="chat-msg-text">${text}</div>
+      <div class="chat-msg-time">${timeStr}</div>
     </div>`;
   container.appendChild(div);
 }
