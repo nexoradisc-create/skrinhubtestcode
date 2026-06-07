@@ -1300,7 +1300,13 @@ function updateChatInputState() {
 function openSignInModal() { document.getElementById('signinModal').classList.add('show'); }
 function closeSignInModal() { document.getElementById('signinModal').classList.remove('show'); }
 document.getElementById('signinModal').addEventListener('click', function(e) { if (e.target === this) closeSignInModal(); });
-function doDiscordSignIn() { closeSignInModal(); window.location.href = '/api/auth/discord'; }
+function doDiscordSignIn() {
+  closeSignInModal();
+  const clientId = '1368253122299822292';
+  const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
+  const scope = encodeURIComponent('identify');
+  window.location.href = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+}
 
 /* ═══════════════════════ ADMIN MODAL ══════════════════ */
 function openAdminModal() {
@@ -1338,7 +1344,7 @@ document.addEventListener('keydown', function(e) {
 
 /* ═══════════════════════ SIGN OUT ════════════════════ */
 async function doSignOut() {
-  await fetch('/api/auth/logout', { method: 'POST' });
+  localStorage.removeItem('skrinhub_discord_user');
   discordUser = null;
   isAdmin = false;
   sessionStart = null;
@@ -1499,25 +1505,49 @@ function startSessionTimer() {
 
 /* ═══════════════════════ CHECK AUTH ══════════════════ */
 async function checkAuth() {
-  try {
-    const res = await fetch('/api/auth/me');
-    const data = await res.json();
-    if (data.loggedIn && data.user) {
-      discordUser = data.user;
+  // Handle Discord OAuth implicit-flow callback (token in URL hash)
+  const hash = window.location.hash;
+  if (hash && hash.includes('access_token=')) {
+    const params = new URLSearchParams(hash.substring(1));
+    const token = params.get('access_token');
+    history.replaceState({}, '', window.location.pathname);
+    if (token) {
+      try {
+        const res = await fetch('https://discord.com/api/users/@me', {
+          headers: { Authorization: 'Bearer ' + token }
+        });
+        const raw = await res.json();
+        discordUser = {
+          id: raw.id,
+          username: raw.username,
+          displayName: raw.global_name || raw.username,
+          avatar: raw.avatar
+            ? 'https://cdn.discordapp.com/avatars/' + raw.id + '/' + raw.avatar + '.png'
+            : 'https://cdn.discordapp.com/embed/avatars/' + (Number(raw.discriminator || 0) % 5) + '.png',
+        };
+        localStorage.setItem('skrinhub_discord_user', JSON.stringify(discordUser));
+        applyDiscordState();
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({ type: 'identify', user: discordUser }));
+        }
+        showToast('✓ Signed in with Discord!', 'success');
+      } catch (e) {
+        showToast('✗ Sign in failed. Try again.', 'error');
+      }
+      return;
+    }
+  }
+
+  // Restore saved session from localStorage
+  const saved = localStorage.getItem('skrinhub_discord_user');
+  if (saved) {
+    try {
+      discordUser = JSON.parse(saved);
       applyDiscordState();
       if (ws && ws.readyState === WebSocket.OPEN) {
         ws.send(JSON.stringify({ type: 'identify', user: discordUser }));
       }
-    }
-  } catch {}
-
-  const params = new URLSearchParams(window.location.search);
-  const authResult = params.get('auth');
-  if (authResult) {
-    history.replaceState({}, '', window.location.pathname);
-    if (authResult === 'success') showToast('✓ Signed in with Discord!', 'success');
-    else if (authResult === 'notmember') showToast('⚠ You must join the server first.', 'warning');
-    else if (authResult === 'error') showToast('✗ Sign in failed. Try again.', 'error');
+    } catch {}
   }
 }
 
