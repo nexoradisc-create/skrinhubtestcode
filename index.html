@@ -1199,6 +1199,19 @@
         </div>
       </div>
 
+      <!-- ── BROADCAST ── -->
+      <div class="panel" style="margin-bottom:1rem;">
+        <div class="ph"><div class="dot dot-gold"></div><span class="ph-title" style="color:var(--admin);text-shadow:var(--admin-glow);">📢 Broadcast to Chat</span></div>
+        <div class="pb">
+          <p style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--muted);margin-bottom:1rem;line-height:1.7;">Send a pinned announcement to everyone currently in chat. Appears instantly for all users.</p>
+          <div style="display:flex;gap:0.6rem;align-items:stretch;">
+            <input class="adm-input" id="broadcastInput" type="text" placeholder="Type your announcement..." maxlength="500" style="flex:1;" onkeydown="if(event.key==='Enter')sendBroadcast()">
+            <button class="adm-btn" onclick="sendBroadcast()" style="white-space:nowrap;">📢 Send</button>
+          </div>
+          <div id="broadcastStatus" style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--green);margin-top:0.5rem;min-height:1rem;"></div>
+        </div>
+      </div>
+
       <!-- ── TITLE EDITOR ── -->
       <div class="panel">
         <div class="ph"><div class="dot dot-gold"></div><span class="ph-title" style="color:var(--admin);text-shadow:var(--admin-glow);">Edit Site Titles</span></div>
@@ -1353,7 +1366,7 @@ function connectWS() {
   clearTimeout(wsReconnectTimer);
 
   const wsProto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const wsHost = window.location.host || 'c58175c8-ffbe-4518-9a89-8456b2c912f0-00-3jhjthxjlcyh1.sisko.replit.dev';
+  const wsHost = window.location.host;
   const url = wsProto + '//' + wsHost + '/api/ws';
   ws = new WebSocket(url);
 
@@ -2316,6 +2329,19 @@ function resetTitles() {
   applyTitles();
   const status = document.getElementById('titleSaveStatus');
   if (status) { status.textContent = '✓ Reset to defaults.'; setTimeout(() => status.textContent = '', 2000); }
+}
+
+function sendBroadcast() {
+  const input = document.getElementById('broadcastInput');
+  const status = document.getElementById('broadcastStatus');
+  const text = (input.value || '').trim();
+  if (!text) { status.textContent = '⚠ Enter a message first.'; status.style.color = 'var(--error, #ff4444)'; setTimeout(() => status.textContent = '', 2000); return; }
+  if (!ws || ws.readyState !== WebSocket.OPEN) { status.textContent = '⚠ Chat not connected.'; status.style.color = 'var(--error, #ff4444)'; setTimeout(() => status.textContent = '', 2000); return; }
+  ws.send(JSON.stringify({ type: 'broadcast', text }));
+  input.value = '';
+  status.style.color = 'var(--green)';
+  status.textContent = '✓ Broadcast sent!';
+  setTimeout(() => status.textContent = '', 2500);
 }
 
 /* ─── BOOT ─── */
