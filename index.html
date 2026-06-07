@@ -1340,11 +1340,10 @@ function appendChatMsg(msg) {
   let rankBadgeHtml = '';
   if (user.id === 'admin') {
     rankBadgeHtml = '<span class="chat-rank-badge crb-admin">Admin</span>';
-  } else if (rankKey && userRanks[rankKey]) {
-    const rk = userRanks[rankKey];
+  } else {
     const clsMap = {diamond:'crb-diamond',platinum:'crb-platinum',gold:'crb-gold',silver:'crb-silver',bronze:'crb-bronze'};
-    const cls = clsMap[rk];
-    if (cls) rankBadgeHtml = '<span class="chat-rank-badge ' + cls + '">' + rk.charAt(0).toUpperCase() + rk.slice(1) + '</span>';
+    const rk = user.rank || (rankKey && userRanks[rankKey]);
+    if (rk && clsMap[rk]) rankBadgeHtml = '<span class="chat-rank-badge ' + clsMap[rk] + '">' + rk.charAt(0).toUpperCase() + rk.slice(1) + '</span>';
   }
 
   div.className = 'chat-msg';
@@ -1596,6 +1595,7 @@ function adminSetRank() {
   saveAdminData();
   renderAdminLists();
   document.getElementById('rankTargetInput').value = '';
+  fetch(SKRINHUB_API + '/api/ranks', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({userId:uid, rank}) }).catch(()=>{});
   showToast('Rank set: ' + uid + ' -> ' + rank, 'success');
 }
 
@@ -1604,6 +1604,7 @@ function adminRemoveRank(uid) {
   delete userRanks[uid];
   saveAdminData();
   renderAdminLists();
+  fetch(SKRINHUB_API + '/api/ranks/' + encodeURIComponent(uid), { method:'DELETE' }).catch(()=>{});
   showToast('Rank removed for ' + uid, '');
 }
 
@@ -1687,6 +1688,13 @@ async function checkAuth() {
       }
     } catch {}
   }
+  // Sync server-side ranks into local userRanks
+  fetch(SKRINHUB_API + '/api/ranks').then(r=>r.json()).then(data=>{
+    if (data && typeof data === 'object') {
+      Object.entries(data).forEach(([uid, entry]) => { userRanks[uid] = entry.rank; });
+      saveAdminData();
+    }
+  }).catch(()=>{});
 }
 
 /* ═══════════════════════ GENERATOR ══════════════════ */
