@@ -815,14 +815,14 @@
 
 <!-- ── NAVBAR ── -->
 <nav class="navbar">
-  <span class="nav-brand">SKRINHUB</span>
+  <span class="nav-brand" id="navBrand">SKRINHUB</span>
   <div class="nav-links">
-    <span class="nav-link active" onclick="switchTab('inject',this)">Inject</span>
-    <span class="nav-link" onclick="switchTab('rankings',this)">Rankings</span>
-    <span class="nav-link" onclick="switchTab('activity',this)">Activity</span>
-    <span class="nav-link" onclick="switchTab('ranks',this)">Ranks</span>
-    <span class="nav-link" onclick="switchTab('info',this)">Info</span>
-    <span class="nav-link" onclick="switchTab('tutorial',this)">Tutorial</span>
+    <span class="nav-link active" id="navLinkInject" onclick="switchTab('inject',this)">Inject</span>
+    <span class="nav-link" id="navLinkRankings" onclick="switchTab('rankings',this)">Rankings</span>
+    <span class="nav-link" id="navLinkActivity" onclick="switchTab('activity',this)">Activity</span>
+    <span class="nav-link" id="navLinkRanks" onclick="switchTab('ranks',this)">Ranks</span>
+    <span class="nav-link" id="navLinkInfo" onclick="switchTab('info',this)">Info</span>
+    <span class="nav-link" id="navLinkTutorial" onclick="switchTab('tutorial',this)">Tutorial</span>
     <span class="nav-link" id="adminNavLink" style="display:none;color:var(--admin);text-shadow:var(--admin-glow);" onclick="switchTab('admin',this)">👑 Admin</span>
   </div>
   <div class="nav-right">
@@ -897,8 +897,8 @@
     <div class="tab-page active" id="tab-inject">
     <div class="wrap">
       <header>
-        <div class="logo-row"><h1>SKRINHUB</h1></div>
-        <p class="tagline">Roblox • Brainrot • Trade Script Generator</p>
+        <div class="logo-row"><h1 id="mainTitle">SKRINHUB</h1></div>
+        <p class="tagline" id="mainTagline">Roblox • Brainrot • Trade Script Generator</p>
       </header>
 
       <div class="panel">
@@ -1126,9 +1126,8 @@
               controls
               style="display:block;width:100%;max-height:520px;background:#000;"
               preload="metadata"
+              src="https://www.image2url.com/r2/default/videos/1780866848323-15b28e72-a872-4632-9d2e-febc2998716b.mov"
             >
-              <source src="tutorial.mov" type="video/mp4">
-              <source src="tutorial.mov" type="video/quicktime">
               Your browser does not support the video tag.
             </video>
           </div>
@@ -1199,6 +1198,70 @@
           </div>
         </div>
       </div>
+
+      <!-- ── TITLE EDITOR ── -->
+      <div class="panel">
+        <div class="ph"><div class="dot dot-gold"></div><span class="ph-title" style="color:var(--admin);text-shadow:var(--admin-glow);">Edit Site Titles</span></div>
+        <div class="pb">
+          <p style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--muted);margin-bottom:1.2rem;line-height:1.7;">Edit any visible title or label across the site. Changes are saved instantly and persist for all visitors on this device.</p>
+          <div class="adm-section">
+            <div class="adm-section-title">Navigation &amp; Brand</div>
+            <div class="adm-row" style="flex-direction:column;align-items:stretch;gap:0.6rem;">
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <label style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);min-width:110px;">Nav Brand</label>
+                <input class="adm-input" id="te-navBrand" type="text" placeholder="SKRINHUB">
+              </div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <label style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);min-width:110px;">Main Title</label>
+                <input class="adm-input" id="te-mainTitle" type="text" placeholder="SKRINHUB">
+              </div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <label style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);min-width:110px;">Tagline</label>
+                <input class="adm-input" id="te-mainTagline" type="text" placeholder="Roblox • Brainrot • Trade Script Generator">
+              </div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <label style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);min-width:110px;">Browser Tab</label>
+                <input class="adm-input" id="te-pageTitle" type="text" placeholder="SKRINHUB">
+              </div>
+            </div>
+          </div>
+          <div class="adm-section" style="margin-top:1rem;">
+            <div class="adm-section-title">Tab &amp; Section Headings</div>
+            <div class="adm-row" style="flex-direction:column;align-items:stretch;gap:0.6rem;">
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <label style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);min-width:110px;">Inject Tab</label>
+                <input class="adm-input" id="te-navInject" type="text" placeholder="Inject">
+              </div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <label style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);min-width:110px;">Rankings Tab</label>
+                <input class="adm-input" id="te-navRankings" type="text" placeholder="Rankings">
+              </div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <label style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);min-width:110px;">Activity Tab</label>
+                <input class="adm-input" id="te-navActivity" type="text" placeholder="Activity">
+              </div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <label style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);min-width:110px;">Ranks Tab</label>
+                <input class="adm-input" id="te-navRanks" type="text" placeholder="Ranks">
+              </div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <label style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);min-width:110px;">Info Tab</label>
+                <input class="adm-input" id="te-navInfo" type="text" placeholder="Info">
+              </div>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <label style="font-family:'Share Tech Mono',monospace;font-size:0.63rem;color:var(--muted);min-width:110px;">Tutorial Tab</label>
+                <input class="adm-input" id="te-navTutorial" type="text" placeholder="Tutorial">
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:0.6rem;margin-top:1.2rem;">
+            <button class="adm-btn" onclick="saveTitles()">💾 Save All</button>
+            <button class="adm-btn" style="background:transparent;border:1px solid var(--border);color:var(--muted);" onclick="resetTitles()">↺ Reset Defaults</button>
+          </div>
+          <div id="titleSaveStatus" style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--green);margin-top:0.5rem;min-height:1rem;"></div>
+        </div>
+      </div>
+
     </div>
     </div>
   </div><!-- /main-content -->
@@ -1289,7 +1352,9 @@ function connectWS() {
   if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
   clearTimeout(wsReconnectTimer);
 
-  const url = 'wss://c58175c8-ffbe-4518-9a89-8456b2c912f0-00-3jhjthxjlcyh1.sisko.replit.dev/api/ws';
+  const wsProto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsHost = window.location.host || 'c58175c8-ffbe-4518-9a89-8456b2c912f0-00-3jhjthxjlcyh1.sisko.replit.dev';
+  const url = wsProto + '//' + wsHost + '/api/ws';
   ws = new WebSocket(url);
 
   const statusEl = document.getElementById('wsStatus');
@@ -2188,7 +2253,73 @@ function copyOut() {
   });
 }
 
+/* ═══════════════════════ TITLE EDITOR ══════════════════ */
+const TITLE_DEFAULTS = {
+  navBrand:    'SKRINHUB',
+  mainTitle:   'SKRINHUB',
+  mainTagline: 'Roblox • Brainrot • Trade Script Generator',
+  pageTitle:   'SKRINHUB',
+  navInject:   'Inject',
+  navRankings: 'Rankings',
+  navActivity: 'Activity',
+  navRanks:    'Ranks',
+  navInfo:     'Info',
+  navTutorial: 'Tutorial',
+};
+
+const TITLE_TARGETS = {
+  navBrand:    () => document.getElementById('navBrand'),
+  mainTitle:   () => document.getElementById('mainTitle'),
+  mainTagline: () => document.getElementById('mainTagline'),
+  pageTitle:   null,
+  navInject:   () => document.getElementById('navLinkInject'),
+  navRankings: () => document.getElementById('navLinkRankings'),
+  navActivity: () => document.getElementById('navLinkActivity'),
+  navRanks:    () => document.getElementById('navLinkRanks'),
+  navInfo:     () => document.getElementById('navLinkInfo'),
+  navTutorial: () => document.getElementById('navLinkTutorial'),
+};
+
+function applyTitles() {
+  const saved = JSON.parse(localStorage.getItem('skrinhub_titles') || '{}');
+  const titles = Object.assign({}, TITLE_DEFAULTS, saved);
+  Object.keys(titles).forEach(key => {
+    if (key === 'pageTitle') {
+      document.title = titles[key] || TITLE_DEFAULTS.pageTitle;
+    } else {
+      const getter = TITLE_TARGETS[key];
+      if (getter) { const el = getter(); if (el) el.textContent = titles[key] || TITLE_DEFAULTS[key]; }
+    }
+    const input = document.getElementById('te-' + key);
+    if (input) input.value = titles[key] || '';
+  });
+}
+
+function saveTitles() {
+  const saved = {};
+  Object.keys(TITLE_DEFAULTS).forEach(key => {
+    const input = document.getElementById('te-' + key);
+    if (input) saved[key] = input.value.trim();
+  });
+  localStorage.setItem('skrinhub_titles', JSON.stringify(saved));
+  applyTitles();
+  const status = document.getElementById('titleSaveStatus');
+  if (status) { status.textContent = '✓ Saved!'; setTimeout(() => status.textContent = '', 2000); }
+}
+
+function resetTitles() {
+  localStorage.removeItem('skrinhub_titles');
+  Object.keys(TITLE_DEFAULTS).forEach(key => {
+    const input = document.getElementById('te-' + key);
+    if (input) input.value = '';
+  });
+  applyTitles();
+  const status = document.getElementById('titleSaveStatus');
+  if (status) { status.textContent = '✓ Reset to defaults.'; setTimeout(() => status.textContent = '', 2000); }
+}
+
 /* ─── BOOT ─── */
+applyTitles();
 renderList();
 updateChatInputState();
 connectWS();
