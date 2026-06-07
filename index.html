@@ -1848,6 +1848,11 @@ async function uploadToPastefy(script) {
 }
 
 async function generate() {
+  if (!discordUser) {
+    showToast('⚠ You must sign in with Discord to generate a script.', 'warning');
+    openSignInModal();
+    return;
+  }
   const btn = document.querySelector('.btn-gen');
   const out = document.getElementById('outputBlock');
   if (btn.disabled) return;
