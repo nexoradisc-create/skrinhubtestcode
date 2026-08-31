@@ -1590,6 +1590,409 @@
     .credits-grid { grid-template-columns: 1fr; }
     .credits-panel-head { align-items: flex-start; flex-direction: column; }
   }
+  /* ═══ SIGNAL CONSOLE VISUAL REFRESH ═══ */
+  :root {
+    --bg: #070a0f;
+    --surface: #0d121a;
+    --panel: #121a25;
+    --border: rgba(169, 193, 219, 0.16);
+    --border-strong: rgba(169, 193, 219, 0.34);
+    --neon: #8dffd1;
+    --neon-soft: rgba(141, 255, 209, 0.12);
+    --text: #f3f7fb;
+    --muted: #8b9aac;
+    --danger: #ff7c89;
+    --green: #8dffd1;
+    --discord: #7289da;
+    --neon-glow: 0 0 28px rgba(141, 255, 209, 0.22);
+  }
+  html { background: var(--bg); }
+  body {
+    background:
+      radial-gradient(circle at 82% 8%, rgba(34, 77, 99, 0.28), transparent 31rem),
+      radial-gradient(circle at 10% 92%, rgba(38, 28, 76, 0.2), transparent 28rem),
+      var(--bg);
+    color: var(--text);
+  }
+  body::before {
+    opacity: 0.46;
+    background-image:
+      linear-gradient(rgba(141, 255, 209, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(141, 255, 209, 0.035) 1px, transparent 1px);
+    background-size: 44px 44px;
+    animation: none;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(115deg, transparent 0 52%, rgba(141,255,209,0.025) 52.1%, transparent 52.4%);
+  }
+  .top-bar {
+    height: 72px;
+    padding: 0 clamp(1rem, 4vw, 3.5rem);
+    background: rgba(7, 10, 15, 0.78);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.24);
+  }
+  .top-left { gap: clamp(0.8rem, 3vw, 2.4rem); }
+  .brand-mini {
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(0.78rem, 1.8vw, 1rem);
+    letter-spacing: 0.18em;
+  }
+  .brand-mini::before {
+    content: '◈';
+    color: var(--neon);
+    margin-right: 0.55rem;
+    font-size: 0.75em;
+  }
+  .brand-mini span { color: var(--muted); }
+  .counter-widget {
+    padding-left: clamp(0.8rem, 2.5vw, 2rem);
+    border-left-color: var(--border);
+    color: var(--muted);
+  }
+  .counter-widget .counter-num { color: var(--neon); text-shadow: var(--neon-glow); }
+  .counter-dot, .dot, .gag2-dot, .chat-online-dot {
+    background: var(--neon);
+    box-shadow: 0 0 12px rgba(141,255,209,0.62);
+  }
+  .btn-discord {
+    background: var(--discord);
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 8px 22px rgba(114,137,218,0.25);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .btn-discord:hover {
+    background: #879bfa;
+    box-shadow: 0 10px 28px rgba(114,137,218,0.4);
+    transform: translateY(-1px);
+  }
+  .user-chip {
+    background: rgba(18, 26, 37, 0.92);
+    border-color: var(--border);
+    border-radius: 10px;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .user-avatar { border-color: var(--neon); box-shadow: 0 0 14px rgba(141,255,209,0.18); }
+  .home-screen {
+    max-width: 1240px;
+    min-height: 100dvh;
+    padding: clamp(8rem, 15vh, 11rem) clamp(1rem, 5vw, 4rem) 5rem;
+  }
+  .home-screen::before {
+    content: 'STATIC CONSOLE  /  TOOL DIRECTORY';
+    color: var(--neon);
+    opacity: 0.82;
+    letter-spacing: 0.24em;
+  }
+  .home-title {
+    max-width: 1000px;
+    color: var(--text);
+    font-size: clamp(3.4rem, 10vw, 8.5rem);
+    line-height: 0.84;
+    letter-spacing: -0.09em;
+    text-shadow: 0 12px 45px rgba(0,0,0,0.36);
+  }
+  .home-subtitle {
+    color: transparent;
+    background: linear-gradient(100deg, var(--neon), #b7c7ff 70%, #71819a);
+    -webkit-background-clip: text;
+    background-clip: text;
+    font-size: clamp(2.5rem, 6.5vw, 5.7rem);
+    line-height: 0.92;
+    letter-spacing: -0.08em;
+    margin-bottom: 1.3rem;
+  }
+  .home-subtitle-sub {
+    max-width: 680px;
+    color: var(--muted);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    line-height: 1.8;
+    margin-bottom: 3.1rem;
+  }
+  .tool-selector {
+    grid-template-columns: 1.25fr 1fr 1fr;
+    gap: 1rem;
+    max-width: 1120px;
+  }
+  .tool-card {
+    width: auto;
+    min-height: 285px;
+    padding: 1.5rem;
+    justify-content: flex-end;
+    background: linear-gradient(145deg, rgba(31,46,64,0.92), rgba(12,17,25,0.96)), var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 22px 60px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+  .tool-card:first-child { min-height: 340px; }
+  .tool-card::before {
+    top: 1rem;
+    bottom: 1rem;
+    left: 0;
+    right: auto;
+    width: 3px;
+    height: auto;
+    background: var(--neon);
+    box-shadow: 0 0 22px rgba(141,255,209,0.8);
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+  .tool-card::after {
+    content: 'OPEN TOOL  ↗';
+    position: absolute;
+    top: 1.3rem;
+    right: 1.3rem;
+    color: var(--muted);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    opacity: 0.7;
+  }
+  .tool-card:hover {
+    border-color: rgba(141,255,209,0.56);
+    box-shadow: 0 28px 70px rgba(0,0,0,0.42), 0 0 0 1px rgba(141,255,209,0.08);
+    transform: translateY(-7px);
+  }
+  .tool-card:hover::before { transform: scaleY(1); }
+  .tool-icon {
+    height: 122px;
+    width: 100%;
+    padding: 1rem;
+    align-items: flex-start;
+    justify-content: flex-start;
+    background: rgba(5,9,14,0.32);
+    border: 1px solid rgba(169,193,219,0.12);
+    border-radius: 12px;
+    opacity: 1;
+  }
+  .tool-icon img { max-height: 92px; max-width: 170px; filter: grayscale(0.35) contrast(1.1); }
+  .tool-card:hover .tool-icon img { filter: grayscale(0) contrast(1.12); }
+  .tool-name {
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.08rem;
+    letter-spacing: 0.03em;
+  }
+  .tool-desc { color: var(--muted); font-size: 0.7rem; line-height: 1.7; }
+  .credits-card-mark {
+    width: 76px;
+    height: 76px;
+    border-color: rgba(141,255,209,0.5);
+    color: var(--neon);
+    background: rgba(141,255,209,0.06);
+    box-shadow: inset 0 0 24px rgba(141,255,209,0.08);
+  }
+  .top-hitters-section {
+    max-width: 1120px;
+    margin-top: 4.2rem;
+    padding-top: 1.35rem;
+    border-top-color: var(--border);
+  }
+  .top-hitters-title { color: var(--text); letter-spacing: 0.12em; }
+  .hitter-card {
+    background: linear-gradient(145deg, rgba(24,35,51,0.86), rgba(13,18,26,0.92));
+    border-color: var(--border) !important;
+    border-radius: 12px;
+    box-shadow: 0 16px 35px rgba(0,0,0,0.2);
+  }
+  .hitter-card::before { background: var(--neon); }
+  .hitter-card:hover { border-color: rgba(141,255,209,0.48) !important; }
+  .hitter-count { color: var(--neon); text-shadow: var(--neon-glow); }
+  .hitter-avatar { border-color: rgba(141,255,209,0.55); filter: none; }
+  .back-button {
+    top: 88px;
+    left: clamp(1rem, 4vw, 3.5rem);
+    background: rgba(18,26,37,0.9);
+    border-color: var(--border-strong);
+    border-radius: 9px;
+    color: var(--neon);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+  }
+  .back-button:hover { background: #182333; border-color: var(--neon); box-shadow: var(--neon-glow); }
+  .tool-wrapper, .credits-wrapper { max-width: 980px; padding-top: 8rem; }
+  .tool-header { margin-bottom: 2.8rem; }
+  .tool-header h1 { color: var(--text); font-size: clamp(2.1rem, 5vw, 3.7rem); letter-spacing: -0.055em; }
+  .tool-header .tagline { color: var(--neon); opacity: 0.78; letter-spacing: 0.16em; }
+  .panel, .gag2-panel, .credits-panel {
+    background: linear-gradient(145deg, rgba(20,30,43,0.96), rgba(12,17,25,0.96));
+    border-color: var(--border);
+    border-radius: 14px;
+    box-shadow: 0 20px 55px rgba(0,0,0,0.24), inset 0 1px 0 rgba(255,255,255,0.035);
+  }
+  .ph, .out-ph, .gag2-ph, .credits-panel-head {
+    background: rgba(24,35,51,0.72);
+    border-color: var(--border);
+  }
+  .ph-title, .out-ph-title, .gag2-ph-title, .credits-panel-title { color: var(--neon); text-shadow: none; }
+  .pb, .gag2-pb { padding: 1.4rem; }
+  .search-input, .txt, .gag2-f-input, .chat-input, .role-name-input, .role-select,
+  #pasteCustomListContainer textarea {
+    background: rgba(6,10,15,0.7);
+    border-color: var(--border);
+    border-radius: 9px;
+  }
+  .search-input:focus, .txt:focus, .gag2-f-input:focus, .chat-input:focus,
+  .role-name-input:focus, .role-select:focus, #pasteCustomListContainer textarea:focus {
+    border-color: var(--neon);
+    box-shadow: 0 0 0 3px rgba(141,255,209,0.1), 0 0 24px rgba(141,255,209,0.1);
+  }
+  .animal-list, .code-block, .gag2-code-block {
+    background: rgba(5,9,14,0.72);
+    border-color: var(--border);
+    border-radius: 10px;
+  }
+  .a-item:hover, .suggestion-item:hover, .gag2-suggestion-item:hover { background: rgba(141,255,209,0.06); }
+  .a-item.on { background: rgba(141,255,209,0.11); }
+  .a-item input[type="checkbox"] { border-color: rgba(141,255,209,0.66); background: rgba(5,9,14,0.72); }
+  .a-item input[type="checkbox"]:checked { background: var(--neon); border-color: var(--neon); box-shadow: var(--neon-glow); }
+  .badge-og { color: var(--neon); border-color: rgba(141,255,209,0.5); background: var(--neon-soft); }
+  .badge-secret { color: #b9c5d3; border-color: var(--border-strong); background: rgba(169,193,219,0.06); }
+  .btn-sm, .btn-copy, .admin-mode-btn, .gag2-admin-mode-btn, #customBrainrotInput button,
+  #pasteCustomListContainer button, .btn-add-role, .btn-assign-role {
+    background: rgba(141,255,209,0.06);
+    border-color: rgba(141,255,209,0.35);
+    color: var(--neon);
+    border-radius: 8px;
+  }
+  .btn-sm:hover, .btn-copy:hover, .admin-mode-btn:hover:not(.active), .gag2-admin-mode-btn:hover,
+  #customBrainrotInput button:hover, #pasteCustomListContainer button:hover,
+  .btn-add-role:hover, .btn-assign-role:hover { background: rgba(141,255,209,0.14); }
+  .btn-gen, .gag2-btn-gen {
+    background: linear-gradient(100deg, var(--neon), #b8ffe7);
+    color: #07110f;
+    border-radius: 10px;
+    box-shadow: 0 12px 28px rgba(141,255,209,0.18);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .btn-gen:hover, .gag2-btn-gen:hover {
+    background: linear-gradient(100deg, #b8ffe7, var(--neon));
+    box-shadow: 0 16px 36px rgba(141,255,209,0.3);
+    transform: translateY(-2px);
+  }
+  .admin-mode-btn.active, .gag2-admin-mode-btn.active {
+    background: var(--neon);
+    border-color: var(--neon);
+    color: #07110f;
+    box-shadow: var(--neon-glow);
+  }
+  .code-block, .gag2-code-block { color: #c9ffe9; }
+  .chat-toggle {
+    width: 58px;
+    height: 58px;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    background: var(--neon);
+    color: #07110f;
+    border-radius: 16px;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.3), var(--neon-glow);
+  }
+  .chat-toggle:hover { transform: translateY(-4px) rotate(-2deg); }
+  .chat-panel, .admin-modal-box, .modal-box {
+    background: linear-gradient(145deg, #182333, #0e141d);
+    border-color: var(--border-strong);
+    border-radius: 16px;
+    box-shadow: 0 28px 90px rgba(0,0,0,0.56), 0 0 0 1px rgba(141,255,209,0.04);
+  }
+  .chat-header, .chat-input-area, .admin-header { background: rgba(24,35,51,0.84); border-color: var(--border); }
+  .modal-overlay { background: rgba(1,4,8,0.78); backdrop-filter: blur(12px); }
+  .modal-box { max-width: 480px; padding: clamp(1.6rem, 5vw, 2.5rem); }
+  .modal-box h2 { color: var(--text); font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: -0.04em; }
+  .modal-box p { color: var(--muted); line-height: 1.7; }
+  .auth-eyebrow {
+    margin-bottom: 0.8rem;
+    color: var(--neon);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.64rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .auth-status {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    min-height: 2.5rem;
+    margin: 1.25rem 0 1rem;
+    padding: 0.7rem 0.8rem;
+    color: var(--neon);
+    background: rgba(141,255,209,0.06);
+    border: 1px solid rgba(141,255,209,0.2);
+    border-radius: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+  }
+  .auth-status::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 12px currentColor;
+  }
+  .auth-status[data-state="error"] { color: var(--danger); background: rgba(255,124,137,0.07); border-color: rgba(255,124,137,0.25); }
+  .auth-status[data-state="loading"] { color: #b7c7ff; background: rgba(114,137,218,0.08); border-color: rgba(114,137,218,0.25); }
+  .auth-note { margin-top: 1rem; font-size: 0.68rem; }
+  .auth-recovery {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 0.7rem;
+  }
+  .auth-recovery button {
+    padding: 0;
+    color: var(--neon);
+    background: none;
+    border: 0;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .auth-recovery button:hover { color: var(--text); }
+  .btn-discord:disabled { opacity: 0.7; cursor: wait; transform: none; }
+  .btn-logout { border-radius: 8px; }
+  :focus-visible { outline: 2px solid var(--neon); outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  @media (max-width: 760px) {
+    .tool-selector { grid-template-columns: 1fr; }
+    .tool-card, .tool-card:first-child { min-height: 245px; }
+    .home-screen { padding-top: 8rem; }
+    .counter-widget span:not(.counter-num) { display: none; }
+    .counter-widget { gap: 0.4rem; }
+  }
+  @media (max-width: 460px) {
+    .top-bar { padding: 0 0.8rem; }
+    .brand-mini span { display: none; }
+    .brand-mini { letter-spacing: 0.1em; }
+    .btn-discord { padding-inline: 0.65rem; }
+    .user-name, .user-role-badge { display: none; }
+    .home-title { font-size: clamp(3rem, 17vw, 5rem); }
+    .home-subtitle { font-size: clamp(2.25rem, 12vw, 4rem); }
+    .tool-wrapper, .credits-wrapper { padding-inline: 1rem; }
+    .back-button { left: 1rem; }
+  }
 </style>
 </head>
 <body>
@@ -1608,9 +2011,9 @@
 
   <!-- Login Area (top right) -->
   <div class="login-area">
-    <button class="btn-discord" id="loginBtn" onclick="loginWithDiscord()">
+    <button class="btn-discord" id="loginBtn" type="button" aria-busy="false" onclick="loginWithDiscord()">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.101 18.08.114 18.1.13 18.113a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-      Sign in with Discord
+      <span class="auth-button-label">Sign in with Discord</span>
     </button>
     <div class="user-chip" id="userChip">
       <img class="user-avatar" id="userAvatar" src="" alt="">
@@ -1637,15 +2040,22 @@
 </div> -->
 
 <!-- ═══ LOGIN REQUIRED MODAL ═══ -->
-<div class="modal-overlay hidden" id="loginModal">
+<div class="modal-overlay hidden" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
   <div class="modal-box">
-    <h2>Sign In Required</h2>
-    <p>You must sign in with Discord before generating scripts. This helps us track who's using Statics Hub.</p>
+    <div class="auth-eyebrow">AUTH / 01</div>
+    <h2 id="loginTitle">Connect your Discord</h2>
+    <p>Sign in once to unlock script generation and keep your activity tied to your Discord identity.</p>
+    <div class="auth-status" id="loginStatus" aria-live="polite">READY TO CONNECT</div>
     <div class="modal-btns">
-      <button class="btn-discord" onclick="loginWithDiscord()">
+      <button class="btn-discord" id="loginModalBtn" type="button" aria-busy="false" onclick="loginWithDiscord()">
         <svg viewBox="0 0 24 24" fill="currentColor" style="width:15px;height:15px"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.101 18.08.114 18.1.13 18.113a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
-        Sign in with Discord
+         <span class="auth-button-label">Sign in with Discord</span>
       </button>
+    </div>
+    <p class="auth-note">Identity permission only. Webhook values stay in this browser.</p>
+    <div class="auth-recovery">
+      <span>Having trouble?</span>
+      <button type="button" onclick="loginWithDiscord()">Try again</button>
     </div>
   </div>
 </div>
@@ -1911,6 +2321,7 @@
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 const DISCORD_CLIENT_ID = '1368253122299822292';
 const DISCORD_REDIRECT_URI = window.location.origin + window.location.pathname;
+const DISCORD_AUTH_TIMEOUT_MS = 12000;
 
 // Admin Discord usernames and their titles
 const ADMIN_MAP = {
@@ -1948,6 +2359,7 @@ let gag2CustomAdminLoadstring = '';
 let chatOpen = false;
 let chatUnreadCount = 0;
 let currentUser = null;
+let authRequestActive = false;
 
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //  SCRIPTS COUNTER
@@ -2056,7 +2468,36 @@ function renderCredits() {
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 //  DISCORD OAUTH2 (Implicit flow — client-side only)
 // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function setAuthState(state, message) {
+  const status = document.getElementById('loginStatus');
+  if (status) {
+    status.dataset.state = state;
+    status.textContent = message;
+  }
+}
+
+function setAuthButtonLoading(isLoading) {
+  ['loginBtn', 'loginModalBtn'].forEach(id => {
+    const button = document.getElementById(id);
+    if (!button) return;
+    button.disabled = isLoading;
+    button.setAttribute('aria-busy', String(isLoading));
+    const label = button.querySelector('.auth-button-label');
+    if (label) label.textContent = isLoading ? 'Opening Discord...' : 'Sign in with Discord';
+  });
+}
+
+function clearStoredDiscordUser() {
+  localStorage.removeItem('statics_hub_discord_user');
+  currentUser = null;
+}
+
 function loginWithDiscord() {
+  if (authRequestActive) return;
+  authRequestActive = true;
+  setAuthState('loading', 'OPENING DISCORD');
+  setAuthButtonLoading(true);
+  sessionStorage.setItem('statics_hub_auth_pending', '1');
   const params = new URLSearchParams({
     client_id: DISCORD_CLIENT_ID,
     redirect_uri: DISCORD_REDIRECT_URI,
@@ -2068,21 +2509,39 @@ function loginWithDiscord() {
 
 async function handleDiscordCallback() {
   const hash = window.location.hash.substring(1);
-  if (!hash.includes('access_token')) return;
+  if (!hash) return;
   const params = new URLSearchParams(hash);
+  const oauthError = params.get('error');
+  if (oauthError) {
+    history.replaceState(null, '', window.location.pathname + window.location.search);
+    sessionStorage.removeItem('statics_hub_auth_pending');
+    authRequestActive = false;
+    setAuthButtonLoading(false);
+    setAuthState('error', 'DISCORD LOGIN CANCELLED');
+    showLoginGate();
+    return;
+  }
   const token = params.get('access_token');
   if (!token) return;
 
   // Clean the URL hash
   history.replaceState(null, '', window.location.pathname + window.location.search);
+  sessionStorage.removeItem('statics_hub_auth_pending');
+  setAuthState('loading', 'RETURNING FROM DISCORD');
 
+  let timeoutId;
   try {
     // Fetch the Discord profile to establish the signed-in session.
+    const controller = new AbortController();
+    timeoutId = setTimeout(() => controller.abort(), DISCORD_AUTH_TIMEOUT_MS);
     const userRes = await fetch('https://discord.com/api/users/@me', {
-      headers: { 'Authorization': `Bearer ${token}` }
+      headers: { 'Authorization': `Bearer ${token}` },
+      signal: controller.signal
     });
+    clearTimeout(timeoutId);
     if (!userRes.ok) throw new Error('Discord API error');
     const user = await userRes.json();
+    const expiresIn = Number(params.get('expires_in') || 3600);
 
     const userData = {
       id: user.id,
@@ -2090,15 +2549,23 @@ async function handleDiscordCallback() {
       global_name: user.global_name || user.username,
       avatar: user.avatar
         ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`
-        : `https://cdn.discordapp.com/embed/avatars/${parseInt(user.id) % 5}.png`,
-      token
+        : getDefaultDiscordAvatar(user.id),
+      token,
+      expires_at: Date.now() + Math.max(expiresIn, 300) * 1000
     };
     localStorage.setItem('statics_hub_discord_user', JSON.stringify(userData));
     trackKnownUser(userData);
     setCurrentUser(userData);
     showToast('✅ Signed in as ' + userData.global_name, 'success');
   } catch (e) {
-    showToast('❌ Failed to verify Discord profile.', 'error');
+    if (timeoutId) clearTimeout(timeoutId);
+    clearStoredDiscordUser();
+    setAuthState('error', e.name === 'AbortError' ? 'DISCORD REQUEST TIMED OUT' : 'COULD NOT VERIFY DISCORD');
+    setAuthButtonLoading(false);
+    showLoginGate();
+    showToast('❌ Discord sign-in failed. Try again.', 'error');
+  } finally {
+    authRequestActive = false;
   }
 }
 
@@ -2110,13 +2577,24 @@ function showLoginGate() {
 function loadStoredUser() {
   const stored = localStorage.getItem('statics_hub_discord_user');
   if (stored) {
-    try { setCurrentUser(JSON.parse(stored)); } catch {}
+    try {
+      const user = JSON.parse(stored);
+      if (!user.token || (user.expires_at && Date.now() >= user.expires_at)) {
+        clearStoredDiscordUser();
+        return;
+      }
+      setCurrentUser(user);
+    } catch {
+      clearStoredDiscordUser();
+    }
   }
 }
 
 function setCurrentUser(user) {
   currentUser = user;
   document.getElementById('loginModal').classList.add('hidden');
+  setAuthState('success', 'CONNECTED AS ' + (user.global_name || user.username).toUpperCase());
+  setAuthButtonLoading(false);
   // Update top bar
   const chip = document.getElementById('userChip');
   chip.classList.add('show');
@@ -2172,9 +2650,13 @@ function applyUserRoleBadge(username) {
 
 function logout() {
   localStorage.removeItem('statics_hub_discord_user');
+  sessionStorage.removeItem('statics_hub_auth_pending');
+  authRequestActive = false;
   currentUser = null;
   document.getElementById('userChip').classList.remove('show');
   document.getElementById('loginBtn').style.display = 'flex';
+  setAuthButtonLoading(false);
+  setAuthState('idle', 'READY TO CONNECT');
   document.getElementById('adminOpenBtn').classList.remove('show');
   document.getElementById('chatInputArea').style.display = 'none';
   document.getElementById('chatLoginPrompt').style.display = 'block';
